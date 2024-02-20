@@ -1,5 +1,14 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
+import {
+    checkEmail,
+    checkInput,
+    checkPassword,
+    checkPasswordAgain,
+    checkPhonenumber,
+    checkUsername
+} from "../../utils/Validation.js";
+import {toast} from "react-toastify";
 function Register(){
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -32,18 +41,18 @@ function Register(){
         e.preventDefault();
 
         // Kiểm tra các điều kiện và gán kết quả vào biến
-        const isUsernameValid = !await checkUsername(username);
-        const isEmailValid = !await checkEmail(email);
-        const isPasswordValid = !checkPassword(password);
-        const isPasswordAgainValid = !checkPasswordAgain(passwordAgain);
-        const isFirstNameValid = !checkFirstName(firstName);
-        const isLastNameValid = !checkLastName(lastName);
-        const isPhonenumberValid = !checkPhonenumber(phonenumber);
-
+        const isUsernameValid = !await checkUsername(setErrorUsername, username);
+        const isEmailValid = !await checkEmail(setErrorEmail, email);
+        const isPasswordValid = !checkPassword(setErrorPassword, password);
+        const isPasswordAgainValid = !checkPasswordAgain(setErrorPasswordAgain, passwordAgain, password);
+        const isFirstNameValid = !checkInput(setErrorFirstName, firstName);
+        const isLastNameValid = !checkInput(setErrorLastName, lastName);
+        const isPhonenumberValid = !checkPhonenumber(setErrorPhonenumber, phonenumber);
+        console.log(isPasswordAgainValid);
         // Kiểm tra tất cả các điều kiện
         if (isUsernameValid && isEmailValid && isPasswordValid && isPasswordAgainValid && isFirstNameValid && isLastNameValid && isPhonenumberValid) {
             try {
-                setThongBao("Đang xử lý...")
+                const loadingToastId = toast.loading("Đang xử lý...");
                 const url = 'http://localhost:8080/user/register';
                 const response = await fetch(url, {
                         method: 'POST',
@@ -63,39 +72,19 @@ function Register(){
                     }
                 )
                 if(response.ok){
-                    setThongBao("Đăng ký thành công, vui lòng kiểm tra email để kích hoạt.\nNếu không có xin hãy kiểm tra lại email đăng ký!");
+                    toast.dismiss(loadingToastId);
+                    toast.success("Đăng ký thành công, vui lòng kiểm tra email để kích hoạt.\nNếu không có xin hãy kiểm tra lại email đăng ký!");
                 }else{
-                    setThongBao("Đã xảy ra lỗi trong quá trình đăng ký tài khoản!");
+                    toast.warning("Đã xảy ra lỗi trong quá trình đăng ký tài khoản!");
                 }
             } catch (error) {
-                setThongBao("Đã xảy ra lỗi trong quá trình đăng ký tài khoản.")
+                toast.warning("Đã xảy ra lỗi trong quá trình đăng ký tài khoản.")
             }
+        }else{
+            console.log("???")
         }
     }
     // KIỂM TRA TÊN ĐĂNG NHẬP ////////////////////////////////////////////////
-    const checkUsername = async (username) => {
-        if(username.trim()===""){
-            setErrorUsername("Thông tin bắt buộc");
-            return true;
-        }
-
-        // end-point
-        const url = `http://localhost:8080/users/search/existsByUsername?username=${username}`;
-        console.log(url);
-        // call api
-        try {
-            const response = await fetch(url);
-            const data = await response.text();
-            if (data === "true") {
-                setErrorUsername("Tên đăng nhập đã tồn tại!");
-                return true;
-            }
-            return false;
-        } catch (error) {
-            console.error("Lỗi khi kiểm tra tên đăng nhập:", error);
-            return false; // Xảy ra lỗi
-        }
-    }
 
     const handleUsernameChange = (e) => {
         // Thay đổi giá trị
@@ -103,40 +92,12 @@ function Register(){
         // Kiểm tra
         setErrorUsername('');
         // Kiểm tra sự tồn tại
-        return checkUsername(e.target.value);
+        return checkUsername(setErrorUsername, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
 
     // KIỂM TRA EMAIL ////////////////////////////////////////////////
-    const checkEmail = async (email) => {
-        if(email.trim()===""){
-            setErrorUsername("Thông tin bắt buộc!");
-            return true;
-        }
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(email)) {
-            setErrorEmail("Email phải đúng định dạng!");
-            return true;
-        }
-        // end-point
-        const url = `http://localhost:8080/users/search/existsByEmail?email=${email}`;
-        console.log(url);
-        // call api
-        try {
-            const response = await fetch(url);
-            const data = await response.text();
-            if (data === "true") {
-                setErrorEmail("Email đã tồn tại!");
-                return true;
-            }
-            return false;
-        } catch (error) {
-            console.error("Lỗi khi kiểm tra email:", error);
-            return false; // Xảy ra lỗi
-        }
-    }
-
     const handleEmailChange = (e) => {
 
         // Thay đổi giá trị
@@ -144,122 +105,62 @@ function Register(){
         // Kiểm tra
         setErrorEmail('');
         // Kiểm tra sự tồn tại
-        return checkEmail(e.target.value);
+        return checkEmail(setErrorEmail, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
-    // KIỂM TRA MẬT KHẨU ////////////////////////////////////////////////
-    const checkPassword = (password) => {
-        if(password.trim()===""){
-            setErrorUsername("Thông tin bắt buộc!");
-            return true;
-        }
-        const passwordRegex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-        if (!passwordRegex.test(password)) {
-            setErrorPassword("Mật khẩu phải có ít nhất 8 ký tự và bao gồm ít nhất 1 ký tự đặc biệt (!@#$%^&*)!");
-            return true;
-        } else {
-            setErrorPassword(""); // Mật khẩu hợp lệ
-            return false;
-        }
-    }
-
+    // KIỂM TRA MẬT KHẨU ///////////////////////////////////////////////
     const handlePasswordChange = (e) => {
         // Thay đổi giá trị
         setPassword(e.target.value);
         // Kiểm tra
         setErrorPassword('');
         // Kiểm tra sự tồn tại
-        return checkPassword(e.target.value);
+        return checkPassword(setErrorPassword, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
     // KIỂM TRA MẬT KHẨU LẶP LẠI ////////////////////////////////////////////////
-    const checkPasswordAgain = (passwordAgain) => {
-        if (passwordAgain !== password) {
-            setErrorPasswordAgain("Mật khẩu không trùng khớp!");
-            return true;
-        } else {
-            setErrorPasswordAgain(""); // Mật khẩu trùng khớp
-            return false;
-        }
-    }
-
     const handlePasswordAgainChange = (e) => {
         // Thay đổi giá trị
         setPasswordAgain(e.target.value);
         // Kiểm tra
         setErrorPasswordAgain('');
         // Kiểm tra sự tồn tại
-        return checkPasswordAgain(e.target.value);
+        return checkPasswordAgain(setErrorPasswordAgain, e.target.value, password);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
     // KIỂM TRA HỌ ĐỆM ////////////////////////////////////////////////
-    const checkFirstName = (firstName) => {
-        if (firstName.trim() === "") {
-            setErrorFirstName("Thông tin bắt buộc!");
-            return true;
-        } else {
-            setErrorFirstName("");
-            return false;
-        }
-    }
-
     const handleFirstNameChange = (e) => {
         // Thay đổi giá trị
         setFirstName(e.target.value);
         // Kiểm tra
         setErrorFirstName('');
         // Kiểm tra sự tồn tại
-        return checkFirstName(e.target.value);
+        return checkInput(setErrorFirstName, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
     // KIỂM TRA TÊN ////////////////////////////////////////////////
-    const checkLastName = (lastName) => {
-        if (lastName.trim() === "") {
-            setErrorLastName("Thông tin bắt buộc!");
-            return true;
-        } else {
-            setErrorLastName("");
-            return false;
-        }
-    }
-
     const handleLastNameChange = (e) => {
         // Thay đổi giá trị
         setLastName(e.target.value);
         // Kiểm tra
         setErrorLastName('');
         // Kiểm tra sự tồn tại
-        return checkLastName(e.target.value);
+        return checkInput(setErrorLastName, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
     // KIỂM TRA SỐ ĐIỆN THOẠI ////////////////////////////////////////////////
-    const checkPhonenumber = (phonenumber) => {
-        if (phonenumber.trim() === "") {
-            setErrorPhonenumber("Thông tin bắt buộc!");
-            return true;
-        }
-        const phonenumberRegex = /^0\d{9}$/;
-        if (!phonenumberRegex.test(phonenumber)) {
-            setErrorPhonenumber("Số điện thoại không hợp lệ!");
-            return true;
-        } else {
-            setErrorPhonenumber("");
-            return false;
-        }
-    }
-
     const handlePhonenumberChange = (e) => {
         // Thay đổi giá trị
         setPhonenumber(e.target.value);
         // Kiểm tra
         setErrorPhonenumber('');
         // Kiểm tra sự tồn tại
-        return checkPhonenumber(e.target.value);
+        return checkPhonenumber(setErrorPhonenumber, e.target.value);
     }
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -347,7 +248,6 @@ function Register(){
                     </div>
                     <div className="text-center">
                         <button type="submit" className="btn btn-primary">Đăng Ký</button>
-                        <div style={{color: "green"}}>{thongBao}</div>
                     </div>
                 </form>
                 <Link to="/login" style={{color: "blue"}}>Trở lại trang đăng nhập</Link>

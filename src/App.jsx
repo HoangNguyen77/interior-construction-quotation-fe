@@ -12,11 +12,14 @@ import About from "./pages/about/About.jsx";
 import Blog from "./pages/blog/Blog.jsx";
 import QuotationCalculator from "./pages/quotation-calculator/QuotationCalculator.jsx";
 import FinishedProject from "./pages/finished-project/FinishedProject.jsx";
-import CheckPage from "./pages/CheckPage.jsx";
+import Profile from "./pages/customer/Profile.jsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
         <div>
+            <ToastContainer />
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Navigate to="/home" />} />
@@ -29,6 +32,7 @@ function App() {
                     <Route path='/blog' element={<Blog/>}></Route>
                     <Route path='/quotation-calculator' element={<QuotationCalculator/>}></Route>
                     <Route path='/finished-project' element={<FinishedProject/>}></Route>
+                    <Route path='/info' element={<Profile/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

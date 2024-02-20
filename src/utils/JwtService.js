@@ -46,13 +46,13 @@ export function getUsernameByToken() {
     }
 }
 
-// export function getIdUserByToken() {
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//         const decodedToken = jwtDecode(token) instanceof JwtPayload;
-//         return decodedToken.id;
-//     }
-// }
+export function getIdUserByToken() {
+    const token = localStorage.getItem('token');
+    if (token) {
+        const decodedToken = jwtDecode(token);
+        return decodedToken.id;
+    }
+}
 
 export function getRoleByToken() {
     const token = localStorage.getItem('token');

@@ -60,13 +60,13 @@ function Header() {
                                                     <img src="/images/user.png" alt=""/>
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <a className="dropdown-item" href="#">Profile</a>
-                                                    <a className="dropdown-item" href="#">Settings</a>
+                                                    <Link className="dropdown-item" to="/info">Thông tin của bạn</Link>
+                                                    <a className="dropdown-item" href="#">Báo giá</a>
                                                     <div className="dropdown-divider"></div>
                                                     <a className="dropdown-item" style={{ cursor: "pointer" }}
                                                        onClick={() => {
                                                            logout(navigate);
-                                                       }}>Log Out</a>
+                                                       }}>Đăng xuất</a>
                                                 </div>
                                             </div>
                                         )
