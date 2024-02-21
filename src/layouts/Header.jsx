@@ -30,6 +30,9 @@ function Header() {
                                                 <li className={location.pathname === "/home" ? "active" : ""}>
                                                     <Link to="/">Trang chủ</Link>
                                                 </li>
+                                                <li className={location.pathname === "/showroom" ? "active" : ""}>
+                                                    <Link to="/showroom">Showroom</Link>
+                                                </li>
                                                 <li className={location.pathname === "/finished-project" ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
                                                 </li>
@@ -43,9 +46,12 @@ function Header() {
                                                         <li><a href="">Thi công phòng bếp</a></li>
                                                     </ul>
                                                 </li>
-                                                <li className={location.pathname === "/blog" ? "active" : ""}><Link to="/blog">Blog</Link></li>
-                                                <li className={location.pathname === "/quotation-calculator" ? "active" : ""}><Link to="/quotation-calculator">Báo giá</Link></li>
-                                                <li className={location.pathname === "/about" ? "active" : ""}><Link to="/about">Về chúng tôi</Link></li>
+                                                <li className={location.pathname === "/blog" ? "active" : ""}><Link
+                                                    to="/blog">Blog</Link></li>
+                                                <li className={location.pathname === "/quotation-calculator" ? "active" : ""}>
+                                                    <Link to="/quotation-calculator">Báo giá</Link></li>
+                                                <li className={location.pathname === "/about" ? "active" : ""}><Link
+                                                    to="/about">Về chúng tôi</Link></li>
                                             </ul>
                                         </div>
                                     </nav>
