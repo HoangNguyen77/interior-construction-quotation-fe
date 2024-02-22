@@ -15,6 +15,7 @@ import FinishedProject from "./pages/finished-project/FinishedProject.jsx";
 import Profile from "./pages/customer/Profile.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Showroom from "./pages/showroom/Showroom.jsx";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                     <Route path='/quotation-calculator' element={<QuotationCalculator/>}></Route>
                     <Route path='/finished-project' element={<FinishedProject/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>
+                    <Route path='/showroom' element={<Showroom/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>
