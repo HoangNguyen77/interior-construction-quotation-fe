@@ -4,6 +4,7 @@ import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import {Link} from "react-router-dom";
 function Blog(){
+    useScrollToTop();
     const sectionRef = useRef(null);
     useEffect(() => {
         sectionRef.current.scrollIntoView({behavior: 'smooth'});

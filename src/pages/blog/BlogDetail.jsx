@@ -7,11 +7,37 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link} from "react-router-dom";
 
 function BlogDetail() {
+    // const sectionRef = useRef(null);
+    // useEffect(() => {
+    //     sectionRef.current.scrollIntoView({behavior: 'smooth'});
+    // }, []);
+    // return (
+    //     <div>
+    //         <Header/>
+    //         <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_1.jpg)"}}
+    //              data-aos="fade"
+    //              data-stellar-background-ratio="0.5">
+    //             <div className="container">
+    //                 <div className="row align-items-center justify-content-center">
+    //                     <div className="col-md-7 text-center" data-aos="fade">
+    //                         <span className="caption mb-3">Read Our</span>
+    //                         <h1 className="mb-4">Blogs</h1>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //
+    //
+
+    //         <Footer/>
+    //     </div>
+    // )
+    useScrollToTop();
     const sectionRef = useRef(null);
     useEffect(() => {
         sectionRef.current.scrollIntoView({behavior: 'smooth'});
     }, []);
-    return (
+    return(
         <div>
             <Header/>
             <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_1.jpg)"}}
@@ -91,7 +117,8 @@ function BlogDetail() {
                         consectetur adipisicing elit. Optio dolores culpa qui
                         aliquam placeat nobis veritatis tempora natus rerum obcaecati.
                     </p>
-                    <Link to="/blog" className="p-2" style={{fontSize:'50px'}}><span className="icon-arrow-circle-left"></span></Link>
+                    <Link to="/blog" className="p-2" style={{fontSize: '50px'}}><span
+                        className="icon-arrow-circle-left"></span></Link>
                 </div>
             </div>
             <Footer/>
