@@ -1,13 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {jwtDecode} from "jwt-decode";
+import {isToken, isTokenExpired} from "../../utils/JwtService.js";
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigation = useNavigate();
+
+    useEffect(() => {
+        if (isToken() && isTokenExpired(localStorage.getItem('token'))) navigation("/");
+    }, []);
     const handleLogin = () => {
         const loginRequest = {
             username: username,
@@ -35,7 +40,7 @@ const Login = () => {
                 console.log(decodedToken.enabled)
                 // Kiểm tra xem tài khoản kích hoạt chưa
                 if (decodedToken.enabled === false) {
-                    setError(
+                    toast.warning(
                         "Tài khoản của bạn chưa kích hoạt hoặc đã bị vô hiệu hoá"
                     );
                 }else{

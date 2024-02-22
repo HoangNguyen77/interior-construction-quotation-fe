@@ -16,6 +16,7 @@ import Profile from "./pages/customer/Profile.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Showroom from "./pages/showroom/Showroom.jsx";
+import BlogDetail from "./pages/blog/BlogDetail.jsx";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path='/login' element={<Login/>}></Route>
                     <Route path='/about' element={<About/>}></Route>
                     <Route path='/blog' element={<Blog/>}></Route>
+                    <Route path='/blog/:blogId' element={<BlogDetail/>}></Route>
                     <Route path='/quotation-calculator' element={<QuotationCalculator/>}></Route>
                     <Route path='/finished-project' element={<FinishedProject/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>

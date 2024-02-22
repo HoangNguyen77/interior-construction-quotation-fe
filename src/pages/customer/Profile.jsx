@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import Header from "../../layouts/Header.jsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getIdUserByToken, getUsernameByToken, isToken, isTokenExpired, logout} from "../../utils/JwtService.js";
 import Footer from "../../layouts/Footer.jsx";
 import {checkInput, checkPhonenumber} from "../../utils/Validation.js";
@@ -11,6 +11,7 @@ function Profile() {
 
     const sectionRef = useRef(null);
     const userId = parseInt(getIdUserByToken());
+    const navigation = useNavigate();
 
     console.log(userId);
     const [user, setUser] = useState({
@@ -33,6 +34,7 @@ function Profile() {
 
 
     useEffect(() => {
+        if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/login");
         // Cuộn xuống phần section khi trang được tải
         sectionRef.current.scrollIntoView({behavior: 'smooth'});
         const username = getUsernameByToken();
