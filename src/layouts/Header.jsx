@@ -46,9 +46,12 @@ function Header() {
                                                         <li><a href="">Thi công phòng bếp</a></li>
                                                     </ul>
                                                 </li>
-                                                <li className={location.pathname.startsWith("/blog") ? "active" : ""}><Link to="/blog">Blog</Link></li>
-                                                <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}><Link to="/quotation-calculator">Báo giá</Link></li>
-                                                <li className={location.pathname.startsWith("/about") ? "active" : ""}><Link to="/about">Về chúng tôi</Link></li>
+                                                <li className={location.pathname.startsWith("/blog") ? "active" : ""}>
+                                                    <Link to="/blog">Blog</Link></li>
+                                                <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}>
+                                                    <Link to="/quotation-calculator">Báo giá</Link></li>
+                                                <li className={location.pathname.startsWith("/about") ? "active" : ""}>
+                                                    <Link to="/about">Về chúng tôi</Link></li>
                                             </ul>
                                         </div>
                                     </nav>
