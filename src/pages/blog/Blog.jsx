@@ -28,108 +28,119 @@ function Blog(){
             </div>
 
 
-            <div className="site-section" ref={sectionRef}>
+            <div className="site-section bg-light" ref={sectionRef}>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-3 mb-5">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <Link to="/blog/1" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </Link>
+                    <Link to="/blog/1" >
+                        <div className="row bg-white mb-5 pt-4">
+                            <div className="col-3">
+                                <div className="media-with-text">
+                                    <div className="img-border-sm mb-4">
+                                        <Link to="/blog/1" className="popup-vimeo image-play">
+                                            <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-9">
+                                <div className="media-with-text">
+                                    <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
+                                    <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
+                                        href="#">Admin</a></span>
+                                    <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
+                                        aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-9 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                                    href="#">Admin</a></span>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+                    </Link>
+                    <Link to="/blog/1" >
+                        <div className="row bg-white mb-5 pt-4">
+                            <div className="col-3">
+                                <div className="media-with-text">
+                                    <div className="img-border-sm mb-4">
+                                        <Link to="/blog/1" className="popup-vimeo image-play">
+                                            <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3 mb-5">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <Link to="/blog/1" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </Link>
+                            <div className="col-9">
+                                <div className="media-with-text">
+                                    <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
+                                    <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
+                                        href="#">Admin</a></span>
+                                    <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
+                                        aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-9 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                                    href="#">Admin</a></span>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+                    </Link>
+                    <Link to="/blog/1" >
+                        <div className="row bg-white mb-5 pt-4">
+                            <div className="col-3">
+                                <div className="media-with-text">
+                                    <div className="img-border-sm mb-4">
+                                        <Link to="/blog/1" className="popup-vimeo image-play">
+                                            <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3 mb-5">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <Link to="/blog/1" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </Link>
+                            <div className="col-9">
+                                <div className="media-with-text">
+                                    <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
+                                    <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
+                                        href="#">Admin</a></span>
+                                    <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
+                                        aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-9 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                                    href="#">Admin</a></span>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+                    </Link>
+                    <Link to="/blog/1" >
+                        <div className="row bg-white mb-5 pt-4">
+                            <div className="col-3">
+                                <div className="media-with-text">
+                                    <div className="img-border-sm mb-4">
+                                        <Link to="/blog/1" className="popup-vimeo image-play">
+                                            <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3 mb-5">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <Link to="/blog/1" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </Link>
+                            <div className="col-9">
+                                <div className="media-with-text">
+                                    <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
+                                    <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
+                                        href="#">Admin</a></span>
+                                    <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
+                                        aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-9 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                                    href="#">Admin</a></span>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
+                    </Link>
+                    <Link to="/blog/1" >
+                        <div className="row bg-white mb-5 pt-4">
+                            <div className="col-3">
+                                <div className="media-with-text">
+                                    <div className="img-border-sm mb-4">
+                                        <Link to="/blog/1" className="popup-vimeo image-play">
+                                            <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3 mb-5">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <Link to="/blog/1" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </Link>
+                            <div className="col-9">
+                                <div className="media-with-text">
+                                    <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
+                                    <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
+                                        href="#">Admin</a></span>
+                                    <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
+                                        aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-9 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0"><a href="#">Lorem Ipsum Dolor Sit Amet</a></h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                                    href="#">Admin</a></span>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                            </div>
-                        </div>
-                    </div>
+                    </Link>
+
 
 
                     <div className="row">

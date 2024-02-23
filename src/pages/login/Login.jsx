@@ -72,23 +72,14 @@ const Login = () => {
                 </div>
 
                 {/*Password input*/}
-                <div className="form-outline mb-4">
+                <div className="form-outline">
                     <input type="password" id="form2Example2" className="form-control" value={password} onChange={e=> setPassword(e.target.value)}/>
                     <label className="form-label" htmlFor="form2Example2">Password</label>
                 </div>
 
                 {/*2 column grid layout for inline styling*/}
-                <div className="row mb-4">
-                    <div className="col-6 d-flex justify-content-center">
-                        {/*Checkbox*/}
-                        <div className="checkbox mb-3">
-                            <label>
-                                <input type="checkbox" value="remember-me"/> Remember me
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="col-6">
+                <div className="row mb-2">
+                    <div className="col-12 text-sm-right">
                         {/*Simple link*/}
                         <a href="#!">Quên mật khẩu?</a>
                     </div>
@@ -100,22 +91,6 @@ const Login = () => {
                 {/*Register buttons */}
                 <div className="text-center">
                     <p>Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link></p>
-                             <p>hoặc đăng nhập với:</p>
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                    <i className="icon-facebook"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                    <i className="icon-google"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                    <i className="icon-twitter"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                    <i className="icon-github"></i>
-                    </button>
                 </div>
             </div>
             <Link to="/" style={{color: "blue", display: "flex", justifyContent:"center", fontSize:"18px"}} className="">Quay trở lại trang chủ</Link>

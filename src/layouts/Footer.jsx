@@ -78,19 +78,19 @@ function Footer(){
                             <li><a href="https://maps.app.goo.gl/crYUEMsPVPEpWShn8" target="_blank"
                                    rel="noopener"><strong>Showroom:
                             </strong>Bau Chinh, Châu Đức, An Giang, Vietnam</a>
-                                <li>
-                                    <p><strong>Thời gian làm việc: </strong></p>
-                                    <ul className="list-unstyled">
-                                        <li>Thứ 2 đến CN: Từ 8h đến 17h</li>
-                                        <li>Online: Hỗ trợ 24/7</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <p><strong>Hotline:</strong> 0703 937 521</p>
-                                </li>
-                                <li>
-                                    <p><strong>Email:</strong> info@vivadecor.vn</p>
-                                </li>
+                            </li>
+                            <li>
+                                <p><strong>Thời gian làm việc: </strong></p>
+                                <ul className="list-unstyled">
+                                    <li>Thứ 2 đến CN: Từ 8h đến 17h</li>
+                                    <li>Online: Hỗ trợ 24/7</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <p><strong>Hotline:</strong> 0703 937 521</p>
+                            </li>
+                            <li>
+                                <p><strong>Email:</strong> info@vivadecor.vn</p>
                             </li>
                         </ul>
                     </div>

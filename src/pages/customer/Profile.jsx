@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 function Profile() {
 
     const sectionRef = useRef(null);
+    const sectionRef2 = useRef(null);
     const userId = parseInt(getIdUserByToken());
     const navigation = useNavigate();
 
@@ -29,8 +30,8 @@ function Profile() {
     const [errorLastName, setErrorLastName] = useState("");
     const [errorPhonenumber, setErrorPhonenumber] = useState("");
     const [thongBao, setThongBao] = useState("");
-    const [update, setUpdate] = useState(false)
-
+    const [update, setUpdate] = useState(false);
+    const [changPassword, setChangePassword] = useState(false);
 
 
     useEffect(() => {
@@ -117,7 +118,9 @@ function Profile() {
             }
         )
     }
+    const handleChangePassword = () =>{
 
+    }
     return (
         <div>
             <Header/>
@@ -191,7 +194,6 @@ function Profile() {
                                 <p>{user.phonenumber}</p>
                             )
                     }
-                    <hr/>
                     <div style={{color: "green"}}>{thongBao}</div>
                     {
                         update ?
@@ -215,10 +217,35 @@ function Profile() {
                                 </button>
                             )
                     }
-                    <br/>
+                    <hr ></hr>
+                    <button type="button" className="btn btn-danger" onClick={() => {setChangePassword(!changPassword); sectionRef2.current.scrollIntoView({behavior: 'smooth'});}}>{changPassword ? "Hủy" : "Đổi mật khẩu"}</button>
                     {
-                        !update && <button type="button" className="btn btn-danger">Đổi mật khẩu</button>
+                        changPassword && (
+                            <div className="form-group w-25 mt-3">
+
+                                <div className="form-outline mb-4">
+                                    <input type="password" id="form2Example1" className="form-control"
+                                    />
+                                    <label className="form-label" htmlFor="form2Example1">Mật khẩu cũ</label>
+                                </div>
+                                <div className="form-outline mb-4">
+                                    <input type="password" id="form2Example1" className="form-control"
+                                    />
+                                    <label className="form-label" htmlFor="form2Example1">Mật khẩu cũ</label>
+                                </div>
+                                <div className="form-outline">
+                                    <input type="password" id="form2Example2" className="form-control"
+                                    />
+                                    <label className="form-label" htmlFor="form2Example2">Nhập lại mật khẩu mới</label>
+                                </div>
+                                <button type="button" className="btn btn-success mb-3 mr-3"
+                                        onClick={handleChangePassword}
+                                >Lưu
+                                </button>
+                            </div>
+                        )
                     }
+
 
                 </div>
             </div>
