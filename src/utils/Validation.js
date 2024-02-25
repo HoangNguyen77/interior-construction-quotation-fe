@@ -54,6 +54,77 @@ export const checkEmail = async (setErrorEmail, email) => {
 }
 ///////////////////////////////////////////////////////////////////////////////
 
+// KIỂM TRA USERNAME AND EMAIL FOR FORGET ////////////////////////////////////////////////
+export const checkUsernameExist = async (setErrorUsername, username) => {
+    let flag;
+    if(username.trim()===""){
+        setErrorUsername("Thông tin bắt buộc");
+        flag = true;
+    }
+
+    // end-point
+    const url = `http://localhost:8080/users/search/existsByUsername?username=${username}`;
+    console.log(url);
+    // call api
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        if (data === "false") {
+            setErrorUsername("Tên đăng nhập không tồn tại!");
+            flag = true
+        }else{
+            flag = false;
+        }
+
+    } catch (error) {
+        console.error("Lỗi khi kiểm tra tên đăng nhập:", error);
+        flag = false; // Xảy ra lỗi
+    }
+
+    return flag;
+}
+
+export const checkEmailWithUsername = async (setErrorEmail, email, username) => {
+    if(email.trim()===""){
+        setErrorEmail("Thông tin bắt buộc!");
+        return true;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        setErrorEmail("Email phải đúng định dạng!");
+        return true;
+    }
+    // end-point
+    const url = `http://localhost:8080/users/search/existsByUsernameAndEmail?username=${username}&email=${email}`;
+    console.log(url);
+    // call api
+    try {
+        const response = await fetch(url);
+        const data = await response.text();
+        if (data === "false") {
+            setErrorEmail("Email không trùng khớp!");
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error("Lỗi khi kiểm tra email:", error);
+        return false; // Xảy ra lỗi
+    }
+}
+export const checkEmailValid = (setErrorEmail, email) => {
+    if(email.trim()===""){
+        setErrorEmail("Thông tin bắt buộc!");
+        return true;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        setErrorEmail("Email phải đúng định dạng!");
+        return true;
+    }
+    return false;
+}
+///////////////////////////////////////////////////////////////////////////////
+
 // KIỂM TRA MẬT KHẨU ////////////////////////////////////////////////
 export const checkPassword = (setErrorPassword, password) => {
     if(password.trim()===""){

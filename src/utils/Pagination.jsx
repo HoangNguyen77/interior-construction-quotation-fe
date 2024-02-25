@@ -1,6 +1,21 @@
 import React from "react";
 
 export const Pagination = (props) => {
+    const isFirstPage = props.currentPage === 1;
+    const isLastPage = props.currentPage === props.totalPage;
+
+    const handlePrevPage = () => {
+        if (!isFirstPage) {
+            props.handlePageChange(props.currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (!isLastPage) {
+            props.handlePageChange(props.currentPage + 1);
+        }
+    };
+
     const pageList = [];
     if (props.currentPage === 1) {
         pageList.push(props.currentPage);
@@ -17,7 +32,7 @@ export const Pagination = (props) => {
         if (props.totalPage >= 2) {
             pageList.push(props.currentPage - 1);
         }
-        danhSachTrang.push(props.currentPage);
+        pageList.push(props.currentPage);
         if (props.totalPage >= props.currentPage + 1) {
             pageList.push(props.currentPage + 1);
         }
@@ -25,42 +40,29 @@ export const Pagination = (props) => {
             pageList.push(props.currentPage + 2);
         }
     }
+
     return (
-        // <nav aria-label="...">
-        //     <ul className="pagination">
-        //         <li className="page-item" onClick={() => props.paging(1)}>
-        //             <button className="page-link">
-        //                 Trang đầu
-        //             </button>
-        //         </li>
-        //         {
-        //             pageList.map(page => (
-        //                 <li className="page-item" key={page} onClick={() => props.paging(page)}>
-        //                     <button className={"page-link " + (props.currentPage === page ? "active" : "")}>
-        //                         {page}
-        //                     </button>
-        //                 </li>
-        //             ))
-        //         }
-        //         <li className="page-item" onClick={() => props.paging(props.totalPage)}>
-        //             <button className="page-link">Trang cuối</button>
-        //         </li>
-        //     </ul>
-        // </nav>
         <div className="row mt-5">
             <div className="col-md-12 text-center">
                 <div className="site-block-27">
                     <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li className="active"><span>1</span></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&gt;</a></li>
+                        <li onClick={handlePrevPage} >
+                            <a style={{cursor: isFirstPage ? "default" : "pointer"}}>&lt;</a>
+                        </li>
+                        {pageList.map((page, index) => (
+                            <li key={index} className={props.currentPage === page ? 'active' : ''}
+                                onClick={() => props.handlePageChange(page)} style={{cursor: "pointer"}}>
+                                <a>{page}</a>
+                            </li>
+                        ))}
+                        <li onClick={handleNextPage} >
+                            <a style={{cursor: isLastPage ? "default" : "pointer"}}>&gt;</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     );
 }
+
+export default Pagination;

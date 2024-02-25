@@ -969,18 +969,25 @@ a {
 .site-block-27 ul li {
   display: inline-block;
   margin-bottom: 4px; }
-  .site-block-27 ul li a, .site-block-27 ul li span {
-    text-align: center;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    border: 1px solid #ccc; }
-  .site-block-27 ul li.active a, .site-block-27 ul li.active span {
-    background: #f23a2e;
-    color: #fff;
-    border: 1px solid transparent; }
+.site-block-27 ul li a, .site-block-27 ul li span {
+  text-align: center;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #333; /* Màu chữ mặc định */
+}
+
+.site-block-27 ul li:hover a, .site-block-27 ul li.active a,
+.site-block-27 ul li:hover span, .site-block-27 ul li.active span {
+  background: #f23a2e;
+  color: #fff; /* Màu chữ khi hover hoặc active */
+  border: 1px solid transparent;
+}
 
 .block-47 .block-47-image {
   -webkit-box-flex: 0;
