@@ -73,8 +73,7 @@ function Header() {
                                         :
                                         (
                                             <div className="col-2">
-                                                <Link to="/login" className="btn btn-secondary" style={{color: "black"}}>Đăng
-                                                    nhập</Link>
+                                                <Link to="/login" className="btn btn-secondary" style={{color: " npm"}}>ĐĂNG NHẬP</Link>
                                             </div>
                                         )
                                 }

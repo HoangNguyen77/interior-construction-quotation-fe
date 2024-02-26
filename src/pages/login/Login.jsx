@@ -85,7 +85,7 @@ const Login = () => {
 
                     <div className="col-6">
                         {/*Simple link*/}
-                        <a href="#!">Quên mật khẩu?</a>
+                        <a href="/forget">Quên mật khẩu?</a>
                     </div>
                 </div>
 

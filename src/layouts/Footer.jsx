@@ -8,9 +8,9 @@ function Footer(){
                 <div className="row">
                     <div className="col-md-4">
                         <h3 className="footer-heading mb-4 text-white">About</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat
-                            amet.</p>
-                        <p><a href="#" className="btn btn-primary pill text-white px-4">Read More</a></p>
+                        <p>ViVaDecor là một trong những website thiết kế  nội thất hàng đầu và
+                        hỗ trợ khách hàng bằng tất cả những gì có thể!</p>
+                        <p><a href="/about" className="btn btn-primary pill text-white px-4">Read More</a></p>
                     </div>
                     <div className="col-md-6">
                         <div className="row">
