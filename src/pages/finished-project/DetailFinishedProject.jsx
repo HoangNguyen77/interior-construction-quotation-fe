@@ -1,14 +1,21 @@
 import React from "react";
+import Carousel from 'react-bootstrap/Carousel';
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
-import {Link} from "react-router-dom";
-function FinishedProject(){
-    useScrollToTop()
-    return(
+import { Link } from "react-router-dom";
+
+function DetailFinished() {
+    useScrollToTop();
+
+    // Danh sách hình ảnh nội thất bên trong
+    const interiorImages = ["/images/img_1.jpg", "/images/img_2.jpg", "/images/img_3.jpg", "/images/img_4.jpg", "/images/img_5.jpg", "/images/img_6.jpg", "/images/img_7.jpg"];
+
+    return (
         <div>
-            <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_1.jpg)"}} data-aos="fade"
+            <Header />
+            <div className="site-blocks-cover overlay" style={{ backgroundImage: "url(/images/hero_1.jpg)" }}
+                 data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
@@ -20,54 +27,58 @@ function FinishedProject(){
                 </div>
             </div>
 
-
             <div className="site-section">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 col-lg-8 mb-5">
+                        <div className="col-md-6 col-lg-6 mb-5">
+                            <Carousel
+                                prevLabel={null}
+                                nextLabel={null}
+                            >
+                                {interiorImages.map((image, index) => (
+                                    <Carousel.Item key={index}>
+                                        <img className="d-block w-100" src={image} alt={`Slide ${index + 1}`}/>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        </div>
+
+                        <div className="col-md-6 col-lg-6 mb-5">
                             <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <a href="DetailFinishedProject.jsx" className="popup-vimeo image-play">
-                                        <img src="/images/img_1.jpg" alt="" className="img-fluid"/>
-                                    </a>
+                                <div className="section-heading text-left">
+                                    <h2 className="mb-5">Lorem Ipsum Dolor Sit Amet Ban Tumlum</h2>
+                                </div>
+                                <span className="mb-3 d-block post-date">created_date</span>
+                                <div>
+                                    <Link to="/contact">Nhận báo giá chi tiết</Link>
                                 </div>
                             </div>
                         </div>
-
-                        <div className="col-md-6 col-lg-4 mb-5">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0">Lorem Ipsum Dolor Sit Amet</h2>
-                                <span className="mb-3 d-block post-date">created_date</span>
-                                <Link to="/login" >Đăng
-                                    nhập</Link>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <div className="row mt-5">
-                        <div className="col-md-12 text-center">
-                            <div className="site-block-27">
-                                <ul>
-                                    <li><a href="#">&lt;</a></li>
-                                    <li className="active"><span>1</span></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">&gt;</a></li>
-                                </ul>
-                            </div>
+                    <div className="row">
+                        <div className="col-md-12 mb-5 text-center">
+                            <h2 className="text-black">Nội Thất Bên Trong</h2>
                         </div>
                     </div>
 
+                    <div className="row no-gutters text-center">
+                        {interiorImages.map((image, index) => (
+                            <div key={index} className="col-md-4 mb-4">
+                                <img src={image} alt={`Interior Image ${index + 1}`} className="img-fluid"/>
+                                <div className="product-details">
+                                    <h3>Product Name {index + 1}</h3>
+                                    <p className="category-product">Category</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-
-
-            <Footer/>
+            <Footer />
         </div>
-    )
+    );
 }
-export default FinishedProject
+
+export default DetailFinished;
