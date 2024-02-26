@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Showroom from "./pages/showroom/Showroom.jsx";
 import BlogDetail from "./pages/blog/BlogDetail.jsx";
 import ForgetPassword from "./pages/customer/forget-password/ForgetPassword.jsx";
+import BlogForm from "./pages/staff/BlogForm.jsx";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                     <Route path='/info' element={<Profile/>}></Route>
                     <Route path='/showroom' element={<Showroom/>}></Route>
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
+                    <Route path='/staff/blog-form' element={<BlogForm/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

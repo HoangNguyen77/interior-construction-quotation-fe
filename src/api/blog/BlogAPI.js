@@ -53,7 +53,7 @@ export async function getBlogById(blogId){
                 createdDate: blogData.createdDate
             }
         }else{
-            throw new Error('Sách không tồn tài!');
+            throw new Error('BLog không tồn tại!');
         }
     } catch (error) {
         console.error("Error", error);
