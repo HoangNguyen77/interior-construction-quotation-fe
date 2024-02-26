@@ -17,6 +17,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Showroom from "./pages/showroom/Showroom.jsx";
 import BlogDetail from "./pages/blog/BlogDetail.jsx";
+import MainAdmin from './pages/admin/MainAdmin.jsx';
+import "./index.css"
+
 
 function App() {
     return (
@@ -37,6 +40,7 @@ function App() {
                     <Route path='/finished-project' element={<FinishedProject/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>
                     <Route path='/showroom' element={<Showroom/>}></Route>
+                    <Route path='/admin' element={<MainAdmin/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>
