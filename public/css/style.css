@@ -969,18 +969,25 @@ a {
 .site-block-27 ul li {
   display: inline-block;
   margin-bottom: 4px; }
-  .site-block-27 ul li a, .site-block-27 ul li span {
-    text-align: center;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    border: 1px solid #ccc; }
-  .site-block-27 ul li.active a, .site-block-27 ul li.active span {
-    background: #f23a2e;
-    color: #fff;
-    border: 1px solid transparent; }
+.site-block-27 ul li a, .site-block-27 ul li span {
+  text-align: center;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  color: #333; /* Màu chữ mặc định */
+}
+
+.site-block-27 ul li:hover a, .site-block-27 ul li.active a,
+.site-block-27 ul li:hover span, .site-block-27 ul li.active span {
+  background: #f23a2e;
+  color: #fff; /* Màu chữ khi hover hoặc active */
+  border: 1px solid transparent;
+}
 
 .block-47 .block-47-image {
   -webkit-box-flex: 0;
@@ -1261,7 +1268,7 @@ a {
     color: #000; }
 
 .quick-contact-info {
-  background: #000;
+  background: #363636;
   color: rgba(255, 255, 255, 0.5); }
   .quick-contact-info h2 {
     color: #fff;
@@ -1301,12 +1308,12 @@ a {
 .post-date {
   color: rgba(0, 0, 0, 0.4); }
 
-.section-heading h2 {
+.section-heading h1 {
   position: relative;
   display: inline-block;
   font-family: "Playfair Display";
   font-size: 40px; }
-  .section-heading h2:before, .section-heading h2:after {
+  .section-heading h1:before, .section-heading h1:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -1316,12 +1323,12 @@ a {
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     transform: translateX(-50%); }
-  .section-heading h2:before {
+  .section-heading h1:before {
     width: 100px;
     bottom: -10px;
     left: 50%; }
 
-.section-heading.text-left h2:before, .section-heading.text-left h2:after {
+.section-heading.text-left h1:before, .section-heading.text-left h1:after {
   left: 0;
   -webkit-transform: translateX(0%);
   -ms-transform: translateX(0%);
@@ -1433,4 +1440,17 @@ a {
 }
 .custom-dropdown-toggle img{
   max-width: 30px;
+}
+.icon-button {
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center; /* Center align the icon and text */
+  justify-content: center; /* Center content vertically */
+  padding: 1rem; /* Add some padding */
+}
+
+.icon-button .icon-a {
+  margin-bottom: 0.5rem; /* Add space between the icon and text */
+  display: block; /* Display icon as block to push text below */
+  width: 100%; /* Set width to fit the container */
+  text-align: center; /* Center the icon */
 }
