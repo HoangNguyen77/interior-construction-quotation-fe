@@ -3,9 +3,9 @@ import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 
-function About(){
+function About() {
     useScrollToTop()
-    return(
+    return (
         <div>
             <Header/>
             <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_1.jpg)"}}
@@ -15,7 +15,7 @@ function About(){
                     <div className="row align-items-center justify-content-center">
                         <div className="col-md-7 text-center" data-aos="fade">
                             <span className="caption mb-3">VivaDecor</span>
-                            <h1 className="mb-4">About Us</h1>
+                            <h1 className="mb-4">Về Chúng Tôi</h1>
                         </div>
                     </div>
                 </div>
@@ -28,28 +28,42 @@ function About(){
                         <div className="col-md-6 mb-5 mb-md-0">
 
                             <div className="img-border">
-                                <a href="https://vimeo.com/28959265" className="popup-vimeo image-play">
-                  <span className="icon-wrap">
+                                <a href="" className="popup-vimeo image-play">
+                                    {/* <span className="icon-wrap">
                     <span className="icon icon-play"></span>
-                  </span>
-                                    <img src="/images/img_2.jpg" alt="" className="img-fluid"/>
+                  </span>*/}
+                                    <img src="/images/1.jpg" alt="" className="img-fluid"/>
                                 </a>
                             </div>
 
-                            <img src="/images/img_1.jpg" alt="Image" className="img-fluid image-absolute"/>
+                            <img src="/images/2.jpg" alt="Image" className="img-fluid image-absolute"/>
 
                         </div>
                         <div className="col-md-5 ml-auto">
 
 
                             <div className="section-heading text-left">
-                                <h2 className="mb-5">About Us</h2>
+                                <h2 className="mb-5">Xin chào</h2>
                             </div>
-                            <p className="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nobis magni eaque velit
-                                eum, id rem eveniet dolor possimus voluptas..</p>
-                            <p><a href="https://vimeo.com/28959265" className="popup-vimeo text-uppercase">Watch
-                                Video <span className="icon-arrow-right small"></span></a></p>
+                            <p className="mb-4">VivaDecor với hơn 20 năm kinh nghiệm và trải nghiệm trong lĩnh vực thiết
+                                kế nội thất dịch vụ đầy đủ có trụ sở tại Thành phố Hồ Chí Minh chuyên về thiết kế cổ
+                                điển có tầm ảnh hưởng toàn cầu.
+                                Dù thiết kế không gian dân cư hay thương mại, VivaDecor đã tạo dựng được danh tiếng nhờ
+                                đạt được những kết quả mang tính cá nhân cao cho nhóm khách hàng quốc tế sành điệu.
+                            </p>
+                            <p>
+                                VivaDecor tạo ra những câu chuyện trực quan trở thành môi trường xung quanh đặc trưng.
+                                Được hướng dẫn bởi nguyện vọng của khách hàng cũng như trải nghiệm đa dạng của họ, công
+                                ty thiết kế nội thất độc đáo, cho phép khách hàng thể hiện đầy đủ họ là ai và điều gì có
+                                ý nghĩa đối với họ.
+                            </p>
+                            <p>
+                                Lịch sử và vị trí của dự án, cùng với bề dày kinh nghiệm của VivaDecor và niềm tin vững
+                                chắc rằng thiết kế thành công phải được tạo ra bởi những đặc điểm riêng của từng dự án,
+                                hãy cùng VivaDecor tạo ra những nội thất đặc biệt. Danh mục công việc đã hoàn thành bao
+                                gồm việc phục hồi lịch sử, cải tạo hiện đại và các dự án xây dựng mới.
+                            </p>
+                            {/*<p><a href="https://vimeo.com/629819635" className="popup-vimeo text-uppercase">Xem Video <span className="icon-arrow-right small"></span></a></p>*/}
                         </div>
                     </div>
                 </div>
@@ -58,45 +72,37 @@ function About(){
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-5">Hotel Staffs</h2>
+                            <h2 className="mb-5">Đội ngũ VivaDecor</h2>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-4 mb-5">
+                        <div className="col-md-6 col-lg-4 mb-5" style={{marginLeft: "-200px"}}>
                             <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_1.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
+                                <a href="/about/nguyencongchien" className="d-block mb-4 thumbnail"><img
+                                    src="/images/congchien.jpg"
+                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
                                 <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Angella Lopez</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
+                                    <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
+                                    Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
+                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
+                                    độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. <p>
+                                    <a href="/about/nguyencongchien" className="text-primary">Xem thêm <span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-4 mb-5">
                             <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_2.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
+                                <a href="/about/nguyenhuyhoang" className="d-block mb-4 thumbnail"><img
+                                    src="/images/huyhoang.jpg"
+                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
                                 <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Marina Stalks</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
-                                        className="icon-arrow-right small"></span></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-5">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_3.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
-                                <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Ethan Hoover</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
+                                    <h3 className="heading mb-3"><a href="#">Nguyễn Huy Hoàng</a></h3>
+                                    <p> Nhà thiết kế nội thất tài năng, tốt nghiệp Trường Đại học Boulle
+                                        từng làm việc tại Ashley Furniture với thành tích top 10 hàng năm.
+                                        Hiện làm việc tại ViVaDecor, ông tiếp tục sáng tạo và định hình xu hướng trong
+                                        lĩnh vực trang trí nội thất.</p>
+                                    <p><a href="/about/nguyenhuyhoang" className="text-primary">Xem thêm<span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
@@ -104,54 +110,51 @@ function About(){
 
                         <div className="col-md-6 col-lg-4 mb-5">
                             <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_4.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
+                                <a href="/about/phamchicuong" className="d-block mb-4 thumbnail"><img
+                                    src="/images/chicuong.jpg"
+                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
                                 <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Megan Pearson</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
+                                    <h3 className="heading mb-3"><a href="#">Phạm Chí Cường</a></h3>
+                                    <p> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
+                                        Với cơ hội làm việc cùng nhà thiết kế nổi tiếng Philippe Starck trong nhiều dự
+                                        án quan trọng là
+                                        sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
+                                    <p><a href="/about/phamchicuong" className="text-primary">Xem thêm<span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-4 mb-5">
+                        <div className="col-md-6 col-lg-4 mb-5" style={{marginTop: '-740px', marginLeft: "950px"}}>
                             <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_1.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
+                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/cd.jpg"
+                                                                                    alt="Image" className="img-fluid"
+                                                                                    style={{
+                                                                                        width: '350px',
+                                                                                        height: '360px'
+                                                                                    }}/></a>
                                 <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Cristine Smith</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
+                                    <h3 className="heading mb-3"><a href="#">Tôn Chí Dũng</a></h3>
+                                    <p>Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế
+                                        mang tính chất vĩ đại.
+                                        Ông là một trong số ít người từng học và làm việc tại University of Arts
+                                        London.</p>
+                                    <p><a href="#" className="text-primary">Xem thêm<span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-4 mb-5">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_2.jpg"
-                                                                                    alt="Image" className="img-fluid"/></a>
-                                <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Marina Stalks</a></h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
-                                        soluta quis.</p>
-                                    <p><a href="#" className="text-primary">Read More <span
-                                        className="icon-arrow-right small"></span></a></p>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
 
 
-            <div className="py-5 upcoming-events"
-                 style={{backgroundImage: "url(images/hero_1.jpg)", backgroundAttachment:"fixed"}}>
+            {/*<div className="py-5 upcoming-events"
+                 style={{backgroundImage: "url(images/hero_1.jpg)", backgroundAttachment: "fixed"}}>
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6">
-                            <h2 className="text-white">Summer Promo 50% Off</h2>
+                            <h2 className="text-white">Spring Promo 50% Off</h2>
                             <a href="#" className="text-white btn btn-outline-warning rounded-0 text-uppercase">Avail
                                 Now</a>
                         </div>
@@ -162,13 +165,13 @@ function About(){
                     </div>
 
                 </div>
-            </div>
+            </div>*/}
 
-            <div className="site-section">
+            {/*<div className="site-section">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-5">Hotel Features</h2>
+                            <h2 className="mb-5"> Tính năng của VivaDecor </h2>
                         </div>
                     </div>
                     <div className="row">
@@ -181,13 +184,13 @@ function About(){
                         <div className="col-sm-6 col-md-4 col-lg-3">
                             <div className="text-center p-4 item">
                                 <span className="flaticon-desk display-3 mb-3 d-block text-primary"></span>
-                                <h2 className="h5">Hotel Teller</h2>
+                                <h2 className="h5">ViVa Teller</h2>
                             </div>
                         </div>
                         <div className="col-sm-6 col-md-4 col-lg-3">
                             <div className="text-center p-4 item">
                                 <span className="flaticon-exit display-3 mb-3 d-block text-primary"></span>
-                                <h2 className="h5">Fire Exit</h2>
+                                <h2 className="h5">Door</h2>
                             </div>
                         </div>
                         <div className="col-sm-6 col-md-4 col-lg-3">
@@ -200,7 +203,7 @@ function About(){
                         <div className="col-sm-6 col-md-4 col-lg-3">
                             <div className="text-center p-4 item">
                                 <span className="flaticon-hair-dryer display-3 mb-3 d-block text-primary"></span>
-                                <h2 className="h5">Hair Dryer</h2>
+                                <h2 className="h5">Bathroom</h2>
                             </div>
                         </div>
 
@@ -219,7 +222,7 @@ function About(){
                         <div className="col-sm-6 col-md-4 col-lg-3">
                             <div className="text-center p-4 item">
                                 <span className="flaticon-cab display-3 mb-3 d-block text-primary"></span>
-                                <h2 className="h5">Car Airport</h2>
+                                <h2 className="h5">Prenium Car</h2>
                             </div>
                         </div>
 
@@ -227,56 +230,114 @@ function About(){
                     </div>
                 </div>
             </div>
+*/}
 
+            <div className="site-section">
+                <div className="container">
+                    <div className="row align-items-center">
+                        <div className="ml-lg-5">
+
+
+                            {/* <span className="icon-wrap">
+                    <span className="icon icon-play"></span>
+                  </span>*/}
+                            <span style={{marginLeft: "-100px"}}>
+                                    <img src="/images/quytrinh.jpg" alt="" className="img-thumnail"/>
+
+
+                                {/* <img src="/images/2.jpg" alt="Image" className="img-fluid image-absolute"/>*/}
+                            </span>
+                        </div>
+                        <div className="col-md-6 mx-auto text-xl-left form-control:focus ">
+
+
+                            {/*<div className="section-heading text-left">
+                                <h2 className="mb-5">Xin chào</h2>
+                            </div>*/}
+
+                            <p style={{fontSize: "30px", color:"black"}}>VivaDecor sở hữu quy trình khép kín với tiêu chí ba <a style={{color:"black", fontSize: "35px"}}>KHÔNG</a>:
+                            </p>
+                            <p style={{fontSize: "20px", color:"black"}}> <a style={{color:"black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> trung gian phân phối </p>
+                            <p style={{fontSize: "20px", color:"black"}}><a style={{color: "black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> thợ khoán</p>
+                            <p style={{fontSize: "20px", color:"black"}}><a style={{color: "black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> thuê xưởng bên thứ ba
+                            </p>
+                            <p style={{fontSize: "30px", color:"black"}}>Đảm bảo tiến độ, chất lượng và cam kết với chi phí tốt
+                                nhất</p>
+
+
+                            {/*<p><a href="https://vimeo.com/629819635" className="popup-vimeo text-uppercase">Xem Video <span className="icon-arrow-right small"></span></a></p>*/}
+                        </div>
+                        <div className="col-md-10" style={{marginLeft:"-180px"}}>
+                            <span >
+                                    <img src="/images/sodoquytrinh.PNG" alt="" className="img-border"/>
+
+
+                                {/* <img src="/images/2.jpg" alt="Image" className="img-fluid image-absolute"/>*/}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div className="site-section border-top">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-5">Our Gallery</h2>
+                            <h2 className="mb-5">Show room</h2>
+                        </div>
+                        <div className="row">
+                            <div className=" mx-auto text-center">
+                                <p className="mb-3" style={{marginTop: "-50px", color:"black", fontSize:"17px"}}> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
+                                    Với diện tích 800m², tách biệt các không gian thành 10 phong cách nội thất khác nhau, cùng với 1 phòng vật liệu và tư vấn. </p>
+
+                            </div>
                         </div>
                     </div>
                     <div className="row no-gutters">
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_1.jpg" className="image-popup img-opacity"><img src="/images/img_1.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="/images/japanliving1.jpg" className="image-popup img-opacity"><img
+                                src="/images/japanliving1.jpg"
+                                alt="Image"
+                                className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_2.jpg" className="image-popup img-opacity"><img src="/images/img_2.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="/images/livingandkitchen.jpg" className="image-popup img-opacity"><img
+                                src="/images/livingandkitchen.jpg"
+                                alt="Image"
+                                className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="images/img_3.jpg" className="image-popup img-opacity"><img src="/images/img_3.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="images/kitchen1.jpg" className="image-popup img-opacity"><img
+                                src="/images/kitchen1.jpg"
+                                alt="Image"
+                                className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_4.jpg" className="image-popup img-opacity"><img src="/images/img_4.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="/images/bathroom.jpg" className="image-popup img-opacity"><img
+                                src="/images/bathroom.jpg"
+                                alt="Image"
+                                className="img-fluid"/></a>
                         </div>
 
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_4.jpg" className="image-popup img-opacity"><img src="/images/img_4.jpg"
+                            <a href="/images/7.jpg" className="image-popup img-opacity"><img src="/images/7.jpg"
+                                                                                                 alt="Image"
+                                                                                                 className="img-fluid"/></a>
+                        </div>
+                        <div className="col-md-6 col-lg-3">
+                            <a href="images/43.jpg" className="image-popup img-opacity"><img src="/images/43.jpg"
                                                                                                 alt="Image"
                                                                                                 className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="images/img_5.jpg" className="image-popup img-opacity"><img src="/images/img_5.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="/images/5.jpg" className="image-popup img-opacity"><img src="/images/5.jpg"
+                                                                                                 alt="Image"
+                                                                                                 className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_6.jpg" className="image-popup img-opacity"><img src="/images/img_6.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
-                        </div>
-                        <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_7.jpg" className="image-popup img-opacity"><img src="/images/img_7.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                            <a href="/images/img_3.jpg" className="image-popup img-opacity"><img src="/images/img_3.jpg"
+                                                                                                 alt="Image"
+                                                                                                 className="img-fluid"/></a>
                         </div>
 
                     </div>
@@ -287,4 +348,31 @@ function About(){
     )
 }
 
+// <div className="col-md-6 col-lg-4 mb-5">
+//                             <div className="hotel-room text-center">
+//                                 <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_3.jpg"
+//                                                                                     alt="Image" className="img-fluid"/></a>
+//                                 <div className="p-4">
+//                                     <h3 className="heading mb-3"><a href="#">Ethan Hoover</a></h3>
+//                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
+//                                         soluta quis.</p>
+//                                     <p><a href="#" className="text-primary">Read More <span
+//                                         className="icon-arrow-right small"></span></a></p>
+//                                 </div>
+//                             </div>
+//                         </div>
+//-------------------------------------------------------------------------------------------
+//<div className="col-md-6 col-lg-4 mb-5">
+//                             <div className="hotel-room text-center">
+//                                 <a href="#" className="d-block mb-4 thumbnail"><img src="/images/person_2.jpg"
+//                                                                                     alt="Image" className="img-fluid"/></a>
+//                                 <div className="p-4">
+//                                     <h3 className="heading mb-3"><a href="#">Marina Stalks</a></h3>
+//                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta labore recusandae
+//                                         soluta quis.</p>
+//                                     <p><a href="#" className="text-primary">Read More <span
+//                                         className="icon-arrow-right small"></span></a></p>
+//                                 </div>
+//                             </div>
+//                         </div>
 export default About
