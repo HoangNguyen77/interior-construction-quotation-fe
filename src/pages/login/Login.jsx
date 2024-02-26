@@ -68,20 +68,20 @@ const Login = () => {
                 {/*Username input*/}
                 <div className="form-outline mb-4">
                     <input type="text" id="form2Example1" className="form-control" value={username} onChange={e=> setUsername(e.target.value)}/>
-                    <label className="form-label" htmlFor="form2Example1">Username</label>
+                    <label className="form-label" htmlFor="form2Example1">Tên đăng nhập</label>
                 </div>
 
                 {/*Password input*/}
                 <div className="form-outline">
                     <input type="password" id="form2Example2" className="form-control" value={password} onChange={e=> setPassword(e.target.value)}/>
-                    <label className="form-label" htmlFor="form2Example2">Password</label>
+                    <label className="form-label" htmlFor="form2Example2">Mật khẩu</label>
                 </div>
 
                 {/*2 column grid layout for inline styling*/}
                 <div className="row mb-2">
                     <div className="col-12 text-sm-right">
                         {/*Simple link*/}
-                        <a href="#!">Quên mật khẩu?</a>
+                        <Link to="/forget-password ">Quên mật khẩu?</Link>
                     </div>
                 </div>
 

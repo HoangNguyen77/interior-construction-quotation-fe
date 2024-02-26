@@ -1,17 +1,56 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {getBlogById} from "../../api/blog/BlogAPI.js";
+import {format} from "date-fns";
+import {getAllBLogImage} from "../../api/blog/BlogImageAPI.js";
 
-function BlogDetail() {
+const BlogDetail = () => {
     useScrollToTop();
     const sectionRef = useRef(null);
+    const { blogId } = useParams();
+
+    const [blog, setBlog] = useState(null);
+    const [imageList, setImageList] = useState([]);
+    const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
+    const [baoLoi, setBaoLoi] = useState(null);
+
     useEffect(() => {
-        sectionRef.current.scrollIntoView({behavior: 'smooth'});
-    }, []);
+        getBlogById(blogId).then(blog => {
+            setBlog(blog);
+            setDangTaiDuLieu(false);
+            console.log(blog);
+            // Chờ cho đến khi blog được tải và component đã mount
+            if (sectionRef.current) {
+                sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        }).catch(error => {
+            console.log(error);
+            setBaoLoi(error.toString());
+            setDangTaiDuLieu(false);
+        });
+        getAllBLogImage(blogId).then(
+            imageList => {
+                setImageList(imageList);
+            }
+        ).catch(error => console.log(error));
+    }, [blogId]); // Thêm blogId vào mảng phụ thuộc để useEffect chạy lại khi blogId thay đổi
+
+    if (dangTaiDuLieu) {
+        return <div><h1>Đang tải dữ liệu...</h1></div>;
+    }
+    if (baoLoi) {
+        return <div><h1>Gặp lỗi: {baoLoi}</h1></div>;
+    }
+    if (!blog) {
+        return <div><h1>Blog không tồn tại!</h1></div>;
+    }
+
+    const formattedDate = format(new Date(blog.createdDate), 'MMM do, yyyy');
     return(
         <div>
             <Header/>
@@ -27,77 +66,29 @@ function BlogDetail() {
                     </div>
                 </div>
             </div>
-
-
-            <div className="site-section bg-light" ref={sectionRef}>
-                <div className="container">
-                    <div className="p-5 bg-white">
-                        <h1>Lorem Ipsum Dolor Sit Amet</h1>
-                        <h6><span className="mb-3 d-block post-date">Dec 20th, 2018 &bullet; By <a
-                            href="#">Admin</a></span></h6>
-                        <hr/>
-                        {/*<img src="/images/img_1.jpg" alt="" className="img-fluid mb-5 w-100"/>*/}
-                        <Carousel showThumbs={false}>
-                            <div>
-                                <img src="/images/img_1.jpg" alt=""/>
-                            </div>
-                            <div>
-                                <img src="/images/img_2.jpg" alt=""/>
-                            </div>
-                            <div>
-                                <img src="/images/img_3.jpg" alt=""/>
-                            </div>
-                        </Carousel>
-                        <p style={{fontSize: "large", color: "black"}} className="text-justify mt-5">Lorem ipsum dolor sit
-                            amet consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati.
-
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati. Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Optio dolores culpa qui
-                            aliquam placeat nobis veritatis tempora natus rerum obcaecati.
-                        </p>
+                <div className="site-section bg-light" ref={sectionRef}>
+                    <div className="container">
+                        <div className="p-5 bg-white">
+                            <h1>{blog.title}</h1>
+                            <h6><span className="mb-3 d-block post-date">{formattedDate}</span></h6>
+                            <hr/>
+                            {/*<img src="/images/img_1.jpg" alt="" className="img-fluid mb-5 w-100"/>*/}
+                            <Carousel showThumbs={false}>
+                                {
+                                    imageList.map((img, index)=>(
+                                        <div key={index}>
+                                            <img src={img.imageData} alt=""/>
+                                        </div>
+                                    ))
+                                }
+                            </Carousel>
+                            <p style={{fontSize: "large", color: "black"}} className="text-justify mt-5">{blog.description}
+                            </p>
+                        </div>
+                        <Link to="/blog" className="p-2" style={{fontSize: '50px'}}><span
+                            className="icon-arrow-circle-left"></span></Link>
                     </div>
-                    <Link to="/blog" className="p-2" style={{fontSize: '50px'}}><span
-                        className="icon-arrow-circle-left"></span></Link>
                 </div>
-            </div>
             <Footer/>
         </div>
     )

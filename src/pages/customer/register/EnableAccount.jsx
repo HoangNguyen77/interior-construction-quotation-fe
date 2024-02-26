@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import Header from "../../layouts/Header.jsx";
-import Footer from "../../layouts/Footer.jsx";
-import useScrollToTop from "../../utils/ScrollToTop.jsx";
+import Header from "../../../layouts/Header.jsx";
+import Footer from "../../../layouts/Footer.jsx";
+import useScrollToTop from "../../../utils/ScrollToTop.jsx";
 
 function EnableAccount(){
     useScrollToTop()

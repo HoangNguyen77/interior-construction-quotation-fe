@@ -7,7 +7,7 @@ import {
     checkPasswordAgain,
     checkPhonenumber,
     checkUsername
-} from "../../utils/Validation.js";
+} from "../../../utils/Validation.js";
 import {toast} from "react-toastify";
 function Register(){
     const [username, setUsername] = useState("");
@@ -48,11 +48,12 @@ function Register(){
         const isFirstNameValid = !checkInput(setErrorFirstName, firstName);
         const isLastNameValid = !checkInput(setErrorLastName, lastName);
         const isPhonenumberValid = !checkPhonenumber(setErrorPhonenumber, phonenumber);
+        console.log(isUsernameValid)
         console.log(isPasswordAgainValid);
         // Kiểm tra tất cả các điều kiện
         if (isUsernameValid && isEmailValid && isPasswordValid && isPasswordAgainValid && isFirstNameValid && isLastNameValid && isPhonenumberValid) {
+            const loadingToastId = toast.loading("Đang xử lý...");
             try {
-                const loadingToastId = toast.loading("Đang xử lý...");
                 const url = 'http://localhost:8080/user/register';
                 const response = await fetch(url, {
                         method: 'POST',
@@ -75,9 +76,11 @@ function Register(){
                     toast.dismiss(loadingToastId);
                     toast.success("Đăng ký thành công, vui lòng kiểm tra email để kích hoạt.\nNếu không có xin hãy kiểm tra lại email đăng ký!");
                 }else{
+                    toast.dismiss(loadingToastId);
                     toast.warning("Đã xảy ra lỗi trong quá trình đăng ký tài khoản!");
                 }
             } catch (error) {
+                toast.dismiss(loadingToastId);
                 toast.warning("Đã xảy ra lỗi trong quá trình đăng ký tài khoản.")
             }
         }else{
