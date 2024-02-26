@@ -1,10 +1,12 @@
+
+
 import React, {useEffect, useRef, useState} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import {Link} from "react-router-dom";
-import BlogList from "./components/BlogList.jsx";
-function Blog(){
+import ProductList from "./components/ProductList.jsx";
+function Product(){
     useScrollToTop();
     const sectionRef = useRef(null);
 
@@ -15,26 +17,25 @@ function Blog(){
 
     return(
         <div>
+
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_1.jpg)" }}
+            <div className="site-blocks-cover overlay" style={{backgroundImage: 'url(images/hero_4.jpg)'}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
-                        <div className="col-md-7 text-center" data-aos="fade">
-                            <span className="caption mb-3">Read Our</span>
-                            <h1 className="mb-4">Blogs</h1>
+                        <div className="col-md-9 text-center" data-aos="fade">
+                            <h1 className="mb-2">Showroom</h1>
                         </div>
                     </div>
                 </div>
             </div>
             <div ref={sectionRef}></div>
-
-            <BlogList/>
+            <ProductList/>
             <Footer/>
         </div>
     )
 
 }
 
-export default Blog
+export default Product

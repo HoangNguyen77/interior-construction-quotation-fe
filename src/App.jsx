@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import Header from "./layouts/Header.jsx";
-import Footer from "./layouts/Footer.jsx";
+
 import Home from "./pages/home/Home.jsx";
-import HomeSlider from "./pages/home/components/HomeSlider.jsx";
 import QuotationCategory from "./pages/quotation-category/QuotationCategory.jsx";
 import Register from "./pages/customer/register/Register.jsx";
 import EnableAccount from "./pages/customer/register/EnableAccount.jsx";
@@ -15,9 +13,10 @@ import FinishedProject from "./pages/finished-project/FinishedProject.jsx";
 import Profile from "./pages/customer/Profile.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Showroom from "./pages/showroom/Showroom.jsx";
 import BlogDetail from "./pages/blog/BlogDetail.jsx";
 import ForgetPassword from "./pages/customer/forget-password/ForgetPassword.jsx";
+import Product from "./pages/showroom/Product.jsx";
+import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 
 function App() {
     return (
@@ -37,7 +36,8 @@ function App() {
                     <Route path='/quotation-calculator' element={<QuotationCalculator/>}></Route>
                     <Route path='/finished-project' element={<FinishedProject/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>
-                    <Route path='/showroom' element={<Showroom/>}></Route>
+                    <Route path='/product' element={<Product/>}></Route>
+                    <Route path='/product/:productId' element={<ProductDetail/>}></Route>
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
                 </Routes>
             </BrowserRouter>
