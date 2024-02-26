@@ -29,7 +29,6 @@ function Blog(){
                 </div>
             </div>
             <div ref={sectionRef}></div>
-
             <BlogList/>
             <Footer/>
         </div>

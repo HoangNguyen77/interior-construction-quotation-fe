@@ -1268,7 +1268,7 @@ a {
     color: #000; }
 
 .quick-contact-info {
-  background: #000;
+  background: #363636;
   color: rgba(255, 255, 255, 0.5); }
   .quick-contact-info h2 {
     color: #fff;
@@ -1308,12 +1308,12 @@ a {
 .post-date {
   color: rgba(0, 0, 0, 0.4); }
 
-.section-heading h2 {
+.section-heading h1 {
   position: relative;
   display: inline-block;
   font-family: "Playfair Display";
   font-size: 40px; }
-  .section-heading h2:before, .section-heading h2:after {
+  .section-heading h1:before, .section-heading h1:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -1323,12 +1323,12 @@ a {
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     transform: translateX(-50%); }
-  .section-heading h2:before {
+  .section-heading h1:before {
     width: 100px;
     bottom: -10px;
     left: 50%; }
 
-.section-heading.text-left h2:before, .section-heading.text-left h2:after {
+.section-heading.text-left h1:before, .section-heading.text-left h1:after {
   left: 0;
   -webkit-transform: translateX(0%);
   -ms-transform: translateX(0%);
@@ -1440,4 +1440,17 @@ a {
 }
 .custom-dropdown-toggle img{
   max-width: 30px;
+}
+.icon-button {
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center; /* Center align the icon and text */
+  justify-content: center; /* Center content vertically */
+  padding: 1rem; /* Add some padding */
+}
+
+.icon-button .icon-a {
+  margin-bottom: 0.5rem; /* Add space between the icon and text */
+  display: block; /* Display icon as block to push text below */
+  width: 100%; /* Set width to fit the container */
+  text-align: center; /* Center the icon */
 }
