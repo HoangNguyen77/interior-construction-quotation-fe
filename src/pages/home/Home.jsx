@@ -1,5 +1,4 @@
 import React from "react";
-import HomeSlider from "./components/HomeSlider.jsx";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
@@ -108,28 +107,28 @@ function Home() {
             <div className="py-5 quick-contact-info">
                 <div className="container">
                     <div className="col-md-12 mx-auto text-center mb-1">
-                        <h1 className="mb-3 text-white">Thành tựu của chúng tôi</h1>
-                        <p className="text-white">Với VivaDecor thành tựu chính là sự công nhận và lời khen ngợi từ quý
+                        <h1 className="mb-3 text-white" style={{fontSize:'2em'}}>Thành tựu của chúng tôi</h1>
+                        <p className="text-white text-xl">Với VivaDecor thành tựu chính là sự công nhận và lời khen ngợi từ quý
                             khách hàng đã sử dụng sản phẩm và dịch vụ của chúng tôi.</p>
                     </div>
                     <div className="row">
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">+2500</h1>
+                                <h1 className="text-white" style={{fontSize:'2em'}}>+2500</h1>
                                 <p className="mb-0 text-justify">Xưởng sản xuất rộng hơn 2500m2 với máy móc đạt tiêu
                                     chuẩn châu Âu đáp ứng mọi yêu cầu</p>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">95%</h1>
+                                <h1 className="text-white" style={{fontSize:'2em'}}>95%</h1>
                                 <p className="mb-0 text-justify">Sản phẩm sản xuất thi công hoàn thiện giống bản vẽ
                                     thiết kế 3D 95%</p>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">+400</h1>
+                                <h1 className="text-white" style={{fontSize:'2em'}}>+400</h1>
                                 <p className="mb-0 text-justify">Công trình được bàn giao hoàn thiện cho quý khách. Bao
                                     gồm các dự án Căn hộ cao cấp, Nhà Phố, Biệt thự, Nhà hàng, Quán cà phê….</p>
                             </div>
@@ -189,12 +188,12 @@ function Home() {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6">
-                            <h2 className="text-white">Xem bảng giá</h2>
+                            <h2 className="text-white text-xl" style={{fontSize: "130%"}}>Xem bảng giá</h2>
                             <Link to="/quotation-calculator" className="text-white btn btn-outline-warning rounded-0 text-uppercase">Nhận Báo
                                 Giá Ngay!</Link>
                         </div>
                         <div className="col-md-6">
-                            <h2 className="text-white">THI CÔNG NỘI THẤT VIVADECOR</h2>
+                            <h2 className="text-white text-xl" style={{fontSize: "2em"}}>THI CÔNG NỘI THẤT VIVADECOR</h2>
                         </div>
                     </div>
 
