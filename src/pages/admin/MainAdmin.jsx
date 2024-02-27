@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import ManageBlog from './ManageBlog';
 import ManageUser from './ManageUser';
+import Typeroom from './ManageShowroom/Typeroom&Product';
+import Description from './ManageShowroom/Description';
+import ManageFinished from './ManageFinished';
 
 const MainAdmin = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(-1);
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
-    console.log(index);
   };
 
   const tabMenu = [
-    'Quản lý Showroom',
+    'Loại phòng và sản phẩm',
+    'Mô tả sản phẩm',
     'Quản lý người dùng',
     'Dự án đã thi công',
     'Các loại thi công nội thất',
     'Quản lý Blog',
   ];
+
 
   return (
     <div className='bg-main-admin grid grid-cols-7 p-3'>
@@ -26,6 +30,7 @@ const MainAdmin = () => {
             <div className='pb-2 text-[14px]'>Tài khoản</div>
             <div className='name-user text-[24px] border-b-[0.5px] pb-2 border-[#5a5a5a]'>Nguyễn Công Chiến</div>
           </div>
+
 
           <div className='tab-menu mt-3'>
             {tabMenu.map((tab, index) => (
@@ -48,13 +53,15 @@ const MainAdmin = () => {
 
       </div>
       <div className='col-span-6 '>
-        {selectedTab === 1 ? (
-          <ManageUser />
+        {selectedTab === 0 ? (
+          <Typeroom />
+        ) : selectedTab === 1 ? (
+          <Description/>
         ) : selectedTab === 2 ? (
           <ManageUser />
         ) : selectedTab === 3 ? (
-          <ManageUser />
-        ) : selectedTab === 4 ? (
+          <ManageFinished />
+        ) : selectedTab === 5 ? (
           <ManageBlog />
         ) : (
           ""

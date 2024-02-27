@@ -37,9 +37,13 @@ const ManageBlog = () => {
         setImages([...images, selectedImage]);
     };
 
+    const handleDelete = () => {
+        setImages([]);
+    }
+
 
     return (
-        <div className='h-[96vh] pl-3'>
+        <div className='h-auto pl-3'>
             <div className='w-full h-[150px] relative'>
                 <div className='title-admin absolute top-0 left-0'>QUẢN LÝ BLOG</div>
                 <div className='absolute bottom-0 left-0'>
@@ -104,11 +108,12 @@ const ManageBlog = () => {
                     </div>
 
                     <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'>Thêm</button>
+                    <button className='bg-[#ff2e2e] px-3 py-2 rounded-[5px] text-white ml-3' onClick={handleDelete}>Xóa</button>
                 </div>
             )}
 
             <div className='table-all-posts h-auto mt-[50px]'>
-                <div className='w-4/5 h-[60px] relative top-7 bg-[#E22E6D] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>BÀI VIẾT
+                <div className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#E22E6D] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>BÀI VIẾT
                     <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModalToggle}>
                         <Icon classIcon={faPlus} color={"white"} size={"24px"} />
                     </div>
