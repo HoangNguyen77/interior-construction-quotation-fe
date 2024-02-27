@@ -1,5 +1,4 @@
 import React from "react";
-import HomeSlider from "./components/HomeSlider.jsx";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";

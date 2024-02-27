@@ -9,7 +9,7 @@ import Login from "./pages/login/Login.jsx";
 import About from "./pages/about/About.jsx";
 import Blog from "./pages/blog/Blog.jsx";
 import QuotationCalculator from "./pages/quotation-calculator/QuotationCalculator.jsx";
-import FinishedProject from "./pages/finished-project/FinishedProject.jsx";
+import FinishedProject from "./pages/finished-project/Finished.jsx";
 import Profile from "./pages/customer/Profile.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
