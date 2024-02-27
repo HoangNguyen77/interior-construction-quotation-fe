@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-main-admin{
+    font-family: Roboto, Helvetica, Arial, sans-serif;  
+    background-color: #EAEDF2;
+}
+
+.bg-menu{
+    background: linear-gradient(180deg, rgba(64,64,72,1) 0%, rgba(26,26,26,1) 100%);
+}
+
+.tab-menu div, .logout{
+    line-height: 50px;  
+    margin-top: 5px;
+    padding: 0px 15px;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.tab-menu div:hover, .logout:hover{
+    cursor: pointer;
+}
+
+.title-admin{
+    color: #348EED;
+    font-size: 50px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.shadow1{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
