@@ -30,8 +30,8 @@ function Header() {
                                                 <li className={location.pathname.startsWith("/home") ? "active" : ""}>
                                                     <Link to="/">Trang chủ</Link>
                                                 </li>
-                                                <li className={location.pathname.startsWith("/showroom") ? "active" : ""}>
-                                                    <Link to="/showroom">Showroom</Link>
+                                                <li className={location.pathname.startsWith("/product") ? "active" : ""}>
+                                                    <Link to="/product">Showroom</Link>
                                                 </li>
                                                 <li className={location.pathname.startsWith("/finished-project") ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
