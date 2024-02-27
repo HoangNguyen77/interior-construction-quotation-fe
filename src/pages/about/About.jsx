@@ -8,7 +8,7 @@ function About() {
     return (
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_1.jpg)"}}
+            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_4.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">
@@ -43,7 +43,7 @@ function About() {
 
 
                             <div className="section-heading text-left">
-                                <h2 className="mb-5">Xin chào</h2>
+                                <h1 className="mb-5">Xin chào</h1>
                             </div>
                             <p className="mb-4">VivaDecor với hơn 20 năm kinh nghiệm và trải nghiệm trong lĩnh vực thiết
                                 kế nội thất dịch vụ đầy đủ có trụ sở tại Thành phố Hồ Chí Minh chuyên về thiết kế cổ
@@ -72,7 +72,7 @@ function About() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-5">Đội ngũ VivaDecor</h2>
+                            <h1 className="mb-5">Đội ngũ VivaDecor</h1>
                         </div>
                     </div>
                     <div className="row">
@@ -283,7 +283,7 @@ function About() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-5">Show room</h2>
+                            <h1 className="mb-5">Show room</h1>
                         </div>
                         <div className="row">
                             <div className=" mx-auto text-center">

@@ -5,10 +5,11 @@ import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import {FaBuilding, FaHome, FaUtensils} from "react-icons/fa";
 import {GiSofa} from "react-icons/gi";
-import {IoBed} from "react-icons/io5";
+import {IoBed, IoDesktopSharp} from "react-icons/io5";
 import {FaKitchenSet} from "react-icons/fa6";
 import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
+import {MdVilla} from "react-icons/md";
 
 function Home() {
     useScrollToTop()
@@ -49,20 +50,14 @@ function Home() {
                         </div>
                         <div className="col-2">
                             <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <GiSofa className="icon-a" size={'2em'}/>
-                                PHÒNG KHÁCH
+                                <MdVilla className="icon-a" size={'2em'}/>
+                                BIỆT THỰ
                             </button>
                         </div>
                         <div className="col-2">
                             <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <IoBed className="icon-a" size={'2em'}/>
-                                PHÒNG NGỦ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaUtensils className="icon-a" size={'2em'}/>
-                                PHÒNG BẾP
+                                <IoDesktopSharp className="icon-a" size={'2em'}/>
+                                VĂN PHÒNG
                             </button>
                         </div>
                     </div>
