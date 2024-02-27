@@ -30,8 +30,8 @@ function Header() {
                                                 <li className={location.pathname.startsWith("/home") ? "active" : ""}>
                                                     <Link to="/">Trang chủ</Link>
                                                 </li>
-                                                <li className={location.pathname.startsWith("/showroom") ? "active" : ""}>
-                                                    <Link to="/showroom">Showroom</Link>
+                                                <li className={location.pathname.startsWith("/product") ? "active" : ""}>
+                                                    <Link to="/product">Showroom</Link>
                                                 </li>
                                                 <li className={location.pathname.startsWith("/finished-project") ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
@@ -41,9 +41,8 @@ function Header() {
                                                     <ul className="dropdown arrow-top">
                                                         <li><a href="">Thi công nhà đất</a></li>
                                                         <li><a href="">Thi công chung cư</a></li>
-                                                        <li><a href="">Thi công phòng khách</a></li>
-                                                        <li><a href="">Thi công phòng ngủ</a></li>
-                                                        <li><a href="">Thi công phòng bếp</a></li>
+                                                        <li><a href="">Thi công biệt thự</a></li>
+                                                        <li><a href="">Thi công văn phòng</a></li>
                                                     </ul>
                                                 </li>
                                                 <li className={location.pathname.startsWith("/blog") ? "active" : ""}>

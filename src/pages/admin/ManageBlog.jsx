@@ -26,10 +26,26 @@ const Icon = ({ classIcon, color, size }) => {
 const ManageBlog = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [images, setImages] = useState([]);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
+    const [errorTitle, setErrorTitle] = useState("");
+    const [errorDescription, setErrorDescription] = useState("");
+    const [errorImages, setErrorImages] = useState("");
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    }
+    const handleDescriptionChange = (e) => {
+        setDescription(e.target.value);
+    }
     const handleModalToggle = () => {
         setIsModalOpen(!isModalOpen);
     };
+    const handleModalToggleClose = () => {
+        setImages([]);
+        setIsModalOpen(!isModalOpen);
+    }
 
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
@@ -66,18 +82,22 @@ const ManageBlog = () => {
                 <div className={`relative w-full mt-10`}>
                     <div className='w-full flex justify-between'>
                         <div className='text-black text-[20px]'>Thêm bài viết</div>
-                        <div className='cursor-pointer hover:text-[#ff0000]' onClick={handleModalToggle}>{`[Đóng]`}</div>
+                        <div className='cursor-pointer hover:text-[#ff0000]' onClick={handleModalToggleClose}>{`[Đóng]`}</div>
                     </div>
                     <div className='flex mb-3 gap-[10px]'>
                         <div className='flex flex-col'>
                             <input
                                 className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
                                 placeholder='Nhập tiêu đề...'
+                                value={title}
+                                onChange={handleTitleChange}
                             />
 
                             <textarea
                                 className='bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
                                 placeholder='Nhập nội dung...'
+                                value={description}
+                                onChange={handleDescriptionChange}
                             />
                         </div>
 
