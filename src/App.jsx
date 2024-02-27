@@ -14,6 +14,9 @@ import Profile from "./pages/customer/Profile.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BlogDetail from "./pages/blog/BlogDetail.jsx";
+import MainAdmin from './pages/admin/MainAdmin.jsx';
+import "./index.css"
+
 import ForgetPassword from "./pages/customer/forget-password/ForgetPassword.jsx";
 import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
@@ -38,6 +41,7 @@ function App() {
                     <Route path='/info' element={<Profile/>}></Route>
                     <Route path='/product' element={<Product/>}></Route>
                     <Route path='/product/:productId' element={<ProductDetail/>}></Route>
+                    <Route path='/admin' element={<MainAdmin/>}></Route>
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
                 </Routes>
             </BrowserRouter>
