@@ -6,6 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link, useParams} from "react-router-dom";
 import {getAllProductImages} from "../../api/blog/ProductImageAPI.jsx";
+import {getProductById} from "../../api/blog/ProductAPI.jsx";
 
 const ProductDetail = () => {
     useScrollToTop();
@@ -50,7 +51,7 @@ const ProductDetail = () => {
     return(
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_4.jpg)"}}
+            <div className="site-blocks-cover overlay " style={{backgroundImage: "url(/images/hero_4.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">

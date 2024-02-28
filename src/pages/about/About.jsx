@@ -76,11 +76,11 @@ function About() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-4 mb-5" style={{marginLeft: "-200px"}}>
+                        <div className="col-md-6 col-lg-3 mb-5">
                             <div className="hotel-room text-center">
                                 <a href="/about/nguyencongchien" className="d-block mb-4 thumbnail"><img
                                     src="/images/congchien.jpg"
-                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
+                                    alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
                                     Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
@@ -91,11 +91,11 @@ function About() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-4 mb-5">
+                        <div className="col-md-6 col-lg-3 mb-5">
                             <div className="hotel-room text-center">
                                 <a href="/about/nguyenhuyhoang" className="d-block mb-4 thumbnail"><img
                                     src="/images/huyhoang.jpg"
-                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
+                                    alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Huy Hoàng</a></h3>
                                     <p> Nhà thiết kế nội thất tài năng, tốt nghiệp Trường Đại học Boulle
@@ -107,12 +107,11 @@ function About() {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="col-md-6 col-lg-4 mb-5">
+                        <div className="col-md-6 col-lg-3 mb-5">
                             <div className="hotel-room text-center">
                                 <a href="/about/phamchicuong" className="d-block mb-4 thumbnail"><img
                                     src="/images/chicuong.jpg"
-                                    alt="Image" className="img-fluid" style={{width: '350px', height: '350px'}}/></a>
+                                    alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Phạm Chí Cường</a></h3>
                                     <p> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
@@ -124,14 +123,11 @@ function About() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-4 mb-5" style={{marginTop: '-740px', marginLeft: "950px"}}>
+                        <div className="col-md-6 col-lg-3 mb-5">
                             <div className="hotel-room text-center">
                                 <a href="#" className="d-block mb-4 thumbnail"><img src="/images/cd.jpg"
                                                                                     alt="Image" className="img-fluid"
-                                                                                    style={{
-                                                                                        width: '350px',
-                                                                                        height: '360px'
-                                                                                    }}/></a>
+                                                                                    /></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Tôn Chí Dũng</a></h3>
                                     <p>Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế

@@ -21,7 +21,7 @@ import Finished from "./pages/finished-project/Finished.jsx";
 import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 import MainAdmin from "./pages/admin/MainAdmin.jsx";
-
+import "./tailwind.css"
 
 function App() {
     return (

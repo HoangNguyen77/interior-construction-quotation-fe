@@ -69,7 +69,7 @@ const ProductList = () => {
         <div className="site-section bg-light" ref={sectionRef}>
             <div className="container">
                 <div >
-                    <div className="col-md-6 mx-auto text-center mb-5 ">
+                    <div className="col-md-6 mx-auto text-center mb-5 h2">
                         <h2 className="mb-5">Sản phẩm</h2>
                     </div>
                 </div>
