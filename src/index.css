@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .bg-main-admin{
-    font-family: Roboto, Helvetica, Arial, sans-serif;  
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     background-color: #EAEDF2;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .tab-menu div, .logout{
-    line-height: 50px;  
+    line-height: 50px;
     margin-top: 5px;
     padding: 0px 15px;
     border-radius: 5px;

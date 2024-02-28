@@ -63,3 +63,22 @@ export async function getProductById(productId){
         return null;
     }
 }
+
+export async function getRelatedProductsByCategoryId(categoryId, page) {
+    try {
+        // Fetch category products based on categoryId
+        const categoryProductUrl = `http://localhost:8080/category-product/search/findByTypeRoom_RoomId?roomId=${categoryId}`;
+        const categoryProductResponse = await my_request(categoryProductUrl);
+
+        // Extract typeProduct IDs
+        const typeProductIds = categoryProductResponse._embedded.categoryProducts.map(categoryProduct => categoryProduct.typeProduct.id);
+
+        // Fetch related products based on typeProduct IDs
+        const relatedProductsUrl = `http://localhost:8080/detail-product/search/findByTypeProduct_TypeIdIn?typeId=${typeProductIds}&page=${page}&size=9`;
+        return getProduct(relatedProductsUrl);
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+
