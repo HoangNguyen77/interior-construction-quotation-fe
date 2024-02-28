@@ -5,8 +5,8 @@ import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link, useParams} from "react-router-dom";
-import {getAllProductImages} from "../../api/blog/ProductImageAPI.jsx";
-import {getProductById} from "../../api/blog/ProductAPI.jsx";
+import {getAllProductImages} from "../../api/product/ProductImageAPI.jsx";
+import {getProductById} from "../../api/product/ProductAPI.jsx";
 
 const ProductDetail = () => {
     useScrollToTop();

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Pagination from "../../../utils/Pagination.jsx";
 import {FaSearch} from "react-icons/fa";
 import ProductProps from "./ProductProps.jsx";
-import {getAllProducts, getProductByName} from "../../../api/blog/ProductAPI.jsx";
+import {getAllProducts, getProductByName} from "../../../api/product/ProductAPI.jsx";
 const ProductList = () => {
     const sectionRef = useRef(null);
 
