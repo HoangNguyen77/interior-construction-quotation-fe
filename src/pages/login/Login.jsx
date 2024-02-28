@@ -59,11 +59,11 @@ const Login = () => {
     }
     return (
         <div className="container w-25">
-            <h3 className="text-center mt-5">VivaDecor</h3>
-            <h4>Đăng nhập</h4>
+            <div className="h3 text-center mt-5">VivaDecor</div>
+            <div className="h4">Đăng nhập</div>
             <hr/>
 
-            <div className="form-group">
+            <div className="form-group mt-3                 ">
                 {error&&<div style={{color:"red"}}>{error}</div>}
                 {/*Username input*/}
                 <div className="form-outline mb-4">
@@ -81,16 +81,16 @@ const Login = () => {
                 <div className="row mb-2">
                     <div className="col-12 text-sm-right">
                         {/*Simple link*/}
-                        <Link to="/forget-password ">Quên mật khẩu?</Link>
+                        <Link to="/forget-password " style={{color:"red"}}>Quên mật khẩu?</Link>
                     </div>
                 </div>
 
                 {/*Submit button*/}
-                <button type="submit" className="btn btn-primary btn-block mb-4" onClick={handleLogin}>Đăng nhập</button>
+                <div className="btn btn-primary btn-block mb-4" onClick={handleLogin}>Đăng nhập</div>
 
                 {/*Register buttons */}
                 <div className="text-center">
-                    <p>Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link></p>
+                    <p>Bạn chưa có tài khoản? <Link to="/register" style={{color:"red"}}>Đăng ký</Link></p>
                 </div>
             </div>
             <Link to="/" style={{color: "blue", display: "flex", justifyContent:"center", fontSize:"18px"}} className="">Quay trở lại trang chủ</Link>

@@ -250,7 +250,7 @@ function Register(){
                         <div style={{color: "red"}}>{errorPhonenumber}</div>
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary">Đăng Ký</button>
+                        <button type="submit" className="btn btn-primary" style={{backgroundColor: "red"}}>Đăng Ký</button>
                     </div>
                 </form>
                 <Link to="/login" style={{color: "blue"}}>Trở lại trang đăng nhập</Link>

@@ -1,4 +1,5 @@
 import {my_request} from "../Request.js";
+import {get1ImageOfABlog} from "./BlogImageAPI.js";
 
 async function getBlog(url) {
     const blogList = [];
@@ -60,3 +61,65 @@ export async function getBlogById(blogId){
         return null;
     }
 }
+export async function getBlogWithUsernameById(blogId){
+
+    const url = `http://localhost:8080/blog/search/findBlogWithUserNameByBlogId?blogId=${blogId}`;
+
+    try {
+        // Gọi phương thức request
+        const response =  await fetch(url);
+
+        if(!response.ok){
+            throw new Error('Gặp lỗi trong quá trình gọi API lấy blog!')
+        }
+        const blogData = await response.json();
+        if(blogData){
+            return {
+                blogId: blogData.blogId,
+                description: blogData.description,
+                title: blogData.title,
+                createdDate: blogData.createdDate,
+                firstName: blogData.firstName,
+                lastName: blogData.lastName
+            }
+        }else{
+            throw new Error('BLog không tồn tại!');
+        }
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+export async function getAllBlogWithUsername(page) {
+    const url = `http://localhost:8080/blog?sort=blogId,desc&size=4&page=${page}`;
+    try {
+        const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+        const responseData = response._embedded.blogs;
+        const totalPages = response.page.totalPages;
+        const totalBlogs = response.page.totalElements;
+
+        // Transform each blog into a promise that resolves to the blog with additional details
+        const blogDetailsPromises = responseData.map(async (blog) => {
+            const [userDetails, imageDetails] = await Promise.all([getBlogWithUsernameById(blog.blogId), get1ImageOfABlog(blog.blogId)]);
+
+            // Merge blog details with user and image details
+            return {
+                ...blog,
+                firstName: userDetails.firstName,
+                lastName: userDetails.lastName,
+                image: imageDetails.imageData
+            };
+        });
+
+        // Wait for all promises to resolve
+        const blogList = await Promise.all(blogDetailsPromises);
+        console.log(blogList);
+        console.log(totalBlogs);
+        console.log(totalPages)
+        return { blogList, totalBlogs, totalPages };
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+
