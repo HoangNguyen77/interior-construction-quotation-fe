@@ -33,7 +33,7 @@ const ManageUser = () => {
   };
 
   return (
-    <div className='h-[96vh] pl-3'>
+    <div className='h-auto pl-3'>
       <div className='w-full h-[150px] relative'>
         <div className='title-admin absolute top-0 left-0'>QUẢN LÝ NGƯỜI DÙNG</div>
         <div className='absolute bottom-0 left-0'>
@@ -66,7 +66,8 @@ const ManageUser = () => {
 
 
       <div className='table-all-posts h-auto mt-[50px]'>
-        <div className={`w-4/5 h-[60px] relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>KHÁCH HÀNG
+        <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
+          {isModeShow === false ? (`KHÁCH HÀNG`) : (`NHÂN VIÊN`)}
           <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>
             <Icon classIcon={faRepeat} color={"white"} size={"24px"} />
           </div>
@@ -75,73 +76,143 @@ const ManageUser = () => {
           </div>
         </div>
 
-        <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-          <div className='grid grid-cols-10 py-3 gap-2'>
-            <div className='col-span-1 text-[#348EED]'>ID</div>
-            <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
-            <div className='col-span-3 text-[#348EED]'>Địa chỉ</div>
-            <div className='col-span-2 text-[#348EED]'>Email</div>
-            <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
-            <div className='col-span-1 text-[#348EED]'></div>
-          </div>
-
-          <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
-            <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+        {isModeShow === false ? (
+          <>
+            <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+              <div className='grid grid-cols-10 py-3 gap-2'>
+                <div className='col-span-1 text-[#348EED]'>ID</div>
+                <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
+                <div className='col-span-3 text-[#348EED]'>Địa chỉ</div>
+                <div className='col-span-2 text-[#348EED]'>Email</div>
+                <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
+                <div className='col-span-1 text-[#348EED]'></div>
               </div>
-            </div>
-          </div>
 
-          <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>2</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
-            <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+              <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>3</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
-            <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+              <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>2</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>4</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
-            <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+              <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>3</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-        </div>
+              <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>4</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </>
+        ) : (
+          <>
+            <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+              <div className='grid grid-cols-7 py-3 gap-2'>
+                <div className='col-span-1 text-[#60B664]'>ID</div>
+                <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
+                <div className='col-span-2 text-[#60B664]'>Email</div>
+                <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>
+                <div className='col-span-1 text-[#60B664]'></div>
+              </div>
+
+              <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>2</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>3</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
+              </div>
+
+              <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                <div className='col-span-1 text-black flex flex-col justify-center'>4</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
+                <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
+                <div className='col-span-1 text-black flex flex-col justify-center'>
+                  <div className='flex justify-end gap-2'>
+                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </>
+        )}
+
       </div>
     </div>
   )

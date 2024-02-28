@@ -18,6 +18,7 @@ import MainAdmin from './pages/admin/MainAdmin.jsx';
 import "./index.css"
 
 import ForgetPassword from "./pages/customer/forget-password/ForgetPassword.jsx";
+import BlogForm from "./pages/staff/BlogForm.jsx";
 import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 
