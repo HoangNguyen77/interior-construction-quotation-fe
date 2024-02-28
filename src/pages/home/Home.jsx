@@ -1,14 +1,14 @@
 import React from "react";
-import HomeSlider from "./components/HomeSlider.jsx";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import {FaBuilding, FaHome, FaUtensils} from "react-icons/fa";
 import {GiSofa} from "react-icons/gi";
-import {IoBed} from "react-icons/io5";
+import {IoBed, IoDesktopSharp} from "react-icons/io5";
 import {FaKitchenSet} from "react-icons/fa6";
 import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
+import {MdVilla} from "react-icons/md";
 
 function Home() {
     useScrollToTop()
@@ -49,20 +49,14 @@ function Home() {
                         </div>
                         <div className="col-2">
                             <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <GiSofa className="icon-a" size={'2em'}/>
-                                PHÒNG KHÁCH
+                                <MdVilla className="icon-a" size={'2em'}/>
+                                BIỆT THỰ
                             </button>
                         </div>
                         <div className="col-2">
                             <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <IoBed className="icon-a" size={'2em'}/>
-                                PHÒNG NGỦ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaUtensils className="icon-a" size={'2em'}/>
-                                PHÒNG BẾP
+                                <IoDesktopSharp className="icon-a" size={'2em'}/>
+                                VĂN PHÒNG
                             </button>
                         </div>
                     </div>
@@ -113,35 +107,35 @@ function Home() {
             <div className="py-5 quick-contact-info">
                 <div className="container">
                     <div className="col-md-12 mx-auto text-center mb-1">
-                        <h1 className="mb-3 text-white">Thành tựu của chúng tôi</h1>
+                        <div className="mb-3 h1 text-white">Thành tựu của chúng tôi</div>
                         <p className="text-white">Với VivaDecor thành tựu chính là sự công nhận và lời khen ngợi từ quý
                             khách hàng đã sử dụng sản phẩm và dịch vụ của chúng tôi.</p>
                     </div>
                     <div className="row">
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">+2500</h1>
+                                <div className="h1 text-white">+2500</div>
                                 <p className="mb-0 text-justify">Xưởng sản xuất rộng hơn 2500m2 với máy móc đạt tiêu
                                     chuẩn châu Âu đáp ứng mọi yêu cầu</p>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">95%</h1>
+                                <div className="h1 text-white">95%</div>
                                 <p className="mb-0 text-justify">Sản phẩm sản xuất thi công hoàn thiện giống bản vẽ
                                     thiết kế 3D 95%</p>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div>
-                                <h1 className="text-white">+400</h1>
+                                <h1 className="h1 text-white">+400</h1>
                                 <p className="mb-0 text-justify">Công trình được bàn giao hoàn thiện cho quý khách. Bao
                                     gồm các dự án Căn hộ cao cấp, Nhà Phố, Biệt thự, Nhà hàng, Quán cà phê….</p>
                             </div>
                         </div>
                         <div className="col-md-3 text-center">
                             <div>
-                                <h3 className="text-white mb-4" style={{fontSize: "2em"}}>Đơn vị 3 KHÔNG</h3>
+                                <div className="h2 text-white mb-4" >Đơn vị 3 KHÔNG</div>
                                 <p className="mb-0 text-justify">Không Thợ Khoán<br/>
                                     Không Phân Phối Trung Gian<br/>
                                     Không Phát Sinh Chi Phí</p>
@@ -194,12 +188,12 @@ function Home() {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-6">
-                            <h2 className="text-white">Xem bảng giá</h2>
+                            <div className="h2 text-white">Xem bảng giá</div>
                             <Link to="/quotation-calculator" className="text-white btn btn-outline-warning rounded-0 text-uppercase">Nhận Báo
                                 Giá Ngay!</Link>
                         </div>
                         <div className="col-md-6">
-                            <h2 className="text-white">THI CÔNG NỘI THẤT VIVADECOR</h2>
+                            <h2 className="h2 text-white">THI CÔNG NỘI THẤT VIVADECOR</h2>
                         </div>
                     </div>
 

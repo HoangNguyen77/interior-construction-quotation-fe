@@ -41,9 +41,8 @@ function Header() {
                                                     <ul className="dropdown arrow-top">
                                                         <li><a href="">Thi công nhà đất</a></li>
                                                         <li><a href="">Thi công chung cư</a></li>
-                                                        <li><a href="">Thi công phòng khách</a></li>
-                                                        <li><a href="">Thi công phòng ngủ</a></li>
-                                                        <li><a href="">Thi công phòng bếp</a></li>
+                                                        <li><a href="">Thi công biệt thự</a></li>
+                                                        <li><a href="">Thi công văn phòng</a></li>
                                                     </ul>
                                                 </li>
                                                 <li className={location.pathname.startsWith("/blog") ? "active" : ""}>

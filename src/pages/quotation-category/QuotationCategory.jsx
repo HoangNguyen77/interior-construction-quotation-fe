@@ -24,7 +24,7 @@ function QuotationCategory(){
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-5 section-heading">
-                            <h2 className="mb-xl-0">Dịch vụ thi công nội thất trọn gói </h2>
+                            <h1 className="mb-xl-0">Dịch vụ thi công nội thất trọn gói </h1>
 
                         </div>
                     </div>
@@ -124,7 +124,7 @@ function QuotationCategory(){
                     <div className="">
                         <div className="row">
                             <div className=" mx-auto text-center mb-5 section-heading">
-                                <h2 className="mb-xl-0">Dự án hoàn thiện nội thất tiêu biểu</h2>
+                                <h1 className="mb-xl-0">Dự án hoàn thiện nội thất tiêu biểu</h1>
 
                             </div>
                         </div>

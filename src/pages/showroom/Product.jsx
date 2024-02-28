@@ -17,7 +17,6 @@ function Product(){
 
     return(
         <div>
-
             <Header/>
             <div className="site-blocks-cover overlay" style={{backgroundImage: 'url(images/hero_4.jpg)'}}
                  data-aos="fade"

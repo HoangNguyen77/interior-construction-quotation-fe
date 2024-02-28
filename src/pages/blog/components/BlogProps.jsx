@@ -10,16 +10,16 @@ const getShortDescription = (description) => {
     return shortDescription;
 };
 const BlogProps = (props) => {
-    const maSach = props.blog.blogId;
+    const blogId = props.blog.blogId;
 
-    const [imageList, setImageList] = useState([]);
+    const [image, setImage] = useState("");
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
 
     useEffect(()=>{
-            get1ImageOfABlog(maSach).then(
+            get1ImageOfABlog(blogId).then(
                 imageData => {
-                    setImageList(imageData);
+                    setImage(imageData.imageData);
                     setDangTaiDuLieu(false);
                 }
             ).catch(
@@ -29,10 +29,7 @@ const BlogProps = (props) => {
             );
         },[] //chi goi 1 lan
     )
-    let imageData="";
-    if(imageList[0] && imageList[0].imageData){
-        imageData=imageList[0].imageData;
-    }
+
     const formattedDate = format(new Date(props.blog.createdDate), 'MMM do, yyyy');
     return(
         <div>
@@ -43,7 +40,7 @@ const BlogProps = (props) => {
                         <div className="media-with-text">
                             <div className="img-border-sm mb-4">
                                 <div className="popup-vimeo image-play">
-                                    <img src={imageData} alt="" className="img-fluid"/>
+                                    <img src={image} alt="" className="img-fluid"/>
                                 </div>
                             </div>
                         </div>
