@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {getFirstImageOfProduct} from "../../../api/blog/ProductImageAPI.jsx";
+import {getFirstImageOfProduct} from "../../../api/product/ProductImageAPI.jsx";
 import {FaSearch} from "react-icons/fa";
 
 const ProductProps = (props) => {

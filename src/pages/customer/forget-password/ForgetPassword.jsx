@@ -80,11 +80,11 @@ function ForgetPassword(){
     return (
         <div>
             <div className="container w-25">
-                <h3 className="text-center mt-5">VivaDecor</h3>
-                <h4>Quên mật khẩu</h4>
+                <div className="h3 text-center mt-5">VivaDecor</div>
+                <div className="h4">Quên mật khẩu</div>
                 <hr/>
 
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="form mt-2" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="username" className="form-label">Tên đăng nhập</label>
                         <input
@@ -108,7 +108,7 @@ function ForgetPassword(){
                         <div style={{color: "red"}}>{errorEmail}</div>
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                        <button type="submit" className="btn btn-primary" disabled={isSubmitting} style={{backgroundColor:"red"}}>
                             Gửi
                         </button>
                     </div>

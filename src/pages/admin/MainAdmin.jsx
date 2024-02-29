@@ -4,6 +4,7 @@ import ManageUser from './ManageUser';
 import Typeroom from './ManageShowroom/Typeroom&Product';
 import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
+import ManageQuotation from "./ManageQuotation.jsx";
 
 
 const MainAdmin = () => {
@@ -20,6 +21,7 @@ const MainAdmin = () => {
     'Dự án đã thi công',
     'Các loại thi công nội thất',
     'Quản lý Blog',
+    'Quản lý báo giá'
   ];
 
 
@@ -64,8 +66,10 @@ const MainAdmin = () => {
           <ManageFinished />
         ) : selectedTab === 5 ? (
           <ManageBlog />
+        ) : selectedTab === 6 ?(
+          <ManageQuotation/>
         ) : (
-          ""
+            ""
         )}
 
       </div>

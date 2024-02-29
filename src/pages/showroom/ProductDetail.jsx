@@ -5,14 +5,13 @@ import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link, useParams} from "react-router-dom";
-import {getProductById} from "../../api/blog/ProductAPI.jsx";
-import {getAllProductImages} from "../../api/blog/ProductImageAPI.jsx";
+import {getAllProductImages} from "../../api/product/ProductImageAPI.jsx";
+import {getProductById} from "../../api/product/ProductAPI.jsx";
 
 const ProductDetail = () => {
     useScrollToTop();
     const sectionRef = useRef(null);
     const { productId } = useParams();
-
     const [product, setProduct] = useState(null);
     const [imageList, setImageList] = useState([]);
     const [exception, setException] = useState(null);
@@ -33,8 +32,14 @@ const ProductDetail = () => {
                 setImageList(imageList);
             }
         ).catch(error => console.log(error));
+        // getRelatedProductsByRoomId(roomId).then(
+        //     response => {
+        //         setRelatedProductsList(response.productList);
+        //     })
+        //     .catch(error => {
+        //         console.error("Error fetching related products:", error);
+        //     });
     }, [productId]);
-
 
     if (exception) {
         return <div><h1>{productId}</h1></div>;
@@ -46,7 +51,7 @@ const ProductDetail = () => {
     return(
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_4.jpg)"}}
+            <div className="site-blocks-cover overlay " style={{backgroundImage: "url(/images/hero_4.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">
@@ -61,24 +66,25 @@ const ProductDetail = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
-                                <Carousel showThumbs={false}>
-                                    {imageList.map((img, index) => (
-                                        <div key={index}>
-                                            <img src={img.imageData} alt=""/>
-                                        </div>
-                                    ))}
-                                </Carousel>
+                            <Carousel showThumbs={false}>
+                                {imageList.map((img, index) => (
+                                    <div key={index}>
+                                        <img src={img.imageData} alt=""/>
+                                    </div>
+                                ))}
+                            </Carousel>
                         </div>
                         <div className="col-md-6">
-                                <h1>{product.name}</h1>
-                                <hr/>
-                                <p className="text-justify mt-5">{product.unitPrice}</p>
+                            <h1>{product.name}</h1>
+                            <hr/>
+                            <p className="text-justify mt-5">{product.unitPrice}</p>
                         </div>
                     </div>
                     <Link to="/product" className="p-2" style={{fontSize: '50px'}}><span
                         className="icon-arrow-circle-left"></span></Link>
                 </div>
             </div>
+
             <Footer/>
         </div>
     )

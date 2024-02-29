@@ -31,7 +31,7 @@ const BlogList = () => {
                 }
             )
         }else{
-            getBlogByTitle(search).then(
+            getBlogByTitle(search, (currentPage-1)).then(
                 result => {
                     setBlogList(result.blogList);
                     setTotalPage(result.totalPages);

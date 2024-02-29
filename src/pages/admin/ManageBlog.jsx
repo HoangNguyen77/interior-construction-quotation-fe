@@ -10,7 +10,7 @@ import {checkInput} from "../../utils/Validation.js";
 import {toast} from "react-toastify";
 import {getIdUserByToken} from "../../utils/JwtService.js";
 import Pagination from "../../utils/Pagination.jsx";
-import {getAllBlogWithUsername, getBlogById} from "../../api/blog/BlogAPI.js";
+import {getAllBlogWithUsername, getAllBlogWithUsernameByTitle, getBlogById} from "../../api/blog/BlogAPI.js";
 import {format} from "date-fns";
 import {getAllBLogImage, getAllBlogImageData} from "../../api/blog/BlogImageAPI.js";
 
@@ -53,18 +53,30 @@ const ManageBlog = () => {
     const [blogId, setBLogId] = useState(0);
 
     useEffect(() => {
-        console.log("check");
-        getAllBlogWithUsername(currentPage - 1).then(
-            result => {
-                setBlogList(result.blogList);
-                setTotalPage(result.totalPages);
-                setTotalBlog(result.totalBlogs);
-            }
-        ).catch(error => {
-                console.log(error)
-            }
-        )
-    }, [currentPage, isChanged]);
+        if (search === '') {
+            getAllBlogWithUsername(currentPage - 1).then(
+                result => {
+                    setBlogList(result.blogList);
+                    setTotalPage(result.totalPages);
+                    setTotalBlog(result.totalBlogs);
+                }
+            ).catch(error => {
+                    console.log(error)
+                }
+            )
+        }else {
+            getAllBlogWithUsernameByTitle(search, (currentPage - 1)).then(
+                result => {
+                    setBlogList(result.blogList);
+                    setTotalPage(result.totalPages);
+                    setTotalBlog(result.totalBlogs);
+                }
+            ).catch(error => {
+                    console.log(error)
+                }
+            )
+        }
+    }, [currentPage, isChanged, search]);
     const getShortDescription = (description) => {
         const words = description.split(' ');
         const shortWords = words.slice(0, 5);
@@ -107,6 +119,21 @@ const ManageBlog = () => {
 
         setIsModalOpen(!isModalOpen);
     }
+
+    //                          SEARCH                      //
+    const handleSearch = () => {
+        setSearch(currentSearch);
+        setCurrentPage(1); // Cập nhật currentPage về 1 sau khi tìm kiếm
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            setSearch(event.target.value);
+            handleSearch();
+        }
+    }
+    ///////////////////////////////////////////////////////////
+
+    //                          CRUD                        //
     const checkFileInput = (setErrorInput, input) => {
         console.log(input.length)
         if (!input || input.length === 0) {
@@ -291,6 +318,7 @@ const ManageBlog = () => {
             }
         }
     }
+    ////////////////////////////////////////////////////////////////
         return (
             <div className='h-[96vh] pl-3'>
                 <div className='w-full h-[150px] relative'>
@@ -298,10 +326,13 @@ const ManageBlog = () => {
                     <div className='absolute bottom-0 left-0'>
                         <input
                             className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
-                            placeholder='Nhập tên, email, số điện thoại...'
+                            placeholder='Nhập từ khóa tìm kiếm theo tiêu đề blog...'
+                            value={currentSearch}
+                            onChange={e => setCurrentSearch(e.target.value)}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
-                    <div className='absolute bottom-1 left-[365px]'><Icon classIcon={faSearch} color={"black"}
+                    <div className='absolute bottom-1 left-[365px]' onClick={handleSearch}><Icon classIcon={faSearch} color={"black"}
                                                                           size={"24px"}/>
                     </div>
                     <div
@@ -402,7 +433,7 @@ const ManageBlog = () => {
 
                     </div>
 
-                    <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+                    <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                         <div className='grid grid-cols-12 py-3 gap-2'>
                             <div className='col-span-1 text-[#E22E6D]'>ID</div>
                             <div className='col-span-2 text-[#E22E6D]'>Hình ảnh</div>
@@ -444,59 +475,7 @@ const ManageBlog = () => {
                                 </div>
                             </div>
                         ))
-
                         }
-
-                        {/*<div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>2</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>*/}
-                        {/*        <img className='w-3/5' src='/images/image 2.png' alt=""/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-3 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>1/1/2024</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>*/}
-                        {/*        <div className='flex justify-end gap-2'>*/}
-                        {/*            <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>*/}
-                        {/*            <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                        {/*<div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>3</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>*/}
-                        {/*        <img className='w-3/5' src='/images/image 2.png' alt=""/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-3 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>1/1/2024</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>*/}
-                        {/*        <div className='flex justify-end gap-2'>*/}
-                        {/*            <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>*/}
-                        {/*            <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                        {/*<div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>4</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>*/}
-                        {/*        <img className='w-3/5' src='/images/image 2.png' alt=""/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>*/}
-                        {/*    <div className='col-span-2 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-3 text-black flex flex-col justify-center'>Lorem Ipsum Dolo...</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>1/1/2024</div>*/}
-                        {/*    <div className='col-span-1 text-black flex flex-col justify-center'>*/}
-                        {/*        <div className='flex justify-end gap-2'>*/}
-                        {/*            <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>*/}
-                        {/*            <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
                         <Pagination currentPage={currentPage} totalPage={totalPage}
                                     handlePageChange={handlePageChange}/>
                     </div>
