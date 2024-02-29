@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
@@ -9,9 +9,33 @@ import {FaKitchenSet} from "react-icons/fa6";
 import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
 import {MdVilla} from "react-icons/md";
+import {get3NewBlog} from "../../api/blog/BlogAPI.js";
 
 function Home() {
     useScrollToTop()
+
+    const [blogList, setBlogList] = useState([]);
+    const getShortDescription = (description) => {
+        const words = description.split(' ');
+        const shortWords = words.slice(0, 50);
+        const shortDescription = shortWords.join(' ');
+        return shortDescription;
+    };
+    const formattedDate = (createdDate) => {
+        const date = new Date(createdDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    useEffect(() => {
+        get3NewBlog().then(
+            result => {
+                setBlogList(result.blogList);
+            }
+        ).catch(error => console.log(error))
+    }, []);
     return (
         <div>
             <Header/>
@@ -207,69 +231,30 @@ function Home() {
                             <h5>Các bài viết gần đây</h5>
                         </div>
                     </div>
-                    <div className="row bg-white mb-5 pt-4">
-                        <div className="col-3">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <div className="popup-vimeo image-play">
-                                        <img src="/images/img_2.jpg" alt="" className="img-fluid"/>
+                    {
+                        blogList.map(blog => (
+                            <Link to={`/blog/${blog.blogId}`}>
+                                <div className="row bg-white mb-5 pt-4" key={blog.blogId}>
+                                    <div className="col-3">
+                                        <div className="media-with-text">
+                                            <div className="img-border-sm mb-4">
+                                                <div className="popup-vimeo image-play">
+                                                    <img src={blog.image} alt="" className="img-fluid"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-9">
+                                        <div className="media-with-text">
+                                            <h2 className="heading mb-0" style={{fontSize: '25px'}}>{blog.title}</h2>
+                                            <span className="mb-3 d-block post-date">{formattedDate(blog.createdDate)}</span>
+                                            <p style={{color: '#00000080'}}>{getShortDescription(blog.description)}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-9">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0" style={{fontSize: '25px'}}>Lorem Ipsum Dolor Sit
-                                    Amet</h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018</span>
-                                <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing
-                                    elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row bg-white mb-5 pt-4">
-                        <div className="col-3">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <div className="popup-vimeo image-play">
-                                        <img src="/images/img_3.jpg" alt="" className="img-fluid"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-9">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0" style={{fontSize: '25px'}}>Lorem Ipsum Dolor Sit
-                                    Amet</h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018</span>
-                                <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing
-                                    elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row bg-white mb-5 pt-4">
-                        <div className="col-3">
-                            <div className="media-with-text">
-                                <div className="img-border-sm mb-4">
-                                    <div className="popup-vimeo image-play">
-                                        <img src="/images/img_3.jpg" alt="" className="img-fluid"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-9">
-                            <div className="media-with-text">
-                                <h2 className="heading mb-0" style={{fontSize: '25px'}}>Lorem Ipsum Dolor Sit
-                                    Amet</h2>
-                                <span className="mb-3 d-block post-date">Dec 20th, 2018</span>
-                                <p style={{color: '#00000080'}}>Lorem ipsum dolor sit amet consectetur adipisicing
-                                    elit. Optio dolores culpa qui
-                                    aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-                            </div>
-                        </div>
-                    </div>
+                            </Link>
+                        ))
+                    }
                     <div className="text-right" style={{fontSize: "130%"}}>
                         <Link to="/blog">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
                     </div>
