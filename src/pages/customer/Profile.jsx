@@ -218,13 +218,13 @@ function Profile() {
 
             <div className="site-section" ref={sectionRef}>
                 <div className="container">
-                    <h2>Thông tin của bạn</h2>
+                    <div className="h2">Thông tin của bạn</div>
                     <hr/>
-                    <h5>Tên đăng nhập</h5>
+                    <div className="h5 mt-3">Tên đăng nhập</div>
                     <p>{user.username}</p>
-                    <h5>Email</h5>
+                    <div className="h5">Email</div>
                     <p>{user.email}</p>
-                    <h5>Họ đệm</h5>
+                    <div className="h5">Họ đệm</div>
                     {
                         update ?
                             (
@@ -240,7 +240,7 @@ function Profile() {
                                 <p>{user.firstName}</p>
                             )
                     }
-                    <h5>Tên</h5>
+                    <div className="h5">Tên</div>
                     {
                         update ?
                             (
@@ -256,7 +256,7 @@ function Profile() {
                                 <p>{user.lastName}</p>
                             )
                     }
-                    <h5>Số điện thoại</h5>
+                    <div className="h5">Số điện thoại</div>
                     {
                         update ?
                             (
@@ -277,7 +277,7 @@ function Profile() {
                         update ?
                             (
                                 <div>
-                                    <button type="button" className="btn btn-danger mb-3 mr-3"
+                                    <div  className="btn btn-danger mb-3 mr-3"
                                             onClick={() => {
                                                 setErrorFirstName("");
                                                 setErrorLastName("");
@@ -286,27 +286,27 @@ function Profile() {
                                                 setUpdate(!update)
                                             }
                                     }>Hủy cập nhập
-                                    </button>
-                                    <button type="button" className="btn btn-success mb-3 mr-3"
+                                    </div>
+                                    <div className="btn btn-success mb-3 mr-3"
                                             onClick={handleUpdateProfile}
                                     >Lưu
-                                    </button>
+                                    </div>
                                 </div>
 
                             )
                             :
                             (
-                                <button type="button" className="btn btn-success mb-3"
+                                <div className="btn btn-success mb-3 mt-2"
                                         onClick={
                                                 () => {
                                                     setUpdate(!update)
                                                 }
                                         }>Cập nhập thông tin
-                                </button>
+                                </div>
                             )
                     }
                     <hr ref={sectionRef2}></hr>
-                    <button type="button" className="btn btn-danger" onClick={() => {
+                    <div className="btn btn-danger mt-3" onClick={() => {
                         setOldPassword("")
                         setNewPassword("")
                         setNewPasswordAgain("");
@@ -316,7 +316,7 @@ function Profile() {
                         setChangePassword(!changPassword);
                         sectionRef2.current.scrollIntoView({behavior: 'smooth'});
                         }
-                    }>{changPassword ? "Hủy" : "Đổi mật khẩu"}</button>
+                    }>{changPassword ? "Hủy" : "Đổi mật khẩu"}</div>
                     {
                         changPassword && (
                             <div className="form-group w-25 mt-3">
@@ -342,10 +342,10 @@ function Profile() {
                                     <label className="form-label" htmlFor="form2Example2">Nhập lại mật khẩu mới</label>
                                     <div style={{color: "red"}}>{errorNewPasswordAgain}</div>
                                 </div>
-                                <button type="button" className="btn btn-success mb-3 mr-3"
+                                <div className="btn btn-success mb-3 mr-3"
                                         onClick={handleChangePassword}
                                 >Lưu
-                                </button>
+                                </div>
                             </div>
                         )
                     }

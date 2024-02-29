@@ -69,9 +69,9 @@ const BlogDetail = () => {
                 <div className="site-section bg-light" ref={sectionRef}>
                     <div className="container">
                         <div className="p-5 bg-white">
-                            <h1>{blog.title}</h1>
-                            <h6><span className="mb-3 d-block post-date">{formattedDate}</span></h6>
-                            <hr/>
+                            <div className="h1">{blog.title}</div>
+                            <div className="h6"><span className="mb-3 d-block post-date">{formattedDate}</span></div>
+                            <hr className="mb-3"/>
                             {/*<img src="/images/img_1.jpg" alt="" className="img-fluid mb-5 w-100"/>*/}
                             <Carousel showThumbs={false}>
                                 {

@@ -169,7 +169,7 @@ function Register(){
 
     return(
         <div className="container">
-            <h1 className="mt-5 text-center">Đăng ký</h1>
+            <div className="h1 mt-5 text-center">Đăng ký</div>
             <div className="w-50 mb-3 col-md-6 col-12 mx-auto">
                 <form onSubmit={handleSubmit} className="form">
                     <div className="mb-3">
@@ -250,7 +250,7 @@ function Register(){
                         <div style={{color: "red"}}>{errorPhonenumber}</div>
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary">Đăng Ký</button>
+                        <button type="submit" className="btn btn-primary" style={{backgroundColor: "red"}}>Đăng Ký</button>
                     </div>
                 </form>
                 <Link to="/login" style={{color: "blue"}}>Trở lại trang đăng nhập</Link>
