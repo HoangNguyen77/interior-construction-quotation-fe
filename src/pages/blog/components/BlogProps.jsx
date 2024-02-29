@@ -30,7 +30,13 @@ const BlogProps = (props) => {
         },[] //chi goi 1 lan
     )
 
-    const formattedDate = format(new Date(props.blog.createdDate), 'MMM do, yyyy');
+    const formattedDate = (createdDate) => {
+        const date = new Date(createdDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
     return(
         <div>
             <hr/>
