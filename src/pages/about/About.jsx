@@ -79,7 +79,7 @@ function About() {
                     <div className="row">
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a href="/about/nguyencongchien" className="d-block mb-4 thumbnail"><img
+                                <a href="/about/nguyencongchien" className="d-block mb-1 thumbnail"><img
                                     src="/images/congchien.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
@@ -95,7 +95,7 @@ function About() {
                         </div>
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a href="/about/nguyenhuyhoang" className="d-block mb-4 thumbnail"><img
+                                <a href="/about/nguyenhuyhoang" className="d-block mb-1 thumbnail"><img
                                     src="/images/huyhoang.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
@@ -290,7 +290,7 @@ function About() {
                         </div>
                         <div className="row">
                             <div className=" mx-auto text-center">
-                                <p className="mb-3" style={{color:"black", fontSize:"17px"}}> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
+                                <p className="mb-3"> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
                                     Với diện tích 800m², tách biệt các không gian thành 10 phong cách nội thất khác nhau, cùng với 1 phòng vật liệu và tư vấn. </p>
 
                             </div>

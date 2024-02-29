@@ -3,7 +3,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Header from "./layouts/Header.jsx";
 import Footer from "./layouts/Footer.jsx";
 import Home from "./pages/home/Home.jsx";
-import HomeSlider from "./pages/home/components/HomeSlider.jsx";
+
 import QuotationCategory from "./pages/quotation-category/QuotationCategory.jsx";
 import Register from "./pages/customer/register/Register.jsx";
 import EnableAccount from "./pages/customer/register/EnableAccount.jsx";
@@ -21,7 +21,7 @@ import Finished from "./pages/finished-project/Finished.jsx";
 import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 import MainAdmin from "./pages/admin/MainAdmin.jsx";
-import "./tailwind.css"
+import "./index.css"
 
 function App() {
     return (
