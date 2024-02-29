@@ -41,6 +41,8 @@ function App() {
                     <Route path='/quotation-calculator' element={<QuotationCalculator/>}></Route>
                     <Route path='/product' element={<Product/>}></Route>
                     <Route path='/product/:productId' element={<ProductDetail/>}></Route>
+                    <Route path='/finished-project' element={<Finished/>}></Route>
+                    <Route path='/finished-project/detail-finished' element={<DetailFinished/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>
                     <Route path='/admin' element={<MainAdmin/>}></Route>
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
