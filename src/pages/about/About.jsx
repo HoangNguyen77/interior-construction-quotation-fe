@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
@@ -45,19 +46,19 @@ function About() {
                             <div className="section-heading text-left">
                                 <h1 className="mb-5">Xin chào</h1>
                             </div>
-                            <p className="mb-4">VivaDecor với hơn 20 năm kinh nghiệm và trải nghiệm trong lĩnh vực thiết
+                            <p className="mb-3">VivaDecor với hơn 20 năm kinh nghiệm và trải nghiệm trong lĩnh vực thiết
                                 kế nội thất dịch vụ đầy đủ có trụ sở tại Thành phố Hồ Chí Minh chuyên về thiết kế cổ
                                 điển có tầm ảnh hưởng toàn cầu.
                                 Dù thiết kế không gian dân cư hay thương mại, VivaDecor đã tạo dựng được danh tiếng nhờ
                                 đạt được những kết quả mang tính cá nhân cao cho nhóm khách hàng quốc tế sành điệu.
                             </p>
-                            <p>
+                            <p className="mb-3">
                                 VivaDecor tạo ra những câu chuyện trực quan trở thành môi trường xung quanh đặc trưng.
                                 Được hướng dẫn bởi nguyện vọng của khách hàng cũng như trải nghiệm đa dạng của họ, công
                                 ty thiết kế nội thất độc đáo, cho phép khách hàng thể hiện đầy đủ họ là ai và điều gì có
                                 ý nghĩa đối với họ.
                             </p>
-                            <p>
+                            <p className="mb-3">
                                 Lịch sử và vị trí của dự án, cùng với bề dày kinh nghiệm của VivaDecor và niềm tin vững
                                 chắc rằng thiết kế thành công phải được tạo ra bởi những đặc điểm riêng của từng dự án,
                                 hãy cùng VivaDecor tạo ra những nội thất đặc biệt. Danh mục công việc đã hoàn thành bao
@@ -76,61 +77,64 @@ function About() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-3 mb-5">
+                        <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
                                 <a href="/about/nguyencongchien" className="d-block mb-4 thumbnail"><img
                                     src="/images/congchien.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
-                                    Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
+                                    <p className="text-left mb-3">Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
                                     tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
-                                    độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. <p>
+                                        độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện.</p>
+                                    <p>
                                     <a href="/about/nguyencongchien" className="text-primary">Xem thêm <span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-3 mb-5">
+                        <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
                                 <a href="/about/nguyenhuyhoang" className="d-block mb-4 thumbnail"><img
                                     src="/images/huyhoang.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
-                                    <h3 className="heading mb-3"><a href="#">Nguyễn Huy Hoàng</a></h3>
-                                    <p> Nhà thiết kế nội thất tài năng, tốt nghiệp Trường Đại học Boulle
-                                        từng làm việc tại Ashley Furniture với thành tích top 10 hàng năm.
-                                        Hiện làm việc tại ViVaDecor, ông tiếp tục sáng tạo và định hình xu hướng trong
-                                        lĩnh vực trang trí nội thất.</p>
-                                    <p><a href="/about/nguyenhuyhoang" className="text-primary">Xem thêm<span
+                                    <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
+
+                                   <p className="text-left mb-3">  Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
+                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
+                                       độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. </p>
+                                    <p>
+                                    <a href="/about/nguyenhuyhoang" className="text-primary">Xem thêm <span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-3 mb-5">
+
+
+                        <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
                                 <a href="/about/phamchicuong" className="d-block mb-4 thumbnail"><img
                                     src="/images/chicuong.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Phạm Chí Cường</a></h3>
-                                    <p> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
+                                    <p className="text-left mb-3"> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
                                         Với cơ hội làm việc cùng nhà thiết kế nổi tiếng Philippe Starck trong nhiều dự
-                                        án quan trọng là
-                                        sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
+                                        án quan trọng là  sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
                                     <p><a href="/about/phamchicuong" className="text-primary">Xem thêm<span
                                         className="icon-arrow-right small"></span></a></p>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-3 mb-5">
+                        <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-4 thumbnail"><img src="/images/cd.jpg"
+                                <a href="#" className="d-block mb-5 thumbnail"><img src="/images/cd.jpg"
                                                                                     alt="Image" className="img-fluid"
-                                                                                    /></a>
+                                /></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Tôn Chí Dũng</a></h3>
-                                    <p>Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế
+                                    <p className="text-left mb-3">Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế
                                         mang tính chất vĩ đại.
                                         Ông là một trong số ít người từng học và làm việc tại University of Arts
                                         London.</p>
@@ -237,7 +241,7 @@ function About() {
                             {/* <span className="icon-wrap">
                     <span className="icon icon-play"></span>
                   </span>*/}
-                            <span style={{marginLeft: "-100px"}}>
+                            <span >
                                     <img src="/images/quytrinh.jpg" alt="" className="img-thumnail"/>
 
 
@@ -251,26 +255,29 @@ function About() {
                                 <h2 className="mb-5">Xin chào</h2>
                             </div>*/}
 
-                            <p style={{fontSize: "30px", color:"black"}}>VivaDecor sở hữu quy trình khép kín với tiêu chí ba <a style={{color:"black", fontSize: "35px"}}>KHÔNG</a>:
+                            <p className="h1">VivaDecor sở hữu quy trình khép kín với tiêu chí ba <a style={{color:"black", fontSize: "35px"}}>KHÔNG</a>:
+                        </p>
+                            <p className="display-5 text-black"> <strong className="h3">✔ KHÔNG</strong> trung gian phân phối </p>
+                            <p className="display-5 text-black"><strong className="h3">✔ KHÔNG</strong> thợ khoán</p>
+                            <p className="display-5 text-black"><strong className="h3">✔ KHÔNG</strong> thuê xưởng bên
+                                thứ ba
                             </p>
-                            <p style={{fontSize: "20px", color:"black"}}> <a style={{color:"black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> trung gian phân phối </p>
-                            <p style={{fontSize: "20px", color:"black"}}><a style={{color: "black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> thợ khoán</p>
-                            <p style={{fontSize: "20px", color:"black"}}><a style={{color: "black", fontSize: "25px", fontWeight: "bold"}}>✔ KHÔNG</a> thuê xưởng bên thứ ba
-                            </p>
-                            <p style={{fontSize: "30px", color:"black"}}>Đảm bảo tiến độ, chất lượng và cam kết với chi phí tốt
+                            <p className="h2">Đảm bảo tiến độ, chất lượng và cam kết với chi phí tốt
                                 nhất</p>
 
 
                             {/*<p><a href="https://vimeo.com/629819635" className="popup-vimeo text-uppercase">Xem Video <span className="icon-arrow-right small"></span></a></p>*/}
                         </div>
-                        <div className="col-md-10" style={{marginLeft:"-180px"}}>
+
+                        <div className="col-md-10 mx-auto"  >
                             <span >
-                                    <img src="/images/sodoquytrinh.PNG" alt="" className="img-border"/>
+                                    <img src="/images/sodoquytrinh.jpg" alt="Image" className="img-fluid"/>
 
 
                                 {/* <img src="/images/2.jpg" alt="Image" className="img-fluid image-absolute"/>*/}
                             </span>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -278,12 +285,12 @@ function About() {
             <div className="site-section border-top">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <div className="col-md-6 mx-auto text-center scroll-mb-60 section-heading">
                             <h1 className="mb-5">Show room</h1>
                         </div>
                         <div className="row">
                             <div className=" mx-auto text-center">
-                                <p className="mb-3" style={{marginTop: "-50px", color:"black", fontSize:"17px"}}> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
+                                <p className="mb-3" style={{color:"black", fontSize:"17px"}}> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
                                     Với diện tích 800m², tách biệt các không gian thành 10 phong cách nội thất khác nhau, cùng với 1 phòng vật liệu và tư vấn. </p>
 
                             </div>
@@ -303,7 +310,7 @@ function About() {
                                 className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="images/kitchen1.jpg" className="image-popup img-opacity"><img
+                            <a href="/images/kitchen1.jpg" className="image-popup img-opacity"><img
                                 src="/images/kitchen1.jpg"
                                 alt="Image"
                                 className="img-fluid"/></a>
@@ -321,7 +328,7 @@ function About() {
                                                                                                  className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="images/43.jpg" className="image-popup img-opacity"><img src="/images/43.jpg"
+                            <a href="/images/43.jpg" className="image-popup img-opacity"><img src="/images/43.jpg"
                                                                                                 alt="Image"
                                                                                                 className="img-fluid"/></a>
                         </div>

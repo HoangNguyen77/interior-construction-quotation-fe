@@ -220,12 +220,17 @@ a {
 		}
 	}
 }
-.display-3, .display-2, .display-4 {
+.display-3, .display-2, .display-4{
 	@include media-breakpoint-down(sm) {
 		font-size: 3rem!important;
 	}
 }
-
+.display-5 {
+	@include media-breakpoint-down(sm) {
+		font-size: 3rem!important;
+		color: $black;
+	}
+}
 .bg-md-height {
 	@include media-breakpoint-down(md) {
 		height: 300px;
