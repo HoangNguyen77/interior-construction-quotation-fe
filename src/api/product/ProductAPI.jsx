@@ -82,12 +82,12 @@ export async function getRelatedProductsByCategoryId(categoryId, page) {
 }
 
 export async function getAllRoomTypes(page){
-    const url = `http://localhost:8080/type-room?${page}&size=9`
+    const url = `http://localhost:8080/type-room?${page}&size=20`
     return getRoomType(url);
 }
 
 export async function getRoomTypeByName(keyword){
-    const url= `http://localhost:8080/type-room/search/findByRoomNameContaining?typeName=${keyword}&page=0&size=9`;
+    const url= `http://localhost:8080/type-room/search/findByRoomNameContaining?typeName=${keyword}&page=0&size=20`;
     return getRoomType(url);
 }
 
@@ -147,8 +147,34 @@ async function getCategory(url){
 }
 
 export async function getAllCategory(page){
-    const url = `http://localhost:8080/category-product?${page}&size=9`
+    const url = `http://localhost:8080/category-product?${page}&size=99`
     return getCategory(url);
 }
+
+export async function getCategoryByIdWithRoomId(categoryId){
+    const url = `http://localhost:8080/category-product/search/findCategoryWithRoomById?categoryId=${categoryId}`;
+    try {
+        const response =  await fetch(url);
+        if(!response.ok){
+            throw new Error('Gặp lỗi trong quá trình gọi API!')
+        }
+
+        const categoryData = await response.json();
+
+        if(categoryData){
+            return {
+                categoryId: categoryData.categoryId,
+                categoryName: categoryData.categoryName,
+                roomId: categoryData.roomId
+            }
+        }else{
+            throw new Error('không tồn tài!');
+        }
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+
 
 
