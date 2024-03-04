@@ -411,8 +411,10 @@ const TypeRoom = () => {
                 <div className='flex justify-between text-black text-[24px]'>
                   <div className='w-2/5 h-[50px] flex flex-col justify-center'>Chọn loại phòng</div>
                   <select className='w-3/5 h-[50px] shadow1 border-2 border-[#858585] rounded-[5px] px-2 bg-[#EAEDF2]'
+                          defaultValue="default"
                           onChange={handleRoomTypeChange}
                   >
+                    <option disabled={true} value="default">----Chọn loại phòng----</option>
                     {roomTypeList.map(roomType => (
                         <option key={roomType.roomId} value={roomType.roomId}>{roomType.roomName}</option>
                     ))}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -6,6 +6,11 @@ import {
   faTrashCan,
   faPencil
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  getAllProductWithFirstImage,
+  getAllProductWithFirstImageByName,
+} from "../../../api/product/ProductAPI.jsx";
+import Pagination from "../../../utils/Pagination.jsx";
 
 const Icon = ({ classIcon, color, size }) => {
   const iconSize = {
@@ -27,6 +32,45 @@ const Description = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [images, setImages] = useState([]);
 
+  const [currentSearch, setCurrentSearch] = useState("");
+  const [search, setSearch] = useState("")
+
+  const [productList, setProductList] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalProduct, setTotalProduct] = useState(0);
+  const [isChanged, setIsChanged] = useState(false);
+  useEffect(() => {
+    if (search === ''){
+      getAllProductWithFirstImage(currentPage - 1).then(
+          result => {
+            setProductList(result.productList);
+            setTotalPages(result.totalPages);
+            setTotalProduct(result.totalProducts);
+          }
+      ).catch(
+          error => {
+            console.log(error)
+          }
+      )
+    }else{
+      getAllProductWithFirstImageByName(search, (currentPage - 1)).then(
+          result => {
+            setProductList(result.productList);
+            setTotalPages(result.totalPages);
+            setTotalProduct(result.totalProducts);
+          }
+      )
+          .catch(
+              error => {
+                console.log(error)
+              }
+          )
+    }
+
+  }, [currentPage, search, isChanged]);
+
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -40,6 +84,9 @@ const Description = () => {
   const handleDelete = () => {
     setImages([]);
   }
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    }
 
 
   return (
@@ -57,50 +104,53 @@ const Description = () => {
           <div className='flex mb-3 gap-[10px]'>
             <div className='flex flex-col'>
               <select className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'>
-                <option>Bàn</option>
-                <option>Ghế</option>
-                <option>Tủ</option>
+                <option>phong ngu</option>
+                <option>phong khach</option>
+                <option>phong bep</option>
               </select>
 
-              <input
-                className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
-                placeholder='Nhập tiêu đề...'
-              />
+              <select className='bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'>
+                <option>phong ngu</option>
+                <option>phong khach</option>
+                <option>phong bep</option>
+              </select>
 
               <textarea
-                className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
-                placeholder='Nhập nội dung...'
+                  className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
+                  placeholder='Nhập nội dung...'
               />
             </div>
 
             <div className='flex flex-col w-full'>
               <div className='flex h-[50px] gap-3'>
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều dài...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều dài...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều rộng...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều rộng...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều cao...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều cao...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
-                  placeholder='Giá thành...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
+                    placeholder='Giá thành...'
                 />
-                <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Đơn vị...'
-                />
+                <select className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2'>
+                  <option>m2</option>
+                  <option>md</option>
+                  <option>cai</option>
+                </select>
               </div>
-              <div className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
+              <div
+                  className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
                 {images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(image)}
+                    <img
+                        key={index}
+                        src={URL.createObjectURL(image)}
                     alt={`Image ${index}`}
                     className='h-[126px] w-[126px] object-cover rounded-[5px]'
                   />
@@ -147,17 +197,18 @@ const Description = () => {
             <div className='col-span-1 text-[#348EED]'>Đơn vị</div>
             <div className='col-span-1 text-[#348EED]'></div>
           </div>
-
-          <div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
+            <div className='overflow-y-auto h-[44vh] pr-3'>
+          {productList.map((product) => (
+          <div key={product.productId} className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+            <div className='col-span-1 text-black flex flex-col justify-center'>{product.productId}</div>
             <div className='col-span-2 text-black flex flex-col justify-center'>
-              <img className='w-3/5' src='../../public/images/image 2.png' />
+              <img className='w-3/5' src={product.image} alt="" />
             </div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Bàn</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Gỗ liêm</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>12 - 15 - 10</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>100000</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1m vuong</div>
+            <div className='col-span-2 text-black flex flex-col justify-center'>{product.name}</div>
+            <div className='col-span-2 text-black flex flex-col justify-center'></div>
+            <div className='col-span-2 text-black flex flex-col justify-center'>{product.length} - {product.width} - {product.height}</div>
+            <div className='col-span-1 text-black flex flex-col justify-center'>{product.unitPrice}</div>
+            <div className='col-span-1 text-black flex flex-col justify-center'>{product.unit}</div>
             <div className='col-span-1 text-black flex flex-col justify-center'>
               <div className='flex justify-end gap-2'>
                 <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
@@ -165,60 +216,10 @@ const Description = () => {
               </div>
             </div>
           </div>
-
-          <div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>
-              <img className='w-3/5' src='../../public/images/image 2.png' />
-            </div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Bàn</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Gỗ liêm</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>12 - 15 - 10</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>100000</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1m vuong</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
-              </div>
-            </div>
-          </div>
-
-          <div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>
-              <img className='w-3/5' src='../../public/images/image 2.png' />
-            </div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Bàn</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Gỗ liêm</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>12 - 15 - 10</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>100000</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1m vuong</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
-              </div>
-            </div>
-          </div>
-
-          <div className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>
-              <img className='w-3/5' src='../../public/images/image 2.png' />
-            </div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Bàn</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>Gỗ liêm</div>
-            <div className='col-span-2 text-black flex flex-col justify-center'>12 - 15 - 10</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>100000</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>1m vuong</div>
-            <div className='col-span-1 text-black flex flex-col justify-center'>
-              <div className='flex justify-end gap-2'>
-                <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
-                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
-              </div>
-            </div>
-          </div>
+              ))}
+                </div>
+            <Pagination currentPage={currentPage} totalPage={totalPages}
+                        handlePageChange={handlePageChange}/>
         </div>
       </div>
     </div>

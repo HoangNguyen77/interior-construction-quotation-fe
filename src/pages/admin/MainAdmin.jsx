@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ManageBlog from './ManageBlog';
 import ManageUser from './ManageUser';
-import Typeroom from './ManageShowroom/Typeroom&Product';
+import TypeRoom from './ManageShowroom/Typeroom&Product';
 import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
 import ManageQuotation from "./ManageQuotation.jsx";
@@ -57,7 +57,7 @@ const MainAdmin = () => {
       </div>
       <div className='col-span-6 '>
         {selectedTab === 0 ? (
-          <Typeroom />
+          <TypeRoom />
         ) : selectedTab === 1 ? (
           <Description/>
         ) : selectedTab === 2 ? (
