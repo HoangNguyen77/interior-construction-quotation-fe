@@ -1,4 +1,8 @@
 import {my_request} from "../Request.js";
+import {getFirstImageOfProduct} from "./ProductImageAPI.jsx";
+import product from "../../pages/showroom/Product.jsx";
+import {get1ImageOfABlog} from "../blog/BlogImageAPI.js";
+import {getBlogWithUsernameById} from "../blog/BlogAPI.js";
 
 async function getProduct(url){
     const productList = [];
@@ -26,7 +30,67 @@ export async function getAllProducts(page){
     const url = `http://localhost:8080/detail-product?size=9&page=${page}`
     return getProduct(url);
 }
+export async function getAllProductWithFirstImage(page) {
+    const url = `http://localhost:8080/detail-product?size=9&page=${page}`;
+    try {
+        const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+        const responseData = response._embedded.products;
+        const totalPages = response.page.totalPages;
+        const totalProducts = response.page.totalElements;
 
+
+        const productDetailsPromises = responseData.map(async (product) => {
+            const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
+
+
+            return {
+                ...product,
+                image: imageDetails.imageData
+            };
+        });
+
+        // Wait for all promises to resolve
+        const productList = await Promise.all(productDetailsPromises);
+        console.log(productList);
+        console.log(totalProducts);
+        console.log(totalPages)
+        return { productList, totalProducts, totalPages };
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+
+
+export async function getAllProductWithFirstImageByName(keyword, page) {
+    const url = `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=${page}&size=9`;
+    try {
+        const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+        const responseData = response._embedded.products;
+        const totalPages = response.page.totalPages;
+        const totalProducts = response.page.totalElements;
+
+
+        const productDetailsPromises = responseData.map(async (product) => {
+            const [imageDetails] = await Promise.all([get1ImageOfABlog(product.productId)]);
+
+            return {
+                ...product,
+                image: imageDetails.imageData
+            };
+        });
+
+        // Wait for all promises to resolve
+        const productList = await Promise.all(productDetailsPromises);
+        console.log(productList);
+        console.log(totalProducts);
+        console.log(totalPages)
+        return { productList, totalProducts, totalPages };
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
 export async function getProductByName(keyword){
     const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
     return getProduct(url);

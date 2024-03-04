@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashCan,
+  faPencil,
+} from "@fortawesome/free-solid-svg-icons";
 import { faSearch, faSort, faCheck, faBan, faTrashAlt } from "@fortawesome/free-solid-svg-icons"; // Import faSearch icon
 import axios from 'axios';
 import {toast} from "react-toastify";
@@ -166,7 +170,7 @@ class ManageUser extends Component {
                           onClick={() => this.handleDeleteUserConfirmation(user.userId)}
                           style={{ backgroundColor: 'red', color: 'white' }}
                       >
-                        <FontAwesomeIcon icon={faTrashAlt} color={"white"} size={"20px"} />
+                        <FontAwesomeIcon icon={faTrashCan} color={"white"} size={"20px"} />
                       </button>
                     </div>
 

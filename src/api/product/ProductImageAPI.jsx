@@ -27,6 +27,7 @@ export async function getFirstImageOfProduct(productId){
     //Xac dinh endpoint
     const url= `http://localhost:8080/detail-product/${productId}/productImageList?page=0&size=1`;
     //Goi phuong thuc request
+    const images = await getProductImage(url);
 
-    return getProductImage(url);
+    return images.length > 0 ? images[0] : null;
 }
