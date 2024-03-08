@@ -19,7 +19,7 @@ async function getProduct(url){
             length: responseData[key].length,
             height: responseData[key].height,
             unitPrice: responseData[key].unitPrice,
-            unit: responseData[key].unit
+            unitId: responseData[key].unitId
         });
     }
         return {productList: productList, totalProducts: totalProducts, totalPages: totalPages};
@@ -116,7 +116,8 @@ export async function getProductById(productId){
                 width: productData.width,
                 length: productData.length,
                 unitPrice: productData.unitPrice,
-                unit: productData.unit
+                unitId: productData.unitId,
+                height : productData.height
             }
         }else{
             throw new Error('không tồn tài!');
@@ -199,15 +200,17 @@ async function getCategory(url){
     const response = await my_request(url);
     const responseData = response._embedded.categoryProducts;
     console.log(responseData);
-    const totalPages = response.page.totalPages;
-    const totalCategories = response.page.totalElements;
+    // const totalPages = response.page.totalPages;
+    // const totalCategories = response.page.totalElements;
     for (const key in responseData) {
         categoryList.push({
             categoryId: responseData[key].categoryId,
             categoryName: responseData[key].categoryName,
         });
     }
-    return {categoryList: categoryList, totalCategories: totalCategories, totalPages: totalPages};
+    return {categoryList: categoryList
+        // , totalCategories: totalCategories, totalPages: totalPages
+    };
 }
 
 export async function getAllCategory(page){
@@ -239,6 +242,54 @@ export async function getCategoryByIdWithRoomId(categoryId){
         return null;
     }
 }
+
+export async function getCategoryByRoomId(roomId){
+    const url = `http://localhost:8080/category-product/search/findByTypeRoom_RoomId?roomId=${roomId}`;
+    return getCategory(url);
+}
+
+async function getUnit(url){
+    const unitList =[];
+    const response = await my_request(url);
+    const responseData = response._embedded.units;
+    console.log(responseData);
+    for (const key in responseData) {
+        unitList.push({
+            unitId: responseData[key].unitId,
+            unitName: responseData[key].unitName,
+        });
+    }
+    return {unitList: unitList};
+}
+
+export async function getUnitById(unitId){
+    const url = `http://localhost:8080/unit/search/findByUnitId{?unitId}=${unitId}`;
+    try {
+        const response =  await fetch(url);
+        if(!response.ok){
+            throw new Error('Gặp lỗi trong quá trình gọi API!')
+        }
+
+        const unitData = await response.json();
+
+        if(unitData){
+            return {
+                unitId: unitData.unitId,
+                unitName: unitData.unitName,
+            }
+        }else{
+            throw new Error('không tồn tài!');
+        }
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
+export async function getAllUnit(){
+    const url = `http://localhost:8080/unit`
+    return getUnit(url);
+}
+
 
 
 

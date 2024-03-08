@@ -182,3 +182,15 @@ export const checkInput = (setErrorInput, input) => {
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
+export const checkInputDouble = (setErrorInput, input) => {
+    if (input.trim() === "") {
+        setErrorInput("Thông tin bắt buộc!");
+        return true;
+    } else if (isNaN(parseFloat(input))) {
+        setErrorInput("Vui lòng nhập số!");
+        return true;
+    } else {
+        setErrorInput("");
+        return false;
+    }
+}

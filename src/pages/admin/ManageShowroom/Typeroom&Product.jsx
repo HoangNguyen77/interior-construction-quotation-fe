@@ -153,7 +153,7 @@ const TypeRoom = () => {
       if (roomTypeResult) {
         setRoomName(roomTypeResult.roomName);
       } else {
-        console.log('No blog data returned');
+        console.log('No room data returned');
       }
     } catch (error) {
       console.error('Failed to fetch room type by ID:', error);
