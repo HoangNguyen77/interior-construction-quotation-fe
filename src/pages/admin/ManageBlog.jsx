@@ -134,7 +134,7 @@ const ManageBlog = () => {
     ///////////////////////////////////////////////////////////
 
     //                          CRUD                        //
-    const checkFileInput = (setErrorInput, input) => {np
+    const checkFileInput = (setErrorInput, input) => {
         console.log(input.length)
         if (!input || input.length === 0) {
             setErrorInput("Thông tin bắt buộc!");
