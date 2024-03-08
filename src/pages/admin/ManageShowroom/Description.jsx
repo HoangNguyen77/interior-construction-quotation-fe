@@ -406,8 +406,8 @@ const Description = () => {
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2'
                                     value={unitId}
                                     onChange={handleUnitIdChange}
-                                    defaultValue="default">
-                                    <option disabled={true} value="default">--Chọn đơn vị--</option>
+                                    defaultValue="">
+                                    <option disabled={true} value="">--Chọn đơn vị--</option>
                                     {unitList.map(unit => (
                                         <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>
                                     ))}
