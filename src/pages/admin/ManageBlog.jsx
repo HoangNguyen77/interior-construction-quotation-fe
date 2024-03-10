@@ -119,7 +119,6 @@ const ManageBlog = () => {
 
         setIsModalOpen(!isModalOpen);
     }
-
     //                          SEARCH                      //
     const handleSearch = () => {
         setSearch(currentSearch);
