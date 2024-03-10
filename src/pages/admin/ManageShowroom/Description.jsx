@@ -318,15 +318,6 @@ const Description = () => {
     }
 
     const handleUpdateProduct = async () => {
-        console.log('images:', images);
-        console.log('name:', name);
-        console.log('width:', width);
-        console.log('length:', length);
-        console.log('height:', height);
-        console.log('unitPrice:', unitPrice);
-        console.log('unitId:', unitId);
-        console.log('typeName:', typeName);
-        console.log('categoryId:', categoryId);
         const isImageFilesValid = !checkFileInput(setErrorImages, images);
         const isNameValid = !checkInput(setErrorName, name);
         const isWidthValid = !checkInputDouble(setErrorWidth, width);
@@ -389,15 +380,15 @@ const Description = () => {
             const productResult = await getProductRequestById(productId);
             console.log('Product data:', productResult); // Check the structure
             if (productResult) {
-                setName(productResult.name);
-                setWidth(productResult.width);
-                setLength(productResult.length);
-                setHeight(productResult.height);
-                setUnitId(productResult.unitId);
-                setUnitPrice(productResult.unitPrice);
-                setTypeName(productResult.typeName);
-                setRoomId(productResult.roomId);
-                setCategoryId(productResult.categoryId);
+                setName(productResult.name.toString()); // Convert non-string values to strings
+                setWidth(productResult.width.toString());
+                setLength(productResult.length.toString());
+                setHeight(productResult.height.toString());
+                setUnitId(productResult.unitId.toString());
+                setUnitPrice(productResult.unitPrice.toString());
+                setTypeName(productResult.typeName.toString());
+                setRoomId(productResult.roomId.toString());
+                setCategoryId(productResult.categoryId.toString());
             } else {
                 console.log('No product data returned');
             }
@@ -481,8 +472,8 @@ const Description = () => {
                     />
                 </div>
                 <div className='absolute bottom-1 left-[365px]' onClick={handleSearch}><Icon classIcon={faSearch}
-                                                                      color={"black"}
-                                                                      size={"24px"}/>
+                                                                                             color={"black"}
+                                                                                             size={"24px"}/>
                 </div>
             </div>
 
@@ -668,14 +659,16 @@ const Description = () => {
                                 <div
                                     className='col-span-1 text-black flex flex-col justify-center'>{product.unit}</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
+                                    {!isModalOpen && (
                                     <div className='flex justify-end gap-2'>
                                         <div onClick={() => handleDeleteProduct(product.productId)}>
                                             <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
                                         </div>
                                         <div onClick={() => handleButtonUpdate((product.productId))}>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                            <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        </div>
                                     </div>
-                                    </div>
+                                        )}
                                 </div>
                             </div>
                         ))}
