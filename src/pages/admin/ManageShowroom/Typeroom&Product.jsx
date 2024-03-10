@@ -42,13 +42,14 @@ const TypeRoom = () => {
   const [errorRoomName, setErrorRoomName] = useState("");
   const [isChanged, setIsChanged] = useState(false);
   const [roomName, setRoomName] = useState("");
-  const [roomId, setRoomId] = useState("");
+  const [roomId, setRoomId] = useState(0);
   const [update, setUpdate] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [categoryId, setCategoryId] = useState(0);
   const [errorCategoryName, setErrorCategoryName] = useState("");
   const [errorRoomId, setErrorRoomId] = useState("");
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     getAllRoomTypes(currentPage - 1).then(
@@ -75,6 +76,17 @@ const TypeRoom = () => {
     )
   }, [currentPage, isChanged]);
 
+  const handleModalToggle = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  const handleModalToogleClose = () => {
+    setRoomId(0);
+    setCategoryId(0);
+
+    setErrorRoomId("");
+    setErrorCategoryName("");
+    setIsModalOpen(!isModalOpen);
+  }
   const handlePageChange = (page) => {
     setCurrentPage(page);
   }
@@ -362,8 +374,8 @@ const TypeRoom = () => {
                          value={roomName}
                          onChange={handleRoomNameChange}
                   />
-
                 </div>
+                <div style={{color: "red"}}>{errorRoomName}</div>
                 <div className='w-full flex justify-end mt-3'>
                   <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'
                           onClick={update ? handleUpdateRoomType : handleCreateRoomType}
@@ -411,10 +423,10 @@ const TypeRoom = () => {
                 <div className='flex justify-between text-black text-[24px]'>
                   <div className='w-2/5 h-[50px] flex flex-col justify-center'>Chọn loại phòng</div>
                   <select className='w-3/5 h-[50px] shadow1 border-2 border-[#858585] rounded-[5px] px-2 bg-[#EAEDF2]'
-                          defaultValue="default"
+                          defaultValue="0"
                           onChange={handleRoomTypeChange}
                   >
-                    <option disabled={true} value="default">----Chọn loại phòng----</option>
+                    <option disabled={true} value="0">----Chọn loại phòng----</option>
                     {roomTypeList.map(roomType => (
                         <option key={roomType.roomId} value={roomType.roomId}>{roomType.roomName}</option>
                     ))}
@@ -427,12 +439,14 @@ const TypeRoom = () => {
                          value={categoryName}
                          onChange={handleCategoryNameChange}
                   />
-                </div>
 
+                </div>
+                <div style={{color: "red"}}>{errorCategoryName}</div>
                 <div className='w-full flex justify-end mt-3'>
                   <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'
-                          onClick={update? handleUpdateCategory : handleCreateCategory}
-                  >Lưu</button>
+                          onClick={update ? handleUpdateCategory : handleCreateCategory}
+                  >Lưu
+                  </button>
                 </div>
               </div>
 

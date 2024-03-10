@@ -8,11 +8,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
     getAllProductWithFirstImage,
-    getAllProductWithFirstImageByName, getAllRoomTypes, getAllUnit, getCategoryByRoomId,
+    getAllProductWithFirstImageByName,
+    getAllRoomTypes,
+    getAllUnit,
+    getCategoryByRoomId,
+    getProductById,
+    getProductRequestById,
 } from "../../../api/product/ProductAPI.jsx";
 import Pagination from "../../../utils/Pagination.jsx";
 import {checkInput, checkInputDouble} from "../../../utils/Validation.js";
 import {toast} from "react-toastify";
+import {getIdUserByToken} from "../../../utils/JwtService.js";
+import {getBlogById} from "../../../api/blog/BlogAPI.js";
+import {getAllBlogImageData} from "../../../api/blog/BlogImageAPI.js";
+import {getAllProductImages} from "../../../api/product/ProductImageAPI.jsx";
 
 const Icon = ({classIcon, color, size}) => {
     const iconSize = {
@@ -43,7 +52,8 @@ const Description = () => {
     const [typeName, setTypeName] = useState("");
     const [roomId, setRoomId] = useState("");
     const [unitList, setUnitList] = useState([]);
-    const [unit, setUnit] = useState("");
+    const [productId, setProductId] = useState(0);
+    const [typeId, setTypeId] = useState(0);
 
     const [currentSearch, setCurrentSearch] = useState("");
     const [search, setSearch] = useState("")
@@ -70,6 +80,8 @@ const Description = () => {
     const [errorUnit, setErrorUnit] = useState("");
     const [errorCategory, setErrorCategory] = useState("");
     const [errorTypeName, setErrorTypeName] = useState("");
+    //
+    const [update, setUpdate] = useState(false);
     useEffect(() => {
         if (search === '') {
             getAllProductWithFirstImage(currentPage - 1).then(
@@ -99,6 +111,7 @@ const Description = () => {
         }
 
     }, [currentPage, search, isChanged]);
+
     useEffect(() => {
         getAllRoomTypes(currentPage - 1).then(
             result => {
@@ -128,7 +141,6 @@ const Description = () => {
             getCategoryByRoomId(roomId)
                 .then((result) => {
                     setCategoryList(result.categoryList);
-                    setTotalCategories(result.totalCategories);
                     setTotalPages(result.totalPages);
                 })
                 .catch((error) => {
@@ -139,7 +151,29 @@ const Description = () => {
     const handleModalToggle = () => {
         setIsModalOpen(!isModalOpen);
     };
+    const handleModalToogleClose = () => {
+        setRoomId("");
+        setCategoryId("");
+        setTypeName("");
+        setName("");
+        setHeight("");
+        setLength("");
+        setWidth("");
+        setUnitPrice("");
+        setUnitId("");
+        setImages([]);
 
+        setErrorName("");
+        setErrorLength("");
+        setErrorWidth("");
+        setErrorHeight("");
+        setErrorUnit("");
+        setErrorPrice("");
+        setErrorTypeName("");
+        setErrorImages("");
+
+        setIsModalOpen(!isModalOpen);
+    }
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         // Convert Image to Base64
@@ -156,8 +190,15 @@ const Description = () => {
     const handleRemoveImage = (indexToRemove) => {
         setImages(images.filter((_, index) => index !== indexToRemove));
     };
-    const handleDelete = () => {
-        setImages([]);
+    const handleSearch = () => {
+        setSearch(currentSearch);
+        setCurrentPage(1); // Cập nhật currentPage về 1 sau khi tìm kiếm
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            setSearch(event.target.value);
+            handleSearch();
+        }
     }
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -220,8 +261,6 @@ const Description = () => {
             console.log("Selected Room Type ID:", newRoomId);
         }
     }
-
-
     const handleCreateProduct = async () => {
         const isImageFilesValid = !checkFileInput(setErrorImages, images);
         const isNameValid = !checkInput(setErrorName, name);
@@ -277,6 +316,110 @@ const Description = () => {
             }
         }
     }
+
+    const handleUpdateProduct = async () => {
+        console.log('images:', images);
+        console.log('name:', name);
+        console.log('width:', width);
+        console.log('length:', length);
+        console.log('height:', height);
+        console.log('unitPrice:', unitPrice);
+        console.log('unitId:', unitId);
+        console.log('typeName:', typeName);
+        console.log('categoryId:', categoryId);
+        const isImageFilesValid = !checkFileInput(setErrorImages, images);
+        const isNameValid = !checkInput(setErrorName, name);
+        const isWidthValid = !checkInputDouble(setErrorWidth, width);
+        const isLengthValid = !checkInputDouble(setErrorLength, length);
+        const isHeightValid = !checkInputDouble(setErrorHeight, height);
+        const isPriceValid = !checkInputDouble(setErrorPrice, unitPrice);
+        const isUnitIdValid = !checkInput(setErrorUnit, unitId);
+        const isCategoryValid = !checkInput(setErrorCategory, categoryId);
+        const isTypeNameValid = !checkInput(setErrorTypeName, typeName);
+        if (isCategoryValid && isTypeNameValid && isImageFilesValid && isNameValid &&
+            isWidthValid && isLengthValid && isHeightValid && isPriceValid && isUnitIdValid) {
+            try {
+                const url = `http://localhost:8080/products/update`;
+                const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            productId: productId,
+                            name: name,
+                            width: width,
+                            length: length,
+                            height: height,
+                            unitPrice: unitPrice,
+                            unitId: unitId,
+                            typeName: typeName,
+                            categoryId: categoryId,
+                            productImageList: images
+                        })
+                    }
+                )
+                if (response.ok) {
+                    setIsChanged(!isChanged);
+                    setCurrentPage(1);
+                    setIsModalOpen(!isModalOpen);
+                    setName("");
+                    setWidth("");
+                    setLength("");
+                    setHeight("");
+                    setUnitPrice("");
+                    setUnitId("");
+                    setTypeName("");
+                    setCategoryId("");
+                    setImages([]);
+                    toast.success("Chỉnh sửa sản phẩm thành công");
+                } else {
+                    toast.warning("Đã xảy ra lỗi trong quá trình chỉnh sửa sản phẩm!");
+                }
+            } catch (error) {
+                toast.warning("Đã xảy ra lỗi trong quá trình chỉnh sửa sản phẩm!")
+            }
+        }
+    }
+    const handleButtonUpdate = async (productId) => {
+        setIsModalOpen(true);
+        setUpdate(true);
+        setProductId(productId);
+        try {
+            const productResult = await getProductRequestById(productId);
+            console.log('Product data:', productResult); // Check the structure
+            if (productResult) {
+                setName(productResult.name);
+                setWidth(productResult.width);
+                setLength(productResult.length);
+                setHeight(productResult.height);
+                setUnitId(productResult.unitId);
+                setUnitPrice(productResult.unitPrice);
+                setTypeName(productResult.typeName);
+                setRoomId(productResult.roomId);
+                setCategoryId(productResult.categoryId);
+            } else {
+                console.log('No product data returned');
+            }
+        } catch (error) {
+            console.error('Failed to fetch product by ID:', error);
+        }
+
+        try {
+            const imagesResult = await getAllProductImages(productId);
+            console.log('Image data:', imagesResult); // This should now reflect the structure you provided
+            if (imagesResult && Array.isArray(imagesResult) && imagesResult.length > 0) {
+                // Map over the imagesResult array to extract each imageData string
+                const imageDataArray = imagesResult.map(img => img.imageData);
+                setImages(imageDataArray);
+            } else {
+                console.log('No image data returned');
+            }
+        } catch (error) {
+            console.error('Failed to fetch blog images:', error);
+        }
+    }
+
     const handleDeleteProduct = async (id) => {
         // Display toast confirmation
         toast.warn(({closeToast}) => (
@@ -318,24 +461,37 @@ const Description = () => {
             } else {
                 toast.warning("Đã xảy ra lỗi trong quá trình xóa sản phẩm!");
             }
-        }catch (error){
+        } catch (error) {
             {
                 toast.error("Đã xảy ra lỗi trong quá trình xóa sản phẩm!");
             }
         }
     }
     return (
-        <div className='h-auto pl-3'>
-            <div className='w-full h-[90px] relative'>
+        <div className='h-[96vh] pl-3'>
+            <div className='w-full h-[150px] relative'>
                 <div className='title-admin absolute top-0 left-0'>MÔ TẢ SẢN PHẨM</div>
+                <div className='absolute bottom-0 left-0'>
+                    <input
+                        className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
+                        placeholder='Nhập từ khóa tìm kiếm theo tiêu đề blog...'
+                        value={currentSearch}
+                        onChange={e => setCurrentSearch(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </div>
+                <div className='absolute bottom-1 left-[365px]' onClick={handleSearch}><Icon classIcon={faSearch}
+                                                                      color={"black"}
+                                                                      size={"24px"}/>
+                </div>
             </div>
 
             {isModalOpen && (
-                <div className={`relative w-full`}>
+                <div className={`relative w-full mt-10`}>
                     <div className='w-full flex justify-between'>
-                        <div className='text-black text-[20px]'>Thêm mô tả</div>
+                        <div className='text-black text-[20px]'>{update ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm"}</div>
                         <div className='cursor-pointer hover:text-[#ff0000]'
-                             onClick={handleModalToggle}>{`[Đóng]`}</div>
+                             onClick={handleModalToogleClose}>{`[Đóng]`}</div>
                     </div>
                     <div className='flex mb-3 gap-[10px]'>
                         <div className='flex flex-col'>
@@ -362,18 +518,21 @@ const Description = () => {
                                             value={category.categoryId}>{category.categoryName}</option>
                                 ))}
                             </select>
+                            <div style={{color: "red"}}>{errorCategory}</div>
                             <textarea
                                 className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
                                 placeholder='Nhập Tên Sản Phẩm'
                                 value={name}
                                 onChange={handleNameChange}
                             />
+                            <div style={{color: "red"}}>{errorName}</div>
                             <textarea
                                 className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
                                 placeholder='Nhập nội dung...'
                                 value={typeName}
                                 onChange={handleTypeNameChange}
                             />
+                            <div style={{color: "red"}}>{errorTypeName}</div>
                         </div>
 
                         <div className='flex flex-col w-full'>
@@ -384,24 +543,28 @@ const Description = () => {
                                     value={length}
                                     onChange={handleLengthChange}
                                 />
+                                <div style={{color: "red"}}>{errorLength}</div>
                                 <input
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
                                     placeholder='Chiều rộng...'
                                     value={width}
                                     onChange={handleWidthChange}
                                 />
+                                <div style={{color: "red"}}>{errorWidth}</div>
                                 <input
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
                                     placeholder='Chiều cao...'
                                     value={height}
                                     onChange={handleHeightChange}
                                 />
+                                <div style={{color: "red"}}>{errorHeight}</div>
                                 <input
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
                                     placeholder='Giá thành...'
                                     value={unitPrice}
                                     onChange={handlePriceChange}
                                 />
+                                <div style={{color: "red"}}>{errorPrice}</div>
                                 <select
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2'
                                     value={unitId}
@@ -412,6 +575,7 @@ const Description = () => {
                                         <option key={unit.unitId} value={unit.unitId}>{unit.unitName}</option>
                                     ))}
                                 </select>
+                                <div style={{color: "red"}}>{errorUnit}</div>
                             </div>
                             <div
                                 className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
@@ -448,16 +612,18 @@ const Description = () => {
                                         </div>
                                     </div>
                                 </label>
+                                <div style={{color: "red"}}>{errorImages}</div>
                             </div>
                         </div>
 
                     </div>
 
                     <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'
-                    onClick={handleCreateProduct}>Thêm</button>
-                    <button className='bg-[#ff2e2e] px-3 py-2 rounded-[5px] text-white ml-3'
-                            onClick={handleDelete}>Xóa
+                            onClick={update ? handleUpdateProduct : handleCreateProduct}>Lưu
                     </button>
+                    {/*<button className='bg-[#ff2e2e] px-3 py-2 rounded-[5px] text-white ml-3'*/}
+                    {/*        onClick={handleDelete}>Xóa*/}
+                    {/*</button>*/}
                 </div>
             )}
 
@@ -465,11 +631,11 @@ const Description = () => {
                 <div
                     className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>MÔ
                     TẢ SẢN PHẨM
-                    <div
+                    {!isModalOpen && (<div
                         className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
                         onClick={handleModalToggle}>
                         <Icon classIcon={faPlus} color={"white"} size={"24px"}/>
-                    </div>
+                    </div>)}
                 </div>
 
                 <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
@@ -504,9 +670,11 @@ const Description = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
                                         <div onClick={() => handleDeleteProduct(product.productId)}>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
+                                            <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
                                         </div>
+                                        <div onClick={() => handleButtonUpdate((product.productId))}>
                                         <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
