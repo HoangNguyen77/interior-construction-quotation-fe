@@ -53,7 +53,6 @@ const Description = () => {
     const [roomId, setRoomId] = useState("");
     const [unitList, setUnitList] = useState([]);
     const [productId, setProductId] = useState(0);
-    const [typeId, setTypeId] = useState(0);
 
     const [currentSearch, setCurrentSearch] = useState("");
     const [search, setSearch] = useState("")
@@ -63,8 +62,6 @@ const Description = () => {
     const [totalRoomType, setTotalRoomType] = useState(0);
     const [totalPage, setTotalPage] = useState(0);
     const [categoryList, setCategoryList] = useState([]);
-    const [totalCategories, setTotalCategories] = useState(0);
-    const [category, setCategory] = useState("");
 
 
     const [currentPage, setCurrentPage] = useState(1);

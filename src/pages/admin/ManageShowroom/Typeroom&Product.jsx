@@ -5,7 +5,7 @@ import {
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  getAllCategory,
+  getAllCategory, getAllCategoryWithRoomName,
   getAllRoomTypes,
   getCategoryByIdWithRoomId,
   getRoomTypeById
@@ -64,11 +64,10 @@ const TypeRoom = () => {
     )
   }, [currentPage, isChanged]);
   useEffect(() => {
-    getAllCategory(currentPage - 1).then(
+    getAllCategoryWithRoomName(currentPage - 1).then(
         result => {
           setCategoryList(result.categoryList);
           setTotalPage(result.totalPages);
-          setTotalCategories(result.totalCategories);
         }
     ).catch(error => {
           console.log(error)
@@ -468,7 +467,7 @@ const TypeRoom = () => {
                              className='grid grid-cols-6 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                           <div
                               className='col-span-1 text-black flex flex-col justify-center'>{category.categoryId}</div>
-                          <div className='col-span-2 text-black flex flex-col justify-center'>{category.categoryId.roomName}</div>
+                          <div className='col-span-2 text-black flex flex-col justify-center'>{category.roomName}</div>
                           <div
                               className='col-span-2 text-black flex flex-col justify-center'>{category.categoryName}</div>
                           <div className='col-span-1 text-black flex flex-col justify-center'>

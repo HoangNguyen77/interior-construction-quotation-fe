@@ -285,7 +285,7 @@ export async function getCategoryByIdWithRoomId(categoryId){
             return {
                 categoryId: categoryData.categoryId,
                 categoryName: categoryData.categoryName,
-                roomId: categoryData.roomId
+                roomId: categoryData.roomId,
             }
         }else{
             throw new Error('không tồn tài!');
@@ -294,6 +294,23 @@ export async function getCategoryByIdWithRoomId(categoryId){
         console.error("Error", error);
         return null;
     }
+}
+export async function getAllCategoryWithRoomName(){
+    const categoryList =[];
+    const response = await my_request('http://localhost:8080/category-product/search/findAllCategoryWithRoomName');
+    const responseData = response._embedded.categoryRequests;
+    console.log(responseData);
+    for (const key in responseData) {
+        categoryList.push({
+            categoryId: responseData[key].categoryId,
+            categoryName: responseData[key].categoryName,
+            roomName: responseData[key].roomName,
+            roomId: responseData[key].roomId
+        });
+    }
+    return {categoryList: categoryList
+        // , totalCategories: totalCategories, totalPages: totalPages
+    };
 }
 
 export async function getCategoryByRoomId(roomId){
