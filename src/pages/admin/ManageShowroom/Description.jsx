@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -6,6 +6,7 @@ import {
   faTrashCan,
   faPencil
 } from "@fortawesome/free-solid-svg-icons";
+import {getAllCategory, getAllCategoryByRoomId, getAllRoomTypes} from "../../../api/product/ProductAPI.jsx";
 
 const Icon = ({ classIcon, color, size }) => {
   const iconSize = {
@@ -27,6 +28,11 @@ const Description = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [images, setImages] = useState([]);
 
+  const [roomTypeList, setRoomTypeList] = useState([]);
+  const [roomId, setRoomId] = useState(0);
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -40,7 +46,40 @@ const Description = () => {
   const handleDelete = () => {
     setImages([]);
   }
+  useEffect(() => {
+    getAllRoomTypes(0)
+        .then(result => {
+          setRoomTypeList(result.roomTypeList);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  }, []);
 
+  useEffect(() => {
+    if (roomId !== 0) {
+      getAllCategoryByRoomId(roomId)
+          .then(result => {
+            setCategoryList(result.categoryList);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    } else {
+      setCategoryList([]); // Đặt lại danh sách loại sản phẩm khi roomId = 0
+    }
+  }, [roomId]);
+
+  const handleTypeRoomChange = (e) => {
+    const id = parseInt(e.target.value, 10);
+    setRoomId(id);
+    setSelectedCategoryId(0); // Đặt lại loại sản phẩm khi chọn loại phòng mới
+  };
+
+  const handleCategoryChange = (e) => {
+    const id = parseInt(e.target.value, 10); // Chuyển đổi giá trị selectedCategoryId thành number
+    setSelectedCategoryId(id);
+  };
 
   return (
     <div className='h-auto pl-3'>
@@ -56,53 +95,76 @@ const Description = () => {
           </div>
           <div className='flex mb-3 gap-[10px]'>
             <div className='flex flex-col'>
-              <select className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'>
-                <option>Bàn</option>
-                <option>Ghế</option>
-                <option>Tủ</option>
+              <select
+                  className='bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
+                  defaultValue="default"
+                  onChange={handleTypeRoomChange}
+              >
+                <option disabled={true} value="default">----Chọn loại phòng----</option>
+                {roomTypeList.map(room => (
+                    <option key={room.roomId} value={room.roomId}>{room.roomName}</option>
+                ))}
               </select>
 
-              <input
-                className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
-                placeholder='Nhập tiêu đề...'
-              />
+              <select
+                  className='bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
+                  value={selectedCategoryId}
+                  onChange={handleCategoryChange}
+                  disabled={roomId === 0}
+              >
+                <option disabled={selectedCategoryId !== 0} value="default">----Chọn loại sản phẩm----</option>
+                {categoryList.map(category => (
+                    <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option>
+                ))}
+              </select>
+
 
               <textarea
-                className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
-                placeholder='Nhập nội dung...'
+                  className='text-black bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
+                  placeholder='Nhập mô tả...'
               />
             </div>
 
             <div className='flex flex-col w-full'>
               <div className='flex h-[50px] gap-3'>
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều dài...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều dài...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều rộng...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều rộng...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Chiều cao...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
+                    placeholder='Chiều cao...'
                 />
                 <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
-                  placeholder='Giá thành...'
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
+                    placeholder='Đơn giá...'
                 />
-                <input
-                  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'
-                  placeholder='Đơn vị...'
-                />
+                {/*<input*/}
+                {/*  className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[150px] h-[40px] px-2 text-black'*/}
+                {/*  placeholder='Đơn vị...'*/}
+                {/*/>*/}
+                <select
+                    className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[200px] h-[40px] px-2'
+                    defaultValue="default"
+                >
+                  <option disabled={true} value="default">----Chọn loại đơn vị----</option>
+                  <option>Cái</option>
+                  <option>m2</option>
+                  <option>m3</option>
+                </select>
               </div>
-              <div className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
+              <div
+                  className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
                 {images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(image)}
-                    alt={`Image ${index}`}
-                    className='h-[126px] w-[126px] object-cover rounded-[5px]'
+                    <img
+                        key={index}
+                        src={URL.createObjectURL(image)}
+                        alt={`Image ${index}`}
+                        className='h-[126px] w-[126px] object-cover rounded-[5px]'
                   />
                 ))}
                 <label htmlFor='image-upload' className='cursor-pointer'>
@@ -124,8 +186,8 @@ const Description = () => {
 
           </div>
 
+          {/*<button className='bg-[#ff2e2e] px-3 py-2 rounded-[5px] text-white mr-3' onClick={handleDelete}>Hủy</button>*/}
           <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'>Thêm</button>
-          <button className='bg-[#ff2e2e] px-3 py-2 rounded-[5px] text-white ml-3' onClick={handleDelete}>Xóa</button>
         </div>
       )}
 

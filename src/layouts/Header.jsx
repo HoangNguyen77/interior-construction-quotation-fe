@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {isToken, isTokenExpired, logout} from "../utils/JwtService.js";
+import {getRoleByToken, isToken, isTokenExpired, logout} from "../utils/JwtService.js";
 import { jwtDecode } from "jwt-decode";
 
 function Header() {
@@ -66,7 +66,13 @@ function Header() {
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                     <Link className="dropdown-item" to="/info">Thông tin của bạn</Link>
-                                                    <a className="dropdown-item" href="#">Báo giá</a>
+                                                    {
+                                                        (getRoleByToken() === "ADMIN") && (
+                                                            <Link className="dropdown-item" to="/admin">Dashboard</Link>)
+                                                    }
+                                                    {
+                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/quotation-calculator">Báo giá của bạn</Link>)
+                                                    }
                                                     <div className="dropdown-divider"></div>
                                                     <a className="dropdown-item" style={{ cursor: "pointer" }}
                                                        onClick={() => {

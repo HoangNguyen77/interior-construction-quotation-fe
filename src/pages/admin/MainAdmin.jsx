@@ -5,9 +5,10 @@ import Typeroom from './ManageShowroom/Typeroom&Product';
 import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
 import ManageQuotation from "./ManageQuotation.jsx";
+import RequireAdmin from "./RequireAdmin.jsx";
 
 
-const MainAdmin = () => {
+const MainAdminPage = () => {
   const [selectedTab, setSelectedTab] = useState(-1);
 
   const handleTabClick = (index) => {
@@ -76,5 +77,5 @@ const MainAdmin = () => {
     </div>
   );
 };
-
+const MainAdmin = RequireAdmin(MainAdminPage)
 export default MainAdmin;

@@ -10,11 +10,13 @@ import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
 import {MdVilla} from "react-icons/md";
 import {get3NewBlog} from "../../api/blog/BlogAPI.js";
+import {getFinishedProjectsByTitle} from "../../api/finished/FinishedProjectAPI.js";
 
 function Home() {
     useScrollToTop()
 
     const [blogList, setBlogList] = useState([]);
+    const [projectList, setProjectList] = useState([]);
     const getShortDescription = (description) => {
         const words = description.split(' ');
         const shortWords = words.slice(0, 50);
@@ -35,6 +37,11 @@ function Home() {
                 setBlogList(result.blogList);
             }
         ).catch(error => console.log(error))
+        getFinishedProjectsByTitle(0, "", 6).then(
+            result => {
+                setProjectList(result.projectList);
+            }
+        )
     }, []);
     return (
         <div>
@@ -85,43 +92,17 @@ function Home() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
+                        {
+                            projectList.map(project => (
+                                <div className="col-md-6 col-lg-4 mb-2 p-1" key={project.projectId}>
+                                    <div className="hotel-room text-center">
+                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail"><img src={project.image}
+                                                                                            alt="Image"
+                                                                                            className="img-fluid"/></Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="text-right" style={{fontSize:"130%"}}>
                         <Link to="/finished-project">Xem thêm <span className="icon-arrow-circle-right"></span></Link>

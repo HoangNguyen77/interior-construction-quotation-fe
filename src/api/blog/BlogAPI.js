@@ -58,6 +58,37 @@ export async function get3NewBlog() {
         return null;
     }
 }
+export async function get3RandomBlog(blogId) {
+    // Xác định endpoint
+    const url = `http://localhost:8080/blog/search/findRandomThreeBlogs?blogId=${blogId}`;
+    try {
+        const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+        const responseData = response._embedded.blogs;
+
+        // Transform each blog into a promise that resolves to the blog with additional details
+        const blogDetailsPromises = responseData.map(async (blog) => {
+            try {
+                const imageDetails = await get1ImageOfABlog(blog.blogId);
+                return {
+                    ...blog,
+                    image: imageDetails.imageData
+                };
+            } catch (error) {
+                console.error('Error fetching image details for blog:', error);
+                // In case of an error fetching image details, return the blog without image data
+                return blog;
+            }
+        });
+
+        // Wait for all promises to resolve
+        const blogList = await Promise.all(blogDetailsPromises);
+        console.log(blogList);
+        return { blogList };
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
 
 export async function getBlogByTitle(keyword, page){
     const url= `http://localhost:8080/blog/search/findByTitleContaining?title=${keyword}&page=${page}&size=5&sort=blogId,desc`;

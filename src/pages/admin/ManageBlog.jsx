@@ -204,6 +204,7 @@ const ManageBlog = () => {
                         method: 'POST',
                         headers: {
                             'Content-type': 'application/json',
+                            'Authorization':`Bearer ${localStorage.getItem('token')}`
                         },
                         body: JSON.stringify({
                             blogId: 0,
@@ -443,39 +444,41 @@ const ManageBlog = () => {
                             <div className='col-span-1 text-[#E22E6D]'>Ngày đăng</div>
                             <div className='col-span-1 text-[#E22E6D]'></div>
                         </div>
-                        {blogList.map(blog => (
-                            <div key={blog.blogId} className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                <div className='col-span-1 text-black flex flex-col justify-center'>{blog.blogId}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'>
-                                    <img className='w-3/5' src={blog.image} alt=""/>
+                        <div className='overflow-y-auto h-[50vh] pr-3'>
+                            {blogList.map(blog => (
+                                <div key={blog.blogId} className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>{blog.blogId}</div>
+                                    <div className='col-span-2 text-black flex flex-col justify-center'>
+                                        <img className='w-3/5' src={blog.image} alt=""/>
+                                    </div>
+                                    <div
+                                        className='col-span-2 text-black flex flex-col justify-center'>{blog.firstName + " " + blog.lastName}</div>
+                                    <div
+                                        className='col-span-2 text-black flex flex-col justify-center'>{getShortDescription(blog.title)}...
+                                    </div>
+                                    <div
+                                        className='col-span-3 text-black flex flex-col justify-center'>{getShortDescription(blog.description)}...
+                                    </div>
+                                    <div
+                                        className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>
+                                        {!isModalOpen && (
+                                            <div className='flex justify-end gap-2'>
+                                                <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
+                                                    classIcon={faTrashCan}
+                                                    color={"black"}
+                                                    size={"20px"}/></div>
+                                                <div onClick={() => handleButtonUpdate(blog.blogId)}><Icon
+                                                    classIcon={faPencil}
+                                                    color={"black"}
+                                                    size={"20px"}/></div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                                <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{blog.firstName + " " + blog.lastName}</div>
-                                <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{getShortDescription(blog.title)}...
-                                </div>
-                                <div
-                                    className='col-span-3 text-black flex flex-col justify-center'>{getShortDescription(blog.description)}...
-                                </div>
-                                <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
-                                <div className='col-span-1 text-black flex flex-col justify-center'>
-                                    {!isModalOpen && (
-                                        <div className='flex justify-end gap-2'>
-                                            <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
-                                                classIcon={faTrashCan}
-                                                color={"black"}
-                                                size={"20px"}/></div>
-                                            <div onClick={() => handleButtonUpdate(blog.blogId)}><Icon
-                                                classIcon={faPencil}
-                                                color={"black"}
-                                                size={"20px"}/></div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                        }
+                            ))
+                            }
+                        </div>
                         <Pagination currentPage={currentPage} totalPage={totalPage}
                                     handlePageChange={handlePageChange}/>
                     </div>

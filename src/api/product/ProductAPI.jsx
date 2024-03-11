@@ -135,19 +135,23 @@ async function getCategory(url){
     const response = await my_request(url);
     const responseData = response._embedded.categoryProducts;
     console.log(responseData);
-    const totalPages = response.page.totalPages;
-    const totalCategories = response.page.totalElements;
+    // const totalPages = response.page.totalPages;
+    // const totalCategories = response.page.totalElements;
     for (const key in responseData) {
         categoryList.push({
             categoryId: responseData[key].categoryId,
             categoryName: responseData[key].categoryName,
         });
     }
-    return {categoryList: categoryList, totalCategories: totalCategories, totalPages: totalPages};
+    return {categoryList: categoryList};
 }
 
 export async function getAllCategory(page){
     const url = `http://localhost:8080/category-product?${page}&size=9`
+    return getCategory(url);
+}
+export async function getAllCategoryByRoomId(roomId){
+    const url = `http://localhost:8080/category-product/search/findByTypeRoom_RoomId?roomId=${roomId}&page=0&size=100`
     return getCategory(url);
 }
 

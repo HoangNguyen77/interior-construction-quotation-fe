@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSort, faCheck, faBan, faTrashAlt } from "@fortawesome/free-solid-svg-icons"; // Import faSearch icon
+import {faSearch, faSort, faCheck, faBan, faTrashAlt, faUser} from "@fortawesome/free-solid-svg-icons"; // Import faSearch icon
 import axios from 'axios';
 import {toast} from "react-toastify";
+import Pagination from "../../utils/Pagination.jsx";
+const Icon = ({classIcon, color, size}) => {
+  const iconSize = {
+    width: size,
+    height: size,
+    color: color,
+    cursor: "pointer"
+  };
 
+  return (
+      <span>
+            <FontAwesomeIcon icon={classIcon} style={iconSize}/>
+        </span>
+
+  );
+};
 class ManageUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
+      totalPage : 0,
+      totalElement : 0,
+      currentPage: 1,
       searchValue: '', // Add searchValue state
       sortBy: '', // Add sortBy state
       filterBy: 'all', // Add filterBy state with default value 'all'
@@ -21,8 +39,10 @@ class ManageUser extends Component {
 
   fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/users');
+      const response = await axios.get(`http://localhost:8080/users/search/findByRoleNameIsCustomer?page=${this.state.currentPage - 1}&size=5&sort=userId,desc`);
       const users = response.data._embedded.users;
+      this.setState({totalPage : response.data.page.totalPages})
+      this.setState({totalElement : response.data.page.totalElements})
       this.setState({ users });
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -82,9 +102,15 @@ class ManageUser extends Component {
   handleFilterChange = (filterBy) => {
     this.setState({ filterBy });
   };
-
+  handlePageChange = (page) => {
+    console.log("page: " + page);
+    this.setState({ currentPage: page }, () => {
+      console.log("current page: " + this.state.currentPage);
+      this.fetchUsers();
+    });
+  }
   render() {
-    const { users, searchValue, filterBy } = this.state;
+    const { users, searchValue, filterBy, totalPage, totalElement, currentPage } = this.state;
 
     // Filter users based on searchValue
     let filteredUsers = users.filter(user =>
@@ -116,7 +142,7 @@ class ManageUser extends Component {
 
             <div>
               <div className='absolute bottom-1 left-[365px]'>
-                <FontAwesomeIcon icon={faSearch} color={"black"} size={"24px"} />
+                <FontAwesomeIcon icon={faSearch} color={"black"} size={"24px"}/>
               </div>
               <div className='absolute bottom-1 right-[20vw] '>
                 <select value={filterBy} onChange={(e) => this.handleFilterChange(e.target.value)}>
@@ -126,11 +152,23 @@ class ManageUser extends Component {
                 </select>
               </div>
             </div>
-
+            <div
+                className='absolute z-10 top-0 right-[190px] w-[80px] h-[80px] bg-[#60B664] text-[24px] font-bold text-white text-center flex flex-col justify-center rounded-[10px] shadow1'>
+              <Icon classIcon={faUser} color={"white"} size={"32px"}/>
+            </div>
+            <div
+                className='absolute top-[40px] right-0 w-[300px] h-[110px] rounded-[5px] bg-white shadow1 flex flex-col justify-center text-right px-[30px]'>
+              <div>
+                <div className='text-[24px] text-black'>{totalElement}</div>
+                <div className='text-[24px] text-black'>Người dùng</div>
+              </div>
+            </div>
+          </div>
+          <div className='table-all-posts h-auto mt-[50px]'>
+            <div className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>Người dùng</div>
           </div>
 
-
-          <div className='table-all-posts h-auto mt-[50px]'>
+          <div className='table-all-posts h-auto mt-[2px]'>
             <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
               <div className='grid grid-cols-10 py-3 gap-2'>
                 <div className='col-span-1 text-[#348EED]'>ID</div>
@@ -172,6 +210,8 @@ class ManageUser extends Component {
 
                   </div>
               ))}
+              <Pagination currentPage={currentPage} totalPage={totalPage}
+                          handlePageChange={this.handlePageChange}/>
             </div>
           </div>
         </div>
