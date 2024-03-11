@@ -84,7 +84,7 @@ const ProductList = () => {
                 </div>
 
                 <div className="row">
-                    {productList.map((product, index) => (
+                    {productList.map(product => (
                         <div key={product.productId} className="col-lg-4 col-md-6 mb-4">
                             <ProductProps product={product}/>
                         </div>

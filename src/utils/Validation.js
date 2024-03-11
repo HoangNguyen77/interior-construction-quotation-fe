@@ -182,3 +182,22 @@ export const checkInput = (setErrorInput, input) => {
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
+export const checkInputDouble = (setErrorInput, input) => {
+    if (typeof input !== 'string') {
+        // Handle non-string inputs
+        setErrorInput("Vui lòng nhập thông tin!");
+        return true;
+    }
+
+    // Now it's safe to call trim() on input
+    if (input.trim() === "") {
+        setErrorInput("Thông tin bắt buộc!");
+        return true;
+    } else if (isNaN(parseFloat(input))) {
+        setErrorInput("Vui lòng nhập số!");
+        return true;
+    } else {
+        setErrorInput("");
+        return false;
+    }
+}

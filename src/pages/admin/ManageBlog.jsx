@@ -119,7 +119,6 @@ const ManageBlog = () => {
 
         setIsModalOpen(!isModalOpen);
     }
-
     //                          SEARCH                      //
     const handleSearch = () => {
         setSearch(currentSearch);
@@ -144,7 +143,6 @@ const ManageBlog = () => {
             return false;
         }
     }
-
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         // Convert Image to Base64
@@ -231,7 +229,6 @@ const ManageBlog = () => {
             }
         }
     }
-
     const handleUpdateBlog = async () => {
         const isImageFilesValid = !checkFileInput(setErrorImages, images);
         const isTitleValid = !checkInput(setErrorTitle, title);

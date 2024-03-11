@@ -10,6 +10,7 @@ import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
 import {MdVilla} from "react-icons/md";
 import {get3NewBlog} from "../../api/blog/BlogAPI.js";
+import {get4ProductWithFirstImage, getAllProductWithFirstImage} from "../../api/product/ProductAPI.jsx";
 import {getFinishedProjectsByTitle} from "../../api/finished/FinishedProjectAPI.js";
 
 function Home() {
@@ -17,6 +18,7 @@ function Home() {
 
     const [blogList, setBlogList] = useState([]);
     const [projectList, setProjectList] = useState([]);
+    const [productList, setProductList] = useState([]);
     const getShortDescription = (description) => {
         const words = description.split(' ');
         const shortWords = words.slice(0, 50);
@@ -42,6 +44,11 @@ function Home() {
                 setProjectList(result.projectList);
             }
         )
+        get4ProductWithFirstImage().then(
+            result =>{
+                setProductList(result.productList);
+            }
+        ).catch(error => console.log(error))
     }, []);
     return (
         <div>
@@ -153,38 +160,23 @@ function Home() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
-                            <h1 className="mb-3">Sản Phẩm Nội Thất</h1>
-                            <h5>Các sản phẩm của chúng tôi</h5>
+                            <div className="h1 mb-3">Sản Phẩm Nội Thất</div>
+                            <div className="h5">Các sản phẩm của chúng tôi</div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
+                        {productList.map(product => (
+                            <div key={product.productId} className="col-md-6 col-lg-3 mb-2 p-1">
+                            <Link  to={`/product/${product.productId}`}>
+                                    <div className="hotel-room text-center">
+                                        <a href="#" className="d-block mb-0 thumbnail"><img src={product.image} alt="Image" className="img-fluid"/></a>
+                                    </div>
+                            </Link>
                             </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                     <div className="text-right" style={{fontSize: "130%"}}>
-                        <Link to="/showroom">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
+                        <Link to="/product">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
                     </div>
                 </div>
             </div>
@@ -209,13 +201,13 @@ function Home() {
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
                             <h1 className="mb-3">Bài viết</h1>
-                            <h5>Các bài viết gần đây</h5>
+                            <h5 className="h5">Các bài viết gần đây</h5>
                         </div>
                     </div>
                     {
                         blogList.map(blog => (
-                            <Link to={`/blog/${blog.blogId}`}>
-                                <div className="row bg-white mb-5 pt-4" key={blog.blogId}>
+                            <Link key={blog.blogId} to={`/blog/${blog.blogId}`}>
+                                <div className="row bg-white mb-5 pt-4" >
                                     <div className="col-3">
                                         <div className="media-with-text">
                                             <div className="img-border-sm mb-4">

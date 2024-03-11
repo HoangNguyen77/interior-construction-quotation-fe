@@ -65,7 +65,7 @@ const ProductDetail = () => {
             <div className="site-section bg-light" ref={sectionRef}>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-8">
                             <Carousel showThumbs={false}>
                                 {imageList.map((img, index) => (
                                     <div key={index}>
@@ -74,10 +74,13 @@ const ProductDetail = () => {
                                 ))}
                             </Carousel>
                         </div>
-                        <div className="col-md-6">
-                            <h1>{product.name}</h1>
+                        <div className="col-md-4">
+                            <div className='h2'>{product.name}</div>
                             <hr/>
-                            <p className="text-justify mt-5">{product.unitPrice}</p>
+                            <p className="text-justify mt-3 h5">{product.unitPrice}đ</p>
+                            <p className="text-justify mt-3 ">Kích thước sản phẩm</p>
+                            <p className="text-justify mt-1 h5">{product.width} x {product.length} x {product.height}</p>
+
                         </div>
                     </div>
                     <Link to="/product" className="p-2" style={{fontSize: '50px'}}><span

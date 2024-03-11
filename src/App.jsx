@@ -18,12 +18,14 @@ import BlogDetail from "./pages/blog/BlogDetail.jsx";
 import ForgetPassword from "./pages/customer/forget-password/ForgetPassword.jsx";
 import BlogForm from "./pages/staff/BlogForm.jsx";
 import Finished from "./pages/finished-project/Finished.jsx";
+import DetailFinished from "./pages/finished-project/DetailFinishedProject.jsx";
 import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 import MainAdmin from "./pages/admin/MainAdmin.jsx";
 import "./index.css"
 import DetailFinished from "./pages/finished-project/DetailFinishedProject.jsx";
 import Page403 from "./pages/error/Page403.jsx";
+
 
 function App() {
     return (
