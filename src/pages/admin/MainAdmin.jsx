@@ -59,17 +59,17 @@ const MainAdmin = () => {
         {selectedTab === 0 ? (
           <TypeRoom />
         ) : selectedTab === 1 ? (
-          <Description/>
+          <Description />
         ) : selectedTab === 2 ? (
           <ManageUser />
         ) : selectedTab === 3 ? (
           <ManageFinished />
         ) : selectedTab === 5 ? (
           <ManageBlog />
-        ) : selectedTab === 6 ?(
-          <ManageQuotation/>
+        ) : selectedTab === 6 ? (
+          <ManageQuotation />
         ) : (
-            ""
+          ""
         )}
 
       </div>
