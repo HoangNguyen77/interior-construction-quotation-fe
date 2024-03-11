@@ -11,6 +11,8 @@ import {
     faCheck,
     faTimes
 } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal } from 'antd';
+import QuoteTableConfirm from './QuoteTableConfirm';
 
 const Icon = ({ classIcon, color, size }) => {
     const iconSize = {
@@ -22,8 +24,8 @@ const Icon = ({ classIcon, color, size }) => {
 
     return (
         <span>
-      <FontAwesomeIcon icon={classIcon} style={iconSize} />
-    </span>
+            <FontAwesomeIcon icon={classIcon} style={iconSize} />
+        </span>
 
     );
 };
@@ -31,7 +33,96 @@ const Icon = ({ classIcon, color, size }) => {
 const ManageQuotation = () => {
     const [isModeShow, setModeShow] = useState(false);
     const [isModeShow2, setModeShow2] = useState(false)
+    const [initialArr, setInitialArr] = useState([
+        {
+            id: 1,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123"
+        },
+        {
+            id: 2,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 3,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 4,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 5,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 6,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
 
+    ])
+    const [pendingArr, setPendingArr] = useState([
+        {
+            id: 1,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123"
+        },
+        {
+            id: 2,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 3,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 4,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 5,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+        {
+            id: 6,
+            name: "Nguyễn Công Chiến",
+            address: "Hồ Chí Minh",
+            email: "ncc@gmail.com",
+            phone: "01273687123",
+        },
+
+    ])
     const handleModeShowToggle = () => {
         setModeShow(!isModeShow);
     };
@@ -41,6 +132,22 @@ const ManageQuotation = () => {
     const handleQuotationList = () => {
         setModeShow2(!isModeShow2);
     }
+
+
+    //modal
+    const [isModalOpenAntd, setIsModalOpenAntd] = useState(true);
+
+    const handleOpenQuote = () => {
+        setIsModalOpenAntd(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpenAntd(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpenAntd(false);
+    };
 
     return (
         <div className='h-auto pl-3'>
@@ -77,7 +184,7 @@ const ManageQuotation = () => {
 
             <div className='table-all-posts h-auto mt-[50px]'>
                 <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
-                    {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ?(`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
+                    {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
                     {
                         !isModeShow2 && (
                             <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>
@@ -90,7 +197,7 @@ const ManageQuotation = () => {
                             <div
                                 className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
                                 onClick={handleModeShow2Toggle}>
-                                <Icon classIcon={faArrowLeft} color={"white"} size={"24px"}/>
+                                <Icon classIcon={faArrowLeft} color={"white"} size={"24px"} />
                             </div>
                         )
                     }
@@ -99,6 +206,7 @@ const ManageQuotation = () => {
                 {isModeShow === false ? (
                     <>
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+                            {/** iterate from initialArr*/}
                             <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#348EED]'>ID</div>
                                 <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
@@ -107,8 +215,35 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
                             </div>
+                            {
+                                initialArr.map((item, index) => {
+                                    return (
+                                        <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                            <div className='col-span-1 text-black flex flex-col justify-center'>{item.id}</div>
+                                            <div className='col-span-2 text-black flex flex-col justify-center'>{item.name}</div>
+                                            <div className='col-span-3 text-black flex flex-col justify-center'>{item.address}</div>
+                                            <div className='col-span-2 text-black flex flex-col justify-center'>{item.email}</div>
+                                            <div className='col-span-1 text-black flex flex-col justify-center'>{item.phone}</div>
+                                            <div className='col-span-1 text-black flex flex-col justify-center'>
+                                                <div className='flex justify-end gap-2'>
+                                                    <Button
+                                                        onClick={isModalOpenAntd}
+                                                        icon={
+                                                            <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                                        } />
 
-                            <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                                    <Button
+                                                        onClick={isModalOpenAntd}
+                                                        icon={
+                                                            <Icon classIcon={faCheck} color={"black"} size={"20px"} />
+                                                        } />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                )}
+                            {/* <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
                                 <div className='col-span-2 text-black flex flex-col justify-center'>Nguyễn Công Chiến</div>
                                 <div className='col-span-3 text-black flex flex-col justify-center'>Hồ Chí Minh</div>
@@ -116,7 +251,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTimes } color={"black"} size={"20px"} />
+                                        <Icon classIcon={faTimes} color={"black"} size={"20px"} />
                                         <Icon classIcon={faCheck} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
@@ -130,7 +265,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTimes } color={"black"} size={"20px"} />
+                                        <Icon classIcon={faTimes} color={"black"} size={"20px"} />
                                         <Icon classIcon={faCheck} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
@@ -144,7 +279,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTimes } color={"black"} size={"20px"} />
+                                        <Icon classIcon={faTimes} color={"black"} size={"20px"} />
                                         <Icon classIcon={faCheck} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
@@ -158,15 +293,15 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTimes } color={"black"} size={"20px"} />
+                                        <Icon classIcon={faTimes} color={"black"} size={"20px"} />
                                         <Icon classIcon={faCheck} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </>
-                ) : isModeShow2 === false ?(
+                ) : isModeShow2 === false ? (
                     <>
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             <div className='grid grid-cols-7 py-3 gap-2'>
@@ -235,6 +370,11 @@ const ManageQuotation = () => {
                     </>
                 ) : (
                     <>
+                        <Modal open={isModalOpenAntd} onOk={handleOk} onCancel={handleCancel}
+                            className=' w-full h-full bg-opacity-50 flex justify-center items-center'
+                        >
+                            <QuoteTableConfirm />
+                        </Modal>
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#348EED]'>ID</div>
@@ -246,7 +386,7 @@ const ManageQuotation = () => {
                             </div>
 
                             <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                <div className='col-span-1 text-black flex flex-col justify-center'>1</div>
+                                <div className='col-span-1 text-black flex flex-col justify-center'>10</div>
                                 <div className='col-span-2 text-black flex flex-col justify-center'>Lần thứ nhất
                                 </div>
                                 <div className='col-span-3 text-black flex flex-col justify-center'>Nguyễn Công Chiến
@@ -254,9 +394,11 @@ const ManageQuotation = () => {
                                 <div className='col-span-2 text-black flex flex-col justify-center'>ncc@gmail.com</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
-                                    <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                    <div className='flex justify-end gap-2' >
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <div onClick={handleOpenQuote}>
+                                            <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -271,8 +413,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -287,8 +429,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -303,8 +445,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -318,8 +460,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -333,8 +475,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -348,8 +490,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -363,8 +505,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -378,8 +520,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -393,8 +535,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -408,8 +550,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -423,8 +565,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -438,8 +580,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -453,8 +595,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
@@ -468,8 +610,8 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-black flex flex-col justify-center'>01273687123</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
-                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
-                                        <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
+                                        <Icon classIcon={faTrashCan} color={"black"} size={"20px"} />
+                                        <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                     </div>
                                 </div>
                             </div>
