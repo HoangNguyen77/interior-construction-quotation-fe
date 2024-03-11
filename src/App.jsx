@@ -23,6 +23,8 @@ import Product from "./pages/showroom/Product.jsx";
 import ProductDetail from "./pages/showroom/ProductDetail.jsx";
 import MainAdmin from "./pages/admin/MainAdmin.jsx";
 import "./index.css"
+import DetailFinished from "./pages/finished-project/DetailFinishedProject.jsx";
+import Page403 from "./pages/error/Page403.jsx";
 
 
 function App() {
@@ -44,11 +46,12 @@ function App() {
                     <Route path='/product' element={<Product/>}></Route>
                     <Route path='/product/:productId' element={<ProductDetail/>}></Route>
                     <Route path='/finished-project' element={<Finished/>}></Route>
-                    <Route path='/finished-project/detail-finished' element={<DetailFinished/>}></Route>
+                    <Route path='/finished-project/detail-finished/:projectId' element={<DetailFinished/>}></Route>
                     <Route path='/info' element={<Profile/>}></Route>
                     <Route path='/admin' element={<MainAdmin/>}></Route>
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
                     <Route path='/staff/blog-form' element={<BlogForm/>}></Route>
+                    <Route path='/403' element={<Page403/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

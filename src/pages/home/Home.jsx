@@ -11,11 +11,13 @@ import {Link} from "react-router-dom";
 import {MdVilla} from "react-icons/md";
 import {get3NewBlog} from "../../api/blog/BlogAPI.js";
 import {get4ProductWithFirstImage, getAllProductWithFirstImage} from "../../api/product/ProductAPI.jsx";
+import {getFinishedProjectsByTitle} from "../../api/finished/FinishedProjectAPI.js";
 
 function Home() {
     useScrollToTop()
 
     const [blogList, setBlogList] = useState([]);
+    const [projectList, setProjectList] = useState([]);
     const [productList, setProductList] = useState([]);
     const getShortDescription = (description) => {
         const words = description.split(' ');
@@ -37,14 +39,17 @@ function Home() {
                 setBlogList(result.blogList);
             }
         ).catch(error => console.log(error))
-    }, []);
-    useEffect(() =>{
+        getFinishedProjectsByTitle(0, "", 6).then(
+            result => {
+                setProjectList(result.projectList);
+            }
+        )
         get4ProductWithFirstImage().then(
             result =>{
                 setProductList(result.productList);
             }
         ).catch(error => console.log(error))
-    },[]);
+    }, []);
     return (
         <div>
             <Header/>
@@ -94,43 +99,17 @@ function Home() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
+                        {
+                            projectList.map(project => (
+                                <div className="col-md-6 col-lg-4 mb-2 p-1" key={project.projectId}>
+                                    <div className="hotel-room text-center">
+                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail"><img src={project.image}
+                                                                                            alt="Image"
+                                                                                            className="img-fluid"/></Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="text-right" style={{fontSize:"130%"}}>
                         <Link to="/finished-project">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
@@ -181,8 +160,8 @@ function Home() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
-                            <h1 className="mb-3">Sản Phẩm Nội Thất</h1>
-                            <h5 className="h5">Các sản phẩm của chúng tôi</h5>
+                            <div className="h1 mb-3">Sản Phẩm Nội Thất</div>
+                            <div className="h5">Các sản phẩm của chúng tôi</div>
                         </div>
                     </div>
                     <div className="row">
