@@ -56,6 +56,7 @@ function Profile() {
         sectionRef.current.scrollIntoView({behavior: 'smooth'});
 
         const url = `http://localhost:8080/users/${userId}`;
+
         async function fetchData() {
             const response = await fetch(url);
             return response.json();
@@ -140,9 +141,9 @@ function Profile() {
     }
     const handleUpdateProfile = () => {
         fetch(
-            `http://localhost:8080/users/${userId}`,{
-                method:'PUT',
-                headers:{
+            `http://localhost:8080/users/${userId}`, {
+                method: 'PUT',
+                headers: {
                     'Content-Type': 'application/json'
                     // 'Authorization':`Bearer ${token}`
                 },
@@ -151,7 +152,7 @@ function Profile() {
         ).then(
             response => {
 
-                if (response.ok){
+                if (response.ok) {
                     toast.success("Cập nhập thành công");
                     setUpdate(!update);
                     return response.json();
@@ -164,12 +165,12 @@ function Profile() {
             }
         )
     }
-    const handleChangePassword = () =>{
-        if (!checkInput(setErrorOldPassword, oldPassword) && !checkPassword(setErrorNewPassword, newPassword) && !checkPasswordAgain(setErrorNewPasswordAgain, newPasswordAgain, newPassword)){
+    const handleChangePassword = () => {
+        if (!checkInput(setErrorOldPassword, oldPassword) && !checkPassword(setErrorNewPassword, newPassword) && !checkPasswordAgain(setErrorNewPasswordAgain, newPasswordAgain, newPassword)) {
             fetch(
-                `http://localhost:8080/user/change-password`,{
-                    method:'PUT',
-                    headers:{
+                `http://localhost:8080/user/change-password`, {
+                    method: 'PUT',
+                    headers: {
                         'Content-Type': 'application/json'
                         // 'Authorization':`Bearer ${token}`
                     },
@@ -182,11 +183,11 @@ function Profile() {
             ).then(
                 response => {
 
-                    if (response.ok){
+                    if (response.ok) {
                         toast.success("Đổi mật khẩu thành công!");
                         setChangePassword(!changPassword);
                         return response.json();
-                    }else{
+                    } else {
                         toast.warning("Đổi mật khẩu không thành công. Vui lòng kiểm tra lại mật khẩu hiện tại");
                     }
                 }
@@ -195,7 +196,7 @@ function Profile() {
                     console.log(error)
                 }
             )
-        }else {
+        } else {
             toast.warning("Vui lòng kiểm tra lại các trường thông tin!");
         }
     }
@@ -220,75 +221,79 @@ function Profile() {
                 <div className="container">
                     <div className="h2">Thông tin của bạn</div>
                     <hr/>
-                    <div className="h5 mt-3">Tên đăng nhập</div>
-                    <p>{user.username}</p>
-                    <div className="h5">Email</div>
-                    <p>{user.email}</p>
-                    <div className="h5">Họ đệm</div>
-                    {
-                        update ?
-                            (
-                                <div>
-                                    <input type="text" value={user.firstName} className="form-control mb-2"
+
+
+
+
+                    <div className="mt-3 ml-3">
+                        <div className="flex items-center">
+                            <div className="h5 mr-3 ml-3">Tên đăng nhập:</div>
+                            <div className="h6 mr-3 font-medium">{user.username}</div>
+                        </div>
+
+                        <div className="flex items-center">
+                            <div className="h5 mr-3 ml-3">Email:</div>
+                            <div className="h6 mr-3 font-medium">{user.email}</div>
+                        </div>
+
+                        <div className="flex items-center">
+                            <div className="h5 mr-3 ml-3">Họ đệm:</div>
+                            {update ? (
+                                <div className="flex items-center">
+                                    <input type="text" value={user.firstName} className="form-control mb-2 mr-3"
                                            onChange={handleFirstNameChange}/>
                                     <div style={{color: "red"}}>{errorFirstName}</div>
                                 </div>
+                            ) : (
+                                <div className="h6 mr-3 font-medium">{user.firstName}</div>
+                            )}
+                        </div>
 
-                            )
-                            :
-                            (
-                                <p>{user.firstName}</p>
-                            )
-                    }
-                    <div className="h5">Tên</div>
-                    {
-                        update ?
-                            (
-                                <div>
-                                    <input type="text" value={user.lastName} className="form-control mb-2"
+                        <div className="flex items-center">
+                            <div className="h5 mr-3 ml-3">Tên:</div>
+                            {update ? (
+                                <div className="flex items-center">
+                                    <input type="text" value={user.lastName} className="form-control mb-2 mr-3"
                                            onChange={handleLastNameChange}/>
                                     <div style={{color: "red"}}>{errorLastName}</div>
                                 </div>
+                            ) : (
+                                <div className="h6 mr-3 font-medium">{user.lastName}</div>
+                            )}
+                        </div>
 
-                            )
-                            :
-                            (
-                                <p>{user.lastName}</p>
-                            )
-                    }
-                    <div className="h5">Số điện thoại</div>
-                    {
-                        update ?
-                            (
-                                <div>
-                                    <input type="text" value={user.phonenumber} className="form-control mb-2"
+                        <div className="flex items-center">
+                            <div className="h5 mr-3 ml-3">Số điện thoại:</div>
+                            {update ? (
+                                <div className="flex items-center">
+                                    <input type="text" value={user.phonenumber} className="form-control mb-2 mr-3"
                                            onChange={handlePhonenumberChange}/>
                                     <div style={{color: "red"}}>{errorPhonenumber}</div>
                                 </div>
+                            ) : (
+                                <div className="h6 mr-3 font-medium">{user.phonenumber}</div>
+                            )}
+                        </div>
+                    </div>
 
-                            )
-                            :
-                            (
-                                <p>{user.phonenumber}</p>
-                            )
-                    }
+
                     <div style={{color: "green"}}>{thongBao}</div>
                     {
                         update ?
                             (
                                 <div>
-                                    <div  className="btn btn-danger mb-3 mr-3"
-                                            onClick={() => {
-                                                setErrorFirstName("");
-                                                setErrorLastName("");
-                                                setErrorPhonenumber("");
-                                                setUser(initialUserData);
-                                                setUpdate(!update)
-                                            }
-                                    }>Hủy cập nhập
+                                    <div className="btn btn-danger mb-3 mr-3"
+                                         onClick={() => {
+                                             setErrorFirstName("");
+                                             setErrorLastName("");
+                                             setErrorPhonenumber("");
+                                             setUser(initialUserData);
+                                             setUpdate(!update)
+                                         }
+                                         }>Hủy cập nhập
                                     </div>
                                     <div className="btn btn-success mb-3 mr-3"
-                                            onClick={handleUpdateProfile}
+                                         onClick={handleUpdateProfile}
                                     >Lưu
                                     </div>
                                 </div>
@@ -297,11 +302,11 @@ function Profile() {
                             :
                             (
                                 <div className="btn btn-success mb-3 mt-2"
-                                        onClick={
-                                                () => {
-                                                    setUpdate(!update)
-                                                }
-                                        }>Cập nhập thông tin
+                                     onClick={
+                                         () => {
+                                             setUpdate(!update)
+                                         }
+                                     }>Cập nhập thông tin
                                 </div>
                             )
                     }
@@ -315,7 +320,7 @@ function Profile() {
                         setNewPasswordAgain("");
                         setChangePassword(!changPassword);
                         sectionRef2.current.scrollIntoView({behavior: 'smooth'});
-                        }
+                    }
                     }>{changPassword ? "Hủy" : "Đổi mật khẩu"}</div>
                     {
                         changPassword && (
@@ -343,7 +348,7 @@ function Profile() {
                                     <div style={{color: "red"}}>{errorNewPasswordAgain}</div>
                                 </div>
                                 <div className="btn btn-success mb-3 mr-3"
-                                        onClick={handleChangePassword}
+                                     onClick={handleChangePassword}
                                 >Lưu
                                 </div>
                             </div>
