@@ -27,7 +27,6 @@ function DetailFinished() {
         return `${day}/${month}/${year}`;
     };
     // Danh sách hình ảnh nội thất bên trong
-    const interiorImages = ["/images/img_1.jpg", "/images/img_2.jpg", "/images/img_3.jpg", "/images/img_4.jpg", "/images/img_5.jpg", "/images/img_6.jpg", "/images/img_7.jpg"];
     useEffect(() => {
         sectionRef.current.scrollIntoView({behavior: 'smooth'});
         getFinishedProjectById(projectId).then(
@@ -69,7 +68,8 @@ function DetailFinished() {
                             >
                                 {imageList.map((image, index) => (
                                     <Carousel.Item key={index}>
-                                        <img className="d-block w-100" src={image.imageData} alt={`Slide ${index + 1}`}/>
+                                        <img className="d-block w-100" src={image.imageData}
+                                             alt={`Slide ${index + 1}`}/>
                                     </Carousel.Item>
                                 ))}
                             </Carousel>
@@ -77,12 +77,12 @@ function DetailFinished() {
 
                         <div className="col-md-6 col-lg-6 mb-5 ">
                             <div className="media-with-text ">
-                                <div className=" text-left">
+                                <div className=" mx-auto text-center mb-1 section-heading">
                                     <div className="h2 mb-3">{title}</div>
                                 </div>
                                 <span className="mb-3 d-block post-date">{formattedDate(finishedDate)}</span>
-                                <div>
-                                    <Link to="/contact">Nhận báo giá chi tiết</Link>
+                                <div className="media-with-text">
+                                    <div className="h5" style={{color: '#00000080'}}>{content}</div>
                                 </div>
                             </div>
                         </div>
@@ -94,23 +94,30 @@ function DetailFinished() {
                         </div>
                     </div>
 
-                    {/*<div className="row no-gutters text-center">*/}
-                    {/*    {interiorImages.map((image, index) => (*/}
-                    {/*        <div key={index} className="col-md-4 mb-4">*/}
-                    {/*            <img src={image} alt={`Interior Image ${index + 1}`} className="img-fluid"/>*/}
-                    {/*            <div className="product-details">*/}
-                    {/*                <h3>Product Name {index + 1}</h3>*/}
-                    {/*                <p className="category-product">Category</p>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    ))}*/}
-                    {/*</div>*/}
-                <Link to="/finished-project" className="p-2" style={{fontSize: '50px'}}><span
-                    className="icon-arrow-circle-left"></span></Link>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="my-4"></div>
+                        <div className="col-md-6 mx-auto text-center mb-1 section-heading">
+                            <h1 className="mb-1">Nội thất bên trong</h1>
+                        </div>
+                        <div className="my-4"></div>
+                    </div>
+
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                        {imageList.map((image, index) => (
+                            <div key={index} className="relative">
+                                <img className="w-full h-auto" src={image.imageData} alt={`Slide ${index + 1}`}
+                                     style={{marginBottom: '20px'}}/>
+                            </div>
+                        ))}
+                    </div>
+
+
+                    <Link to="/finished-project" className="p-2" style={{fontSize: '50px'}}><span
+                        className="icon-arrow-circle-left"></span></Link>
                 </div>
             </div>
 
-            <Footer />
+            <Footer/>
         </div>
     );
 }

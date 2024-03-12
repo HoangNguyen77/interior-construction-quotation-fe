@@ -66,23 +66,44 @@ const ProductDetail = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8">
-                            <Carousel showThumbs={false}>
+                            <Carousel showThumbs={false} dynamicHeight={true}>
                                 {imageList.map((img, index) => (
                                     <div key={index}>
-                                        <img src={img.imageData} alt=""/>
+                                        <img src={img.imageData} alt="" style={{maxWidth: '100%', maxHeight: '100%'}}/>
                                     </div>
                                 ))}
                             </Carousel>
                         </div>
+
+
                         <div className="col-md-4">
                             <div className='h2'>{product.name}</div>
                             <hr/>
                             <p className="text-justify mt-3 h5">{product.unitPrice}đ</p>
                             <p className="text-justify mt-3 ">Kích thước sản phẩm</p>
                             <p className="text-justify mt-1 h5">{product.width} x {product.length} x {product.height}</p>
-
                         </div>
+
+
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="my-4"></div>
+                        <div className="col-md-6 mx-auto text-center mb-1 section-heading">
+                            <h1 className="mb-1">Nội thất bên trong</h1>
+                        </div>
+                        <div className="my-4"></div>
+                    </div>
+
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                        {imageList.map((image, index) => (
+                            <div key={index} className="relative">
+                                <img className="w-full h-auto" src={image.imageData} alt={`Slide ${index + 1}`}
+                                     style={{marginBottom: '20px'}}/>
+                            </div>
+                        ))}
+                    </div>
+
                     <Link to="/product" className="p-2" style={{fontSize: '50px'}}><span
                         className="icon-arrow-circle-left"></span></Link>
                 </div>
