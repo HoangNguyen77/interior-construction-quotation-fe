@@ -6,6 +6,7 @@ import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
 import ManageQuotation from "./ManageQuotation.jsx";
 import RequireAdmin from "./RequireAdmin.jsx";
+import {toast} from "react-toastify";
 
 
 const MainAdminPage = () => {
@@ -20,7 +21,6 @@ const MainAdminPage = () => {
     'Mô tả sản phẩm',
     'Quản lý người dùng',
     'Dự án đã thi công',
-    'Các loại thi công nội thất',
     'Quản lý Blog',
     'Quản lý báo giá'
   ];
@@ -41,7 +41,11 @@ const MainAdminPage = () => {
               <div
                 key={index}
                 className={`${index === selectedTab ? 'bg-[#348EED] pl-4' : ''}`}
-                onClick={() => handleTabClick(index)}
+                onClick={() => {
+                  handleTabClick(index);
+                  toast.dismiss();
+                }
+              }
               >
                 {tab}
               </div>
@@ -65,9 +69,9 @@ const MainAdminPage = () => {
           <ManageUser />
         ) : selectedTab === 3 ? (
           <ManageFinished />
-        ) : selectedTab === 5 ? (
+        ) : selectedTab === 4 ? (
           <ManageBlog />
-        ) : selectedTab === 6 ?(
+        ) : selectedTab === 5 ?(
           <ManageQuotation/>
         ) : (
             ""

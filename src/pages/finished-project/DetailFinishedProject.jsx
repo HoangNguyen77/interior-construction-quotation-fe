@@ -105,6 +105,8 @@ function DetailFinished() {
                     {/*        </div>*/}
                     {/*    ))}*/}
                     {/*</div>*/}
+                <Link to="/finished-project" className="p-2" style={{fontSize: '50px'}}><span
+                    className="icon-arrow-circle-left"></span></Link>
                 </div>
             </div>
 

@@ -72,32 +72,32 @@ function Home() {
                             <h1 className="mb-5">Dự án đã thi công</h1>
                         </div>
                     </div>
-                    <div className="row justify-content-center mb-4">
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaBuilding className="icon-a" size={'2em'}/>
-                                CHUNG CƯ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaHome className="icon-a" size={'2em'}/>
-                                NHÀ PHỐ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <MdVilla className="icon-a" size={'2em'}/>
-                                BIỆT THỰ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <IoDesktopSharp className="icon-a" size={'2em'}/>
-                                VĂN PHÒNG
-                            </button>
-                        </div>
-                    </div>
+                    {/*<div className="row justify-content-center mb-4">*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <FaBuilding className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        CHUNG CƯ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <FaHome className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        NHÀ PHỐ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <MdVilla className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        BIỆT THỰ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <IoDesktopSharp className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        VĂN PHÒNG*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*</div>*/}
                     <div className="row">
                         {
                             projectList.map(project => (
@@ -160,8 +160,8 @@ function Home() {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
-                            <div className="h1 mb-3">Sản Phẩm Nội Thất</div>
-                            <div className="h5">Các sản phẩm của chúng tôi</div>
+                            <h1 className="mb-3">Sản Phẩm Nội Thất</h1>
+                            <h5 className="h5">Các sản phẩm của chúng tôi</h5>
                         </div>
                     </div>
                     <div className="row">
