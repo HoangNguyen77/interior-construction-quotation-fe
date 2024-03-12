@@ -51,6 +51,7 @@ const ManageBlog = () => {
     const [update, setUpdate] = useState(false);
     const [isChanged, setIsChanged] = useState(false);
     const [blogId, setBLogId] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         if (search === '') {
@@ -269,6 +270,7 @@ const ManageBlog = () => {
         }
     }
     const handleDeleteBlog = async (id) => {
+        setIsDeleting(true);
         // Display toast confirmation
         toast.warn(({closeToast}) => (
             <div>
@@ -277,9 +279,14 @@ const ManageBlog = () => {
                     <div className="col-2 btn btn-danger" onClick={() => {
                         deleteBlog(id);
                         closeToast(); // Close the toast after deletion
+                        setIsDeleting(false);
                     }}>Xóa
                     </div>
-                    <div className="col-2 btn btn-secondary" onClick={closeToast}>Hủy</div>
+                    <div className="col-2 btn btn-secondary" onClick={()=>{
+                        closeToast();
+                        setIsDeleting(false);
+                    }
+                    }>Hủy</div>
                 </div>
             </div>
         ), {
@@ -287,7 +294,7 @@ const ManageBlog = () => {
             autoClose: false,
             closeButton: false,
             style: {
-                width: "400px", // Điều chỉnh chiều rộng của khung toast
+                width: "450px", // Điều chỉnh chiều rộng của khung toast
                 padding: "20px", // Thêm padding nếu cần
                 backgroundColor: "#fff", // Màu nền của khung toast
                 color: "white", // Màu chữ của nội dung toast
@@ -422,7 +429,7 @@ const ManageBlog = () => {
                         className='w-4/5 h-[60px] relative top-7 bg-[#E22E6D] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>BÀI
                         VIẾT
                         {
-                            !isModalOpen && (<div
+                            !isModalOpen && !isDeleting && (<div
                                 className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
                                 onClick={handleModalToggle}>
                                 <Icon classIcon={faPlus} color={"white"} size={"24px"}/>
@@ -459,7 +466,7 @@ const ManageBlog = () => {
                                     <div
                                         className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>
-                                        {!isModalOpen && (
+                                        {(!isModalOpen && !isDeleting)  && (
                                             <div className='flex justify-end gap-2'>
                                                 <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
                                                     classIcon={faTrashCan}

@@ -2,7 +2,7 @@ import {my_request} from "../Request.js";
 import {get1ImageOfABlog} from "../blog/BlogImageAPI.js";
 
 export async function getFinishedQuotation(page, keyword) {
-    const url = `http://localhost:8080/finished/quotation-without-construct?keyword=${keyword}&page=${page}&size=5&sort=headerId,desc`
+    const url = `http://localhost:8080/finished/quotation-without-construct?keyword=${keyword}&page=${page}&size=8&sort=headerId,desc`
     const quotationList = [];
     //Goi phuong thuc request
     const response = await my_request(url);

@@ -626,6 +626,7 @@ const ManageFinished = () => {
                                 <div className='col-span-1 text-[#348EED]'>Trạng thái</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
                             </div>
+                            <div className='overflow-y-auto h-[47vh] pr-3'>
                             {
                                 quotationList.map(quotation => (
                                     <div key={quotation.headerId} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
@@ -660,6 +661,7 @@ const ManageFinished = () => {
                                     </div>
                                 ))
                             }
+                            </div>
                             <Pagination currentPage={currentPageQuotation} totalPage={totalPageQuotation}
                                         handlePageChange={handlePageQuotationChange}/>
 
@@ -677,6 +679,7 @@ const ManageFinished = () => {
                                 <div className='col-span-2 text-[#348EED]'>Ngày hoàn thành thi công</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
                             </div>
+                            <div className='overflow-y-auto h-[47vh] pr-3'>
                             {
                                 projectList.map(project => (
                                     <div key={project.projectId} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
@@ -707,6 +710,7 @@ const ManageFinished = () => {
                                     </div>
                                 ))
                             }
+                            </div>
                             <Pagination currentPage={currentPageProject} totalPage={totalPageProject}
                                         handlePageChange={handlePageProjectChange}/>
                         </div>
