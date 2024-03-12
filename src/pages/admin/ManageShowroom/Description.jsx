@@ -462,7 +462,7 @@ const Description = () => {
                 <div className='absolute bottom-0 left-0'>
                     <input
                         className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
-                        placeholder='Nhập từ khóa tìm kiếm theo tiêu đề blog...'
+                        placeholder='Nhập từ khóa tìm kiếm theo tên sản phẩm...'
                         value={currentSearch}
                         onChange={e => setCurrentSearch(e.target.value)}
                         onKeyDown={handleKeyDown}

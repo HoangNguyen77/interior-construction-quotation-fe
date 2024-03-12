@@ -64,7 +64,7 @@ const MainAdminPage = () => {
         {selectedTab === 0 ? (
           <TypeRoom />
         ) : selectedTab === 1 ? (
-          <Description/>
+          <Description />
         ) : selectedTab === 2 ? (
           <ManageUser />
         ) : selectedTab === 3 ? (
@@ -74,7 +74,7 @@ const MainAdminPage = () => {
         ) : selectedTab === 5 ?(
           <ManageQuotation/>
         ) : (
-            ""
+          ""
         )}
 
       </div>
