@@ -25,7 +25,9 @@ const ProductProps = (props) => {
 
             <Link to={`/product/${props.product.productId}`}>
                         <div className="hotel-room text-center">
-                            <a href="#" className="d-block mb-0 thumbnail"><img src={image} alt="Product" className="img-fluid"/></a>
+                            <a href="#" className="d-block mb-0 thumbnail" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>
+                                <img src={image} alt="Product" className="img-fluid" style={{objectFit: 'contain'}}/>
+                            </a>
                             <div className='hotel-room-body'>
                                 <h3 className="heading mb-0"><a href="#">{props.product.name}</a></h3>
                                 <p className="price">Price: {props.product.unitPrice}</p>

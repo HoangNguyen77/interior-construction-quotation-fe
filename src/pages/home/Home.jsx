@@ -103,9 +103,15 @@ function Home() {
                             projectList.map(project => (
                                 <div className="col-md-6 col-lg-4 mb-2 p-1" key={project.projectId}>
                                     <div className="hotel-room text-center">
-                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail"><img src={project.image}
-                                                                                            alt="Image"
-                                                                                            className="img-fluid"/></Link>
+                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail"
+                                              style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px'}}
+                                        >
+                                            <img src={project.image}
+                                                 alt="Image"
+                                                 className="img-fluid"
+                                                 style={{objectFit: 'contain'}}
+                                            />
+                                        </Link>
                                     </div>
                                 </div>
                             ))
@@ -156,7 +162,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="site-section">
+            <div className="site-section bg-light">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
@@ -169,7 +175,11 @@ function Home() {
                             <div key={product.productId} className="col-md-6 col-lg-3 mb-2 p-1">
                             <Link  to={`/product/${product.productId}`}>
                                     <div className="hotel-room text-center">
-                                        <a href="#" className="d-block mb-0 thumbnail"><img src={product.image} alt="Image" className="img-fluid"/></a>
+                                        <a href="#" className="d-block mb-0 thumbnail"
+                                           style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}
+                                        >
+                                            <img src={product.image} alt="Image" className="img-fluid" style={{objectFit: 'contain'}}/>
+                                        </a>
                                     </div>
                             </Link>
                             </div>
@@ -211,8 +221,8 @@ function Home() {
                                     <div className="col-3">
                                         <div className="media-with-text">
                                             <div className="img-border-sm mb-4">
-                                                <div className="popup-vimeo image-play">
-                                                    <img src={blog.image} alt="" className="img-fluid"/>
+                                                <div className="popup-vimeo image-play" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>
+                                                    <img src={blog.image} alt="" className="img-fluid" style={{objectFit: 'contain'}}/>
                                                 </div>
                                             </div>
                                         </div>

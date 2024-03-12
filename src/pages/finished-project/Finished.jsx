@@ -64,7 +64,7 @@ const Finished = () => {
             </div>
 
 
-            <div className="site-section" ref={sectionRef}>
+            <div className="site-section bg-light" ref={sectionRef}>
                 <div className="container">
                     <div className="form-inline mb-5">
                         <input className="form-control mr-sm-2" type="search" placeholder="Tìm kiếm"
@@ -80,17 +80,28 @@ const Finished = () => {
                     <div className="row mt-3">
                         {
                             projectList.map(project => (
-                                <div key={project.projectId} className="col-lg-4 col-md-6 mb-5">
-                                    <div className="media-with-text">
-                                        <div className="img-border-sm mb-4">
-                                            <Link to={`/finished-project/detail-finished/${project.projectId}`}
-                                                  className="popup-vimeo image-play">
-                                                <img src={project.image} alt="" className="img-fluid"/>
-                                            </Link>
+                                <div key={project.projectId} className="col-lg-4 col-md-6 mb-4">
+                                    {/*style={{maxWidth: '300px', maxHeight: '250px', overflow: 'hidden', border: '1px solid #ccc'}}*/}
+                                    {/*<div className="media-with-text" >*/}
+                                    {/*    <div className="img-border-sm mb-4" >*/}
+                                    {/*        <Link to={`/finished-project/detail-finished/${project.projectId}`}*/}
+                                    {/*              className="popup-vimeo image-play">*/}
+                                    {/*            /!*style={{minWidth: '100%', minHeight: "auto", display: 'block'}}*!/*/}
+                                    {/*            <img src={project.image} alt="" className="img-fluid" />*/}
+                                    {/*        </Link>*/}
+                                    {/*    </div>*/}
+                                    {/*    <div className="h2 heading mb-0"><a href="#">{project.title}</a></div>*/}
+                                    {/*    <span*/}
+                                    {/*        className="mb-3 d-block post-date">{formattedDate(project.finishedDate)}</span>*/}
+                                    {/*</div>*/}
+                                    <div className="hotel-room">
+                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>
+                                            <img src={project.image} alt="Product" className="img-fluid" style={{objectFit: 'contain'}}/>
+                                        </Link>
+                                        <div className='hotel-room-body'>
+                                            <h3 className="heading mb-0"><a href="#">{project.title}</a></h3>
+                                            <p className="price">{formattedDate(project.finishedDate)}</p>
                                         </div>
-                                        <div className="h2 heading mb-0"><a href="#">{project.title}</a></div>
-                                        <span
-                                            className="mb-3 d-block post-date">{formattedDate(project.finishedDate)}</span>
                                     </div>
                                 </div>
                             ))

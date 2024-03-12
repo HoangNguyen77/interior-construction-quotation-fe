@@ -45,8 +45,8 @@ const BlogProps = (props) => {
                     <div className="col-3">
                         <div className="media-with-text">
                             <div className="img-border-sm mb-4">
-                                <div className="popup-vimeo image-play">
-                                    <img src={image} alt="" className="img-fluid"/>
+                                <div className="popup-vimeo image-play" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '180px'}}>
+                                    <img src={image} alt="" className="img-fluid" style={{objectFit: 'contain'}}/>
                                 </div>
                             </div>
                         </div>
