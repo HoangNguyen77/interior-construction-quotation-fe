@@ -640,6 +640,7 @@ const Description = () => {
                     <div className='overflow-y-auto h-[44vh] pr-3'>
                         {productList.map((product) => (
                             <div key={product.productId}
+
                                  className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                 <div
                                     className='col-span-1 text-black flex flex-col justify-center'>{product.productId}</div>
@@ -647,14 +648,24 @@ const Description = () => {
                                     <img className='w-3/5' src={product.image} alt=""/>
                                 </div>
                                 <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{product.name}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'></div>
+                                    className='col-span-2 text-black flex flex-col justify-center'>
+                                    {product.name}
+                                </div>
+                                <div className='col-span-2 text-black flex flex-col justify-center'>
+                                    {product.typeName}
+                                </div>
                                 <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{product.length} - {product.width} - {product.height}</div>
+                                    className='col-span-2 text-black flex flex-col justify-center'>
+                                    {product.length} - {product.width} - {product.height}
+                                </div>
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{product.unitPrice}</div>
+                                    className='col-span-1 text-black flex flex-col justify-center'>
+                                    {product.unitPrice}
+                                </div>
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{product.unit}</div>
+                                    className='col-span-1 text-black flex flex-col justify-center'>
+                                    {product.unitName}
+                                </div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     {!isModalOpen && (
                                     <div className='flex justify-end gap-2'>
@@ -667,6 +678,7 @@ const Description = () => {
                                     </div>
                                         )}
                                 </div>
+
                             </div>
                         ))}
                     </div>
