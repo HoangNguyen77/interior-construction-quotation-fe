@@ -3,6 +3,7 @@ import {getFirstImageOfProduct} from "./ProductImageAPI.jsx";
 import product from "../../pages/showroom/Product.jsx";
 import {get1ImageOfABlog} from "../blog/BlogImageAPI.js";
 import {getBlogWithUsernameById} from "../blog/BlogAPI.js";
+import axios from "axios";
 
 async function getProduct(url){
     const productList = [];
@@ -289,7 +290,29 @@ export async function getAllUnit(){
     const url = `http://localhost:8080/unit`
     return getUnit(url);
 }
-
+export async function getAllType(){
+    const url = `http://localhost:8080/type-product`
+    return axios.get(url);
+}
+export async function addQuotation(quotationRequest) {
+    const url = "http://localhost:8080/quotation/add-quotation"; // Update the URL with your endpoint for adding a quotation
+    try {
+        const response = await axios.post(url, quotationRequest, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        if (response.status === 200) {
+            return "Create quotation successfully";
+        } else {
+            return "Create quotation failed";
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        return "Failed to create quotation";
+    }
+}
 
 
 
