@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link, useParams} from "react-router-dom";
 import {getAllProductImages} from "../../api/product/ProductImageAPI.jsx";
-import {getProductById, getProductRequestById} from "../../api/product/ProductAPI.jsx";
+import {getProductById, getProductRequestById, getRelatedProduct} from "../../api/product/ProductAPI.jsx";
 
 const ProductDetail = () => {
     useScrollToTop();
@@ -15,6 +15,8 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [imageList, setImageList] = useState([]);
     const [exception, setException] = useState(null);
+    const [relatedProductList, setRelatedProductList] = useState([]);
+    const [roomId, setRoomId] = useState('');
 
     useEffect(() => {
         getProductRequestById(productId).then(product => {
@@ -32,6 +34,11 @@ const ProductDetail = () => {
                 setImageList(imageList);
             }
         ).catch(error => console.log(error));
+        getRelatedProduct(roomId).then(
+            result=>{
+                setRelatedProductList(result.productList);
+            }
+        ).catch(error => console.log(error));
         // getRelatedProductsByRoomId(roomId).then(
         //     response => {
         //         setRelatedProductsList(response.productList);
@@ -39,7 +46,7 @@ const ProductDetail = () => {
         //     .catch(error => {
         //         console.error("Error fetching related products:", error);
         //     });
-    }, [productId]);
+    }, [roomId, productId]);
 
     if (exception) {
         return <div><h1>{productId}</h1></div>;
