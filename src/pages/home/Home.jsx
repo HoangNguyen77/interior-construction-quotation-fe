@@ -12,6 +12,7 @@ import {MdVilla} from "react-icons/md";
 import {get3NewBlog} from "../../api/blog/BlogAPI.js";
 import {get4ProductWithFirstImage, getAllProductWithFirstImage} from "../../api/product/ProductAPI.jsx";
 import {getFinishedProjectsByTitle} from "../../api/finished/FinishedProjectAPI.js";
+import {toast} from "react-toastify";
 
 function Home() {
     useScrollToTop()
@@ -34,6 +35,7 @@ function Home() {
     };
 
     useEffect(() => {
+        toast.dismiss();
         get3NewBlog().then(
             result => {
                 setBlogList(result.blogList);
