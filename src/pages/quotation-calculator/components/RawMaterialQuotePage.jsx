@@ -1,37 +1,53 @@
-import { Button, Input, InputNumber, Modal, Popconfirm, Select, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, InputNumber, Modal, Popconfirm, Select, Table, message } from 'antd';
 import Title from 'antd/es/typography/Title';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, Navigate, redirect, useNavigate } from 'react-router-dom';
-import { message } from 'antd';
-
+import { useNavigate } from 'react-router-dom';
+import { addQuotation } from "../../../api/product/ProductAPI";
+import {
+  getIdUserByToken
+} from "../../../utils/JwtService.js";
 const RawMaterialQuotePage = () => {
   const [rawMaterial, setRawMaterial] = useState([]);
+  const [type, setType] = useState([]);
   const [dataSource, setDataSource] = useState([
     {
       key: '0',
-      RoomType:
-        [
-          { value: 'jack', label: 'Jack' },
-          { value: 'lucy', label: 'Lucy' },
-          { value: 'Yiminghe', label: 'yiminghe' },
-          { value: 'disabled', label: 'Disabled', disabled: true },
-        ],
-      Product: [
-        { value: 'product1', label: 'Product 1' },
-        { value: 'product2', label: 'Product 2' },
-        { value: 'product3', label: 'Product 3' },
-        { value: 'product4', label: 'Product 4' }
-      ],
+      RoomType: '', // Initialize RoomType as an empty string
+      Product: [],
       Furniture: 'Bàn',
       Length: '0',
       Width: '0',
       Height: '0',
       Quantity: 1, // Default quantity set to 1
-      TotalCost: 0,
+      Unit: [], // Default quantity set to 1
+      TotalCost: 0, 
+      UnitPrice: 0, // Initialize UnitPrice
       Note: 'Ban khong gi',
     }
   ]);
+  const userId = parseInt(getIdUserByToken());
+  const handleAddQuotationDetail = async () => {
+
+    const quotationDetails = dataSource.map(item => ({
+        customerID: userId,
+        productID: item.Product[0].value,
+        estimateTotalPrice: item.UnitPrice, // Assuming UnitPrice is the estimate total price
+        quantity: item.Quantity
+    }));
+
+   
+
+    // Call the addQuotation function and pass the quotationDetails
+    const result = await addQuotation(quotationDetails);
+    if (result) {
+      message.success("Quotation details added successfully.");
+  } else {
+      // Show error message
+      message.error("Failed to add quotation details.");
+  }
+};
+
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
   const [isPopconfirmVisible, setIsPopconfirmVisible] = useState(false);
@@ -39,14 +55,15 @@ const RawMaterialQuotePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://furniture-quote.azurewebsites.net/rawMaterial/getAllRawMaterial?page=0&size=23&sort=id', {
+        const response = await axios.get('http://localhost:8080/type-product', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem("token")}`,
           }
         });
         if (response.status === 200) {
-          setRawMaterial(response.data.data.content);
+          console.log(response.data._embedded.typeProducts);
+          setType(response.data._embedded.typeProducts);
         } else {
           throw new Error('Network response was not ok');
         }
@@ -64,52 +81,163 @@ const RawMaterialQuotePage = () => {
   const handleAdd = () => {
     const newData = {
       key: count + 1,
-      Furniture: 'Bàn',
-      RoomType: 'Phòng Khách',
-      Length: '12',
-      Width: '32',
-      Height: '43',
-      Unit: 'M2',
-      Quantity: 2, // Default quantity set to 1
-      UnitPrice: 2300,
-      TotalCost: 46000,
+      Furniture: '',
+      RoomType: '',
+      Length: ' ',
+      Width: ' ',
+      Height: ' ',
+      Unit: '',
+      Quantity: 1, // Default quantity set to 1
+      UnitPrice: 0,
+      TotalCost: 0,
       Note: 'Ban khong gi',
+      Product: [
+        {
+          value: '', // Set the default value to an empty string or null
+          label: '', // Set the default label to an empty string or null
+          height: '0', // Set default height
+          length: '0', // Set default length
+          width: '0', // Set default width
+          unit: '', // Set default width
+          unitPrice: 0,
+        }
+      ],
     };
     setDataSource([...dataSource, newData]);
-    console.log([...dataSource, newData])
     setCount(count + 1);
   };
-
   const handleSave = (row) => {
+    const totalCost = calculateTotalCost(row); // Recalculate total cost based on updated quantity
     const newData = dataSource.map((item) => {
       if (item.key === row.key) {
-        const totalCost = (row.Quantity || 0) * (row.UnitPrice || 0);
-        return { ...item, ...row, TotalCost: totalCost };
+        return { ...item, ...row, TotalCost: totalCost }; // Update total cost with the recalculated value
       }
       return item;
     });
-    setDataSource(newData);
+    setDataSource(newData); // Update dataSource with the new data
   };
+  
+  
+  const calculateTotalCost = (row) => {
+    let totalCost = 0;
+    // Convert Quantity to a number before performing calculations
+    const quantity = parseInt(row.Quantity || 0);
+    // Calculate total cost based on the selected unit
+    switch (row.Unit) {
+      case 'cái':
+        totalCost = quantity * parseFloat(row.UnitPrice || 0);
+        break;
+      case 'md':
+        totalCost = parseInt(row.Length || 0) * parseFloat(row.UnitPrice || 0) * quantity;
+        break;
+      case 'm2':
+        totalCost = parseInt(row.Length || 0) * parseInt(row.Width || 0) * parseFloat(row.UnitPrice || 0) * quantity;
+        break;
+      default:
+        totalCost = 0;
+    }
+    console.log("Calculated Total Cost:", totalCost); // Log để kiểm tra giá trị mới của TotalCost
+    return totalCost;
+  };
+  
+  
+  
+  
 
+
+  const handleRoomTypeChange = async (value, key) => {
+    try {
+      // Fetch products based on the selected room type
+      const response = await axios.get(`http://localhost:8080/detail-product/search/findByTypeProduct_TypeId?typeId=${value}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      const products = response.data._embedded.products;
+
+      // Fetch unit information for each product
+      const productWithUnitPromises = products.map(async (product) => {
+        const unitResponse = await axios.get(product._links.unit.href, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          }
+        });
+        const unit = unitResponse.data;
+        return { ...product, unit };
+      });
+
+      // Resolve all promises
+      const productsWithUnit = await Promise.all(productWithUnitPromises);
+
+      // Update dataSource with products including unit information
+      const newData = dataSource.map((item) => {
+        if (item.key === key) {
+          const selectedProduct = productsWithUnit.find(product => product.productId === value);
+          return {
+            ...item,
+            RoomType: value,
+            Product: [
+              {
+                value: selectedProduct.productId,
+                label: selectedProduct.name,
+                height: selectedProduct.height,
+                length: selectedProduct.length,
+                width: selectedProduct.width,
+                unitPrice: selectedProduct.unitPrice,
+                unit: selectedProduct.unit.unitName,
+              }
+            ],
+            Furniture: selectedProduct.name,
+            Length: selectedProduct.length.toString(),
+            Width: selectedProduct.width.toString(),
+            Height: selectedProduct.height.toString(),
+            unitPrice: selectedProduct.unitPrice,
+            Unit: selectedProduct.unit.unitName, 
+            TotalCost: 0,
+          };
+        }
+        return item;
+      });
+      setDataSource(newData); // Update data source
+      handleSave(newData.find(item => item.key === key));
+    } catch (error) {
+      console.error('There was a problem fetching products:', error);
+    }
+  };
   const handleRawMaterialChange = (value, key) => {
+    const selectedProduct = dataSource.find(item => item.key === key);
+    console.log(selectedProduct)
+
     const newData = dataSource.map((item) => {
       if (item.key === key) {
-        const selectedRawMaterial = rawMaterial.find(f => f.name === value);
-        const totalCost = (item.M2 || 0) * (selectedRawMaterial?.pricePerM2 || 0);
+        const selectedRawMaterial = rawMaterial.find(f => f.typeName === value);
         return {
           ...item,
           RawMaterial: value,
           pricePerM2: selectedRawMaterial?.pricePerM2 || '',
-          TotalCost: totalCost
+          Furniture: selectedProduct.Furniture,
+          length: selectedProduct.Length,
+          width: selectedProduct.Width,
+          unit: selectedProduct.Unit.unitName,
+          height: selectedProduct.Height,
+          unitPrice: selectedProduct.UnitPrice
+
+          // TotalCost: calculateTotalCost(item.Quantity, selectedRawMaterial?.pricePerM2 || 0),
         };
+
       }
       return item;
     });
-    setDataSource(newData);
-    console.log(newData)
+    setDataSource(newData); // Update data source
+    handleSave(newData.find(item => item.key === key));
   };
 
+  
+  
   const columns = [
+
     {
       title: 'Loại phòng',
       dataIndex: 'RoomType',
@@ -117,27 +245,27 @@ const RawMaterialQuotePage = () => {
       render: (_, record) => (
         <Select
           showSearch
-          placeholder="Select a RawMaterial"
+          placeholder="Select a Room Type"
           optionFilterProp="children"
-          onChange={(value) => handleRawMaterialChange(value, record.key)}
+          onChange={(value) => handleRoomTypeChange(value, record.key)}
           filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-          // options={rawMaterial.map(option => ({ value: option.name, label: option.name }))}
-          options={dataSource[0].RoomType.map(option => ({ value: option.label, label: option.label }))}
+          options={type.map(option => ({ value: option.typeId, label: option.typeName }))} // Change value to option.typeId
           style={{ width: "100%" }}
         />
       ),
     },
     {
-      title: 'Sản phẩm', dataIndex: 'pricePerM2', width: '10%'
-      , render: (text, record) => (
+      title: 'Sản phẩm',
+      dataIndex: 'pricePerM2',
+      width: '10%',
+      render: (text, record) => (
         <Select
           showSearch
           placeholder="Select a RawMaterial"
           optionFilterProp="children"
           onChange={(value) => handleRawMaterialChange(value, record.key)}
           filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-          // options={rawMaterial.map(option => ({ value: option.name, label: option.name }))}
-          options={dataSource[0].Product.map(option => ({ value: option.label, label: option.label }))}
+          options={record.Product.map(option => ({ value: option.value, label: option.label }))}
           style={{ width: "100%" }}
         />
       ),
@@ -178,6 +306,16 @@ const RawMaterialQuotePage = () => {
       )
     },
     {
+      title: 'Đơn Vị',
+      dataIndex: 'Unit',
+      width: '10%',
+      render: (_, record) => {
+        const unit = record.Unit;
+
+        return <span>{unit}</span>;
+      }
+    },
+    {
       title: 'Số lượng',
       dataIndex: 'operation',
       width: '10%',
@@ -186,33 +324,22 @@ const RawMaterialQuotePage = () => {
           placeholder="1"
           type="number"
           value={record.Quantity}
-          onChange={(e) => handleSave({ ...record, Quantity: e.target.value })}
+          onChange={(e) => handleSave({ ...record, Quantity: parseInt(e.target.value) || 0 })}
         />
       ),
     },
     {
-      title: 'Tổng Tiền',
-      dataIndex: 'TotalCost',
+      title: 'Giá tiền',
+      dataIndex: 'UnitPrice',
       width: '10%',
-      render: (_, record) => (
-        <span>{parseInt(
-          (record.Quantity || 0) * (record.UnitPrice || 0)
-        ).toLocaleString('vi-VN')} VND</span>
-      ),
-    },
-    {
-      title: 'Ghi chú',
-      dataIndex: 'Note',
-      width: '20%',
-      render: (_, record) => (
-        <Input
-          placeholder="Ghi Chú"
-          value={record?.Note}
-          onChange={(e) => handleSave({ ...record, Note: e.target.value })}
-        />
+      render: (_, record) => {
+        const unitPrice = record.Product[0]?.unitPrice || 0; // Access unitPrice from the Product object
 
-      ),
+        return <span>{unitPrice} VND</span>;
+      }
     },
+   
+    
     {
       title: 'Thao tác',
       dataIndex: 'operation',
@@ -231,7 +358,7 @@ const RawMaterialQuotePage = () => {
   }
 
   const handleShow = () => {
-    setIsPopconfirmVisible(true);
+    // setIsPopconfirmVisible(true);
   }
 
   const handleOk = () => {
@@ -269,7 +396,7 @@ const RawMaterialQuotePage = () => {
           marginTop: 20,
         }}
       >
-        <button type="button" className="btn btn-primary" onClick={handleShow}
+        <button type="button" className="btn btn-primary" onClick={handleAddQuotationDetail}
           style={{
             backgroundColor: 'green',
             color: 'white',
