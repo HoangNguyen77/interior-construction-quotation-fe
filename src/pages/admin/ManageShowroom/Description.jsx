@@ -654,7 +654,7 @@ const Description = () => {
                                 <div
                                     className='col-span-1 text-black flex flex-col justify-center'>{product.unitPrice}</div>
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{product.unit}</div>
+                                    className='col-span-1 text-black flex flex-col justify-center'>{product.unitName}</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     {!isModalOpen && (
                                     <div className='flex justify-end gap-2'>

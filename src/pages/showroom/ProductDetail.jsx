@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {Link, useParams} from "react-router-dom";
 import {getAllProductImages} from "../../api/product/ProductImageAPI.jsx";
-import {getProductById} from "../../api/product/ProductAPI.jsx";
+import {getProductById, getProductRequestById} from "../../api/product/ProductAPI.jsx";
 
 const ProductDetail = () => {
     useScrollToTop();
@@ -17,7 +17,7 @@ const ProductDetail = () => {
     const [exception, setException] = useState(null);
 
     useEffect(() => {
-        getProductById(productId).then(product => {
+        getProductRequestById(productId).then(product => {
             setProduct(product);
             console.log(product);
             if (sectionRef.current) {
@@ -66,10 +66,10 @@ const ProductDetail = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8">
-                            <Carousel showThumbs={false} dynamicHeight={true}>
+                            <Carousel showThumbs={true}>
                                 {imageList.map((img, index) => (
-                                    <div key={index}>
-                                        <img src={img.imageData} alt="" style={{maxWidth: '100%', maxHeight: '100%'}}/>
+                                    <div key={index} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '600px'}}>
+                                        <img src={img.imageData} alt="" style={{objectFit: 'contain'}}/>
                                     </div>
                                 ))}
                             </Carousel>
@@ -79,9 +79,9 @@ const ProductDetail = () => {
                         <div className="col-md-4">
                             <div className='h2'>{product.name}</div>
                             <hr/>
-                            <p className="text-justify mt-3 h5">{product.unitPrice}đ</p>
                             <p className="text-justify mt-3 ">Kích thước sản phẩm</p>
                             <p className="text-justify mt-1 h5">{product.width} x {product.length} x {product.height}</p>
+                            <p className="text-justify mt-1">{product.typeName}</p>
                         </div>
 
 

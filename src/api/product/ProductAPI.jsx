@@ -1,6 +1,6 @@
 import {my_request} from "../Request.js";
 import {getFirstImageOfProduct} from "./ProductImageAPI.jsx";
-
+import axios from "axios";
 async function getProduct(url){
     const productList = [];
     const response = await my_request(url);
@@ -37,20 +37,27 @@ export async function getAllProductWithFirstImage(page) {
 
         const productDetailsPromises = responseData.map(async (product) => {
             try {
-                const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
+                const [imageDetails, productRequest] = await Promise.all([
+                    getFirstImageOfProduct(product.productId),
+                    getProductRequestById(product.productId)
+                ]);
 
                 // Check if imageDetails is not null before accessing imageData
                 const image = imageDetails ? imageDetails.imageData : null;
 
                 return {
                     ...product,
-                    image: image
+                    image: image,
+                    unitName: productRequest.unitName,
+                    typeRoom: productRequest.typeRoom
                 };
             } catch (error) {
-                console.error("Error retrieving image details:", error);
+                console.error("Error retrieving product details:", error);
                 return {
                     ...product,
-                    image: null // Set image to null if there's an error or if imageDetails is null
+                    image: null, // Set image to null if there's an error or if imageDetails is null
+                    unitName: null,
+                    typeRoom: null
                 };
             }
         });
@@ -59,13 +66,14 @@ export async function getAllProductWithFirstImage(page) {
         const productList = await Promise.all(productDetailsPromises);
         console.log(productList);
         console.log(totalProducts);
-        console.log(totalPages)
+        console.log(totalPages);
         return { productList, totalProducts, totalPages };
     } catch (error) {
         console.error("Error", error);
         return null;
     }
 }
+
 
 export async function get4ProductWithFirstImage() {
     const url = `http://localhost:8080/detail-product?size=4`;
@@ -115,20 +123,19 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
 
         const productDetailsPromises = responseData.map(async (product) => {
             try {
-                const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
-
-                // Check if imageDetails is not null before accessing imageData
-                const image = imageDetails ? imageDetails.imageData : null;
+                const productRequest = await getProductRequestById(product.productId);
 
                 return {
                     ...product,
-                    image: image
+                    unitName: productRequest.unitName,
+                    typeRoom: productRequest.typeRoom
                 };
             } catch (error) {
-                console.error("Error retrieving image details:", error);
+                console.error("Error retrieving product details:", error);
                 return {
                     ...product,
-                    image: null // Set image to null if there's an error or if imageDetails is null
+                    unitName: null,
+                    typeRoom: null
                 };
             }
         });
@@ -144,6 +151,7 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
         return null;
     }
 }
+
 export async function getProductByName(keyword){
     const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
     return getProduct(url);
@@ -381,6 +389,7 @@ export async function getProductRequestById(productId){
                 length: productData.length,
                 unitPrice: productData.unitPrice,
                 unitId: productData.unitId,
+                unitName: productData.unitName,
                 height : productData.height,
                 typeName : productData.typeName,
                 categoryId: productData.categoryId,
@@ -392,6 +401,26 @@ export async function getProductRequestById(productId){
     } catch (error) {
         console.error("Error", error);
         return null;
+    }
+}
+
+export async function addQuotation(quotationRequest) {
+    const url = "http://localhost:8080/quotation/add-quotation"; // Update the URL with your endpoint for adding a quotation
+    try {
+        const response = await axios.post(url, quotationRequest, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        if (response.status === 200) {
+            return "Create quotation successfully";
+        } else {
+            return "Create quotation failed";
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        return "Failed to create quotation";
     }
 }
 

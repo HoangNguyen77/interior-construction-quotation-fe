@@ -93,19 +93,19 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
       dataIndex: 'typeProduct',
       // width: '10%'
     },
-    { 
-      title: 'Dài', 
-      dataIndex: 'length', 
+    {
+      title: 'Dài',
+      dataIndex: 'length',
       // width: '10%',
     },
-    { 
-      title: 'Rộng', 
-      dataIndex: 'width', 
+    {
+      title: 'Rộng',
+      dataIndex: 'width',
       // width: '10%',
     },
-    { 
-      title: 'Cao', 
-      dataIndex: 'height', 
+    {
+      title: 'Cao',
+      dataIndex: 'height',
       // width: '10%',
     },
     {
@@ -113,20 +113,20 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
       dataIndex: 'quantity',
       // width: '10%',
     },
-    { 
-      title: 'Tổng Tiền', 
-      dataIndex: 'estimateTotalPrice', 
+    {
+      title: 'Tổng Tiền',
+      dataIndex: 'estimateTotalPrice',
       // width: '20%',
     },
-    { 
-      title: 'Giá thực tế', 
-      dataIndex: 'realTotalPrice', 
+    {
+      title: 'Giá thực tế',
+      dataIndex: 'realTotalPrice',
       // width: '25%',
       render: (_, record) => (
-        <Input
-          value={record.realTotalPrice}
-          onChange={(e) => handlePriceChange(e.target.value, record.detailId)}
-        />
+          <Input
+              value={record.realTotalPrice}
+              onChange={(e) => handlePriceChange(e.target.value, record.detailId)}
+          />
       ),
     },
     {
@@ -134,49 +134,49 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
       dataIndex: 'note',
       width: 100,
       render: (_, record) => (
-        <Input
-          value={record.note}
-          onChange={(e) => handleNoteChange(e.target.value, record.detailId)}
-        />
+          <Input
+              value={record.note}
+              onChange={(e) => handleNoteChange(e.target.value, record.detailId)}
+          />
       ),
     },
   ];
 
   return (
-    <div className='table-container'>
-      <div className='quotetable-title'>
-        <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
-      </div>
-      <Table
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        rowKey="detailId"
-        footer={() => (
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
-            <span>{totalPrice}</span>
-          </div>
-        )}
-      />
-
-      <Modal
-        title="Confirmation"
-        visible={modalVisible}
-        onOk={handleConfirm}
-        onCancel={() => setModalVisible(false)}
-        footer={null} // Disable default footer
-      >
-        <p>Are you sure you want to confirm?</p>
-        <div style={{ textAlign: 'right' }}>
-          <button onClick={handleConfirm}>Confirm</button>
-          <button onClick={() => setModalVisible(false)}>Cancel</button>
+      <div className='table-container'>
+        <div className='quotetable-title'>
+          <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
         </div>
-      </Modal>
-      
-      <button onClick={handleOk}>OK</button>
-    </div>
+        <Table
+            bordered
+            dataSource={dataSource}
+            columns={columns}
+            pagination={false}
+            rowKey="detailId"
+            footer={() => (
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
+                  <span>{totalPrice}</span>
+                </div>
+            )}
+        />
+
+        <Modal
+            title="Confirmation"
+            visible={modalVisible}
+            onOk={handleConfirm}
+            onCancel={() => setModalVisible(false)}
+            footer={null} // Disable default footer
+        >
+          <p>Are you sure you want to confirm?</p>
+          <div style={{ textAlign: 'right' }}>
+            <button onClick={handleConfirm}>Confirm</button>
+            <button onClick={() => setModalVisible(false)}>Cancel</button>
+          </div>
+        </Modal>
+
+        <button onClick={handleOk}>OK</button>
+      </div>
   );
 };
 
