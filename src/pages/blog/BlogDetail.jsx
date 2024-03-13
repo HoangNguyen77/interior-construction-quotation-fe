@@ -139,7 +139,5 @@ const BlogDetail = () => {
             <Footer/>
         </div>
     )
-
 }
-
 export default BlogDetail
