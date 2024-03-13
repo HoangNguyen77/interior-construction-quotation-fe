@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch, faSort, faCheck, faBan, faTrashAlt, faUser} from "@fortawesome/free-solid-svg-icons"; // Import faSearch icon
+import {faSearch, faSort, faCheck, faBan, faTrashAlt, faUser, faTrashCan} from "@fortawesome/free-solid-svg-icons"; // Import faSearch icon
 import axios from 'axios';
 import {toast} from "react-toastify";
 import Pagination from "../../utils/Pagination.jsx";
@@ -32,6 +32,7 @@ class ManageUser extends Component {
             searchValue: '', // Add searchValue state
             sortBy: '', // Add sortBy state
             filterBy: 'all', // Add filterBy state with default value 'all'
+            ísDeleting: false
         };
     }
 
@@ -47,7 +48,7 @@ class ManageUser extends Component {
                     keyword: searchValue,
                     filterBy: filterBy, // Truyền filterBy như một query parameter
                     page: currentPage - 1,
-                    size: 5,
+                    size: 8,
                     sort: 'userId,desc'
                 }
             });
@@ -128,10 +129,40 @@ class ManageUser extends Component {
         }
     };
 
-    handleDeleteUserConfirmation = (userId) => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
-            this.handleDeleteUser(userId);
-        }
+    handleDeleteUserConfirmation = async (userId) => {
+        // if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+        //     this.handleDeleteUser(userId);
+        // }
+        this.setState({isDeleting: true})
+        toast.warn(({closeToast}) => (
+            <div>
+                <div className="h5">Bạn có chắc chắn muốn xóa người dùng này?</div>
+                <div className="row justify-content-between">
+                    <div className="col-2 btn btn-danger" onClick={() => {
+                        this.setState({isDeleting: false})
+                        this.handleDeleteUser(userId);
+                        closeToast(); // Close the toast after deletion
+                    }}>Xóa
+                    </div>
+                    <div className="col-2 btn btn-secondary" onClick={()=>{
+                        this.setState({isDeleting: false})
+                        closeToast();
+                    }
+                    }>Hủy</div>
+                </div>
+            </div>
+        ), {
+            position: "top-center",
+            autoClose: false,
+            closeButton: false,
+            style: {
+                width: "450px", // Điều chỉnh chiều rộng của khung toast
+                padding: "20px", // Thêm padding nếu cần
+                backgroundColor: "#fff", // Màu nền của khung toast
+                color: "white", // Màu chữ của nội dung toast
+                borderRadius: "8px" // Bo tròn các góc của khung toast
+            }
+        });
     };
 
     handleSortChange = (sortBy) => {
@@ -228,13 +259,13 @@ class ManageUser extends Component {
                         <div className='grid grid-cols-10 py-3 gap-2'>
                             <div className='col-span-1 text-[#348EED]'>ID</div>
                             <div className='col-span-1 text-[#348EED]'>Tên người dùng</div>
-                            <div className='col-span-1 text-[#348EED]'>Họ và tên</div>
+                            <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
                             <div className='col-span-2 text-[#348EED]'>Email</div>
-                            <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
+                            <div className='col-span-2 text-[#348EED]'>Số điện thoại</div>
                             <div className='col-span-1 text-[#348EED]'>Trạng thái</div>
-                            <div className='col-span-1 text-[#348EED]'>Hành động</div>
+                            <div className='col-span-1 text-[#348EED]'></div>
                         </div>
-
+                        <div className='overflow-y-auto h-[49vh] pr-3'>
                         {filteredUsers.map(user => (
                             <div key={user.userId} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>{user.userId}</div>
@@ -242,10 +273,10 @@ class ManageUser extends Component {
                                     className='col-span-1 text-black flex flex-col justify-center'>{user.username}</div>
 
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{`${user.firstName} ${user.lastName}`}</div>
+                                    className='col-span-2 text-black flex flex-col justify-center'>{`${user.firstName} ${user.lastName}`}</div>
                                 <div className='col-span-2 text-black flex flex-col justify-center'>{user.email}</div>
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{user.phonenumber}</div>
+                                    className='col-span-2 text-black flex flex-col justify-center'>{user.phonenumber}</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     {user.enabled ?
                                         <div style={{color: 'green'}}>Còn hoạt động</div> :
@@ -253,31 +284,38 @@ class ManageUser extends Component {
                                     }
                                 </div>
 
-
                                 <div className='col-span-1 flex justify-end items-center'>
-                                    <div
-                                        onClick={() => this.handleToggleUserStatus(user.userId, user.enabled ? 'enabled' : 'disabled')}
-                                        style={{
-                                            color: user.enabled ? 'red' : 'green',
-                                            cursor: 'pointer',
-                                            padding: '5px 10px',
-                                            borderRadius: '5px',
-                                            marginRight: '10px',
-                                            border: user.enabled ? '1px solid red' : "1px solid green"
+                                    {/*abc*/}
+                                    {
+                                        !this.state.isDeleting && (
+                                            <div className="flex justify-end items-center">
+                                                <div
+                                                    onClick={() => this.handleToggleUserStatus(user.userId, user.enabled ? 'enabled' : 'disabled')}
+                                                    style={{
+                                                        color: user.enabled ? 'red' : 'green',
+                                                        cursor: 'pointer',
+                                                        borderRadius: '5px',
+                                                        padding : '0px 3px',
+                                                        marginRight: '10px',
+                                                        border: user.enabled ? '1px solid red' : "1px solid green"
 
-                                        }}
-                                    >
-                                        {user.enabled ? 'Disable' : 'Enable '}
-                                    </div>
-                                    <div onClick={() => this.handleDeleteUserConfirmation(user.userId)}>
-                                        <FontAwesomeIcon icon={faTrashAlt} color="black" size="120px"/>
-                                    </div>
-
+                                                    }}
+                                                >
+                                                    {user.enabled ? 'Disable' : 'Enable '}
+                                                </div>
+                                                <div onClick={() => this.handleDeleteUserConfirmation(user.userId)}>
+                                                    <Icon classIcon={faTrashCan} color={"black"} size={"20px"}/>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                                 </div>
+
 
 
                             </div>
                         ))}
+                        </div>
                         <Pagination currentPage={currentPage} totalPage={totalPage}
                                     handlePageChange={this.handlePageChange}/>
                     </div>

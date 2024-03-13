@@ -79,42 +79,45 @@ function ForgetPassword(){
     }
     return (
         <div>
-            <div className="container w-25">
-                <div className="h3 text-center mt-5">VivaDecor</div>
-                <div className="h4">Quên mật khẩu</div>
-                <hr/>
+            <div className="bg-blur"></div>
+            <div className="centered-form">
+                <div className="container w-25 p-2" style={{borderRadius: '20px', zIndex:'3', backgroundColor:'#ffffff'}}>
+                    <div className="h2 text-center mt-5">VivaDecor</div>
+                    <div className="h4">Quên mật khẩu</div>
+                    <hr/>
 
-                <form className="form mt-2" onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="username" className="form-label">Tên đăng nhập</label>
-                        <input
-                            type="text"
-                            id="username"
-                            className="form-control"
-                            value={username}
-                            onChange={handleUsernameChange}
-                        />
-                        <div style={{color: "red"}}>{errorUsername}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input
-                            type="text"
-                            id="email"
-                            className="form-control"
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
-                        <div style={{color: "red"}}>{errorEmail}</div>
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary" disabled={isSubmitting} style={{backgroundColor:"red"}}>
-                            Gửi
-                        </button>
-                    </div>
-                </form>
-                <Link to="/login" style={{color: "blue", display: "flex", justifyContent: "center", fontSize: "18px"}}
-                      className="">Quay trở lại trang đăng nhập</Link>
+                    <form className="form mt-2" onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Tên đăng nhập</label>
+                            <input
+                                type="text"
+                                id="username"
+                                className="form-control"
+                                value={username}
+                                onChange={handleUsernameChange}
+                            />
+                            <div style={{color: "red"}}>{errorUsername}</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email</label>
+                            <input
+                                type="text"
+                                id="email"
+                                className="form-control"
+                                value={email}
+                                onChange={handleEmailChange}
+                            />
+                            <div style={{color: "red"}}>{errorEmail}</div>
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary" disabled={isSubmitting} style={{backgroundColor:"red"}}>
+                                Gửi
+                            </button>
+                        </div>
+                    </form>
+                    <Link to="/login" style={{color: "blue", display: "flex", justifyContent: "center", fontSize: "18px"}}
+                          className="">Quay trở lại trang đăng nhập</Link>
+                </div>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {isToken, isTokenExpired, logout} from "../utils/JwtService.js";
+import {getRoleByToken, isToken, isTokenExpired, logout} from "../utils/JwtService.js";
 import { jwtDecode } from "jwt-decode";
 
 function Header() {
@@ -36,15 +36,15 @@ function Header() {
                                                 <li className={location.pathname.startsWith("/finished-project") ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
                                                 </li>
-                                                <li className={location.pathname.startsWith("/quotation-category") ? "active has-children" : "has-children"}>
-                                                    <Link to="/quotation-category">Các Loại thi công nội thất</Link>
-                                                    <ul className="dropdown arrow-top">
-                                                        <li><a href="">Thi công nhà đất</a></li>
-                                                        <li><a href="">Thi công chung cư</a></li>
-                                                        <li><a href="">Thi công biệt thự</a></li>
-                                                        <li><a href="">Thi công văn phòng</a></li>
-                                                    </ul>
-                                                </li>
+                                                {/*<li className={location.pathname.startsWith("/quotation-category") ? "active has-children" : "has-children"}>*/}
+                                                {/*    <Link to="/quotation-category">Các Loại thi công nội thất</Link>*/}
+                                                {/*    <ul className="dropdown arrow-top">*/}
+                                                {/*        <li><a href="">Thi công nhà đất</a></li>*/}
+                                                {/*        <li><a href="">Thi công chung cư</a></li>*/}
+                                                {/*        <li><a href="">Thi công biệt thự</a></li>*/}
+                                                {/*        <li><a href="">Thi công văn phòng</a></li>*/}
+                                                {/*    </ul>*/}
+                                                {/*</li>*/}
                                                 <li className={location.pathname.startsWith("/blog") ? "active" : ""}>
                                                     <Link to="/blog">Blog</Link></li>
                                                 <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}>
@@ -66,7 +66,13 @@ function Header() {
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                     <Link className="dropdown-item" to="/info">Thông tin của bạn</Link>
-                                                    <a className="dropdown-item" href="#">Báo giá</a>
+                                                    {
+                                                        (getRoleByToken() === "ADMIN") && (
+                                                            <Link className="dropdown-item" to="/admin">Dashboard</Link>)
+                                                    }
+                                                    {
+                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/quotation-calculator">Báo giá của bạn</Link>)
+                                                    }
                                                     <div className="dropdown-divider"></div>
                                                     <a className="dropdown-item" style={{ cursor: "pointer" }}
                                                        onClick={() => {

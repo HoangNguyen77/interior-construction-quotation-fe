@@ -51,6 +51,7 @@ const ManageBlog = () => {
     const [update, setUpdate] = useState(false);
     const [isChanged, setIsChanged] = useState(false);
     const [blogId, setBLogId] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         if (search === '') {
@@ -119,7 +120,6 @@ const ManageBlog = () => {
 
         setIsModalOpen(!isModalOpen);
     }
-
     //                          SEARCH                      //
     const handleSearch = () => {
         setSearch(currentSearch);
@@ -203,6 +203,7 @@ const ManageBlog = () => {
                         method: 'POST',
                         headers: {
                             'Content-type': 'application/json',
+                            'Authorization':`Bearer ${localStorage.getItem('token')}`
                         },
                         body: JSON.stringify({
                             blogId: 0,
@@ -269,6 +270,7 @@ const ManageBlog = () => {
         }
     }
     const handleDeleteBlog = async (id) => {
+        setIsDeleting(true);
         // Display toast confirmation
         toast.warn(({closeToast}) => (
             <div>
@@ -277,9 +279,14 @@ const ManageBlog = () => {
                     <div className="col-2 btn btn-danger" onClick={() => {
                         deleteBlog(id);
                         closeToast(); // Close the toast after deletion
+                        setIsDeleting(false);
                     }}>Xóa
                     </div>
-                    <div className="col-2 btn btn-secondary" onClick={closeToast}>Hủy</div>
+                    <div className="col-2 btn btn-secondary" onClick={()=>{
+                        closeToast();
+                        setIsDeleting(false);
+                    }
+                    }>Hủy</div>
                 </div>
             </div>
         ), {
@@ -287,7 +294,7 @@ const ManageBlog = () => {
             autoClose: false,
             closeButton: false,
             style: {
-                width: "400px", // Điều chỉnh chiều rộng của khung toast
+                width: "450px", // Điều chỉnh chiều rộng của khung toast
                 padding: "20px", // Thêm padding nếu cần
                 backgroundColor: "#fff", // Màu nền của khung toast
                 color: "white", // Màu chữ của nội dung toast
@@ -422,7 +429,7 @@ const ManageBlog = () => {
                         className='w-4/5 h-[60px] relative top-7 bg-[#E22E6D] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>BÀI
                         VIẾT
                         {
-                            !isModalOpen && (<div
+                            !isModalOpen && !isDeleting && (<div
                                 className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
                                 onClick={handleModalToggle}>
                                 <Icon classIcon={faPlus} color={"white"} size={"24px"}/>
@@ -441,39 +448,41 @@ const ManageBlog = () => {
                             <div className='col-span-1 text-[#E22E6D]'>Ngày đăng</div>
                             <div className='col-span-1 text-[#E22E6D]'></div>
                         </div>
-                        {blogList.map(blog => (
-                            <div key={blog.blogId} className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                <div className='col-span-1 text-black flex flex-col justify-center'>{blog.blogId}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'>
-                                    <img className='w-3/5' src={blog.image} alt=""/>
+                        <div className='overflow-y-auto h-[50vh] pr-3'>
+                            {blogList.map(blog => (
+                                <div key={blog.blogId} className='grid grid-cols-12 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>{blog.blogId}</div>
+                                    <div className='col-span-2 text-black flex flex-col justify-center'>
+                                        <img className='w-3/5' src={blog.image} alt=""/>
+                                    </div>
+                                    <div
+                                        className='col-span-2 text-black flex flex-col justify-center'>{blog.firstName + " " + blog.lastName}</div>
+                                    <div
+                                        className='col-span-2 text-black flex flex-col justify-center'>{getShortDescription(blog.title)}...
+                                    </div>
+                                    <div
+                                        className='col-span-3 text-black flex flex-col justify-center'>{getShortDescription(blog.description)}...
+                                    </div>
+                                    <div
+                                        className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>
+                                        {(!isModalOpen && !isDeleting)  && (
+                                            <div className='flex justify-end gap-2'>
+                                                <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
+                                                    classIcon={faTrashCan}
+                                                    color={"black"}
+                                                    size={"20px"}/></div>
+                                                <div onClick={() => handleButtonUpdate(blog.blogId)}><Icon
+                                                    classIcon={faPencil}
+                                                    color={"black"}
+                                                    size={"20px"}/></div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                                <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{blog.firstName + " " + blog.lastName}</div>
-                                <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{getShortDescription(blog.title)}...
-                                </div>
-                                <div
-                                    className='col-span-3 text-black flex flex-col justify-center'>{getShortDescription(blog.description)}...
-                                </div>
-                                <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
-                                <div className='col-span-1 text-black flex flex-col justify-center'>
-                                    {!isModalOpen && (
-                                        <div className='flex justify-end gap-2'>
-                                            <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
-                                                classIcon={faTrashCan}
-                                                color={"black"}
-                                                size={"20px"}/></div>
-                                            <div onClick={() => handleButtonUpdate(blog.blogId)}><Icon
-                                                classIcon={faPencil}
-                                                color={"black"}
-                                                size={"20px"}/></div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))
-                        }
+                            ))
+                            }
+                        </div>
                         <Pagination currentPage={currentPage} totalPage={totalPage}
                                     handlePageChange={handlePageChange}/>
                     </div>

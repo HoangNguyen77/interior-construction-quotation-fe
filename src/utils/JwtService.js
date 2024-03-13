@@ -54,6 +54,7 @@ export function getIdUserByToken() {
     }
 }
 
+
 export function getRoleByToken() {
     const token = localStorage.getItem('token');
     if (token) {

@@ -50,7 +50,7 @@ function EnableAccount(){
             </div>
             <div className="site-section bg-light" style={{paddingBottom:'200px'}} ref={sectionRef}>
                 <div className="container text-center">
-                    <h1>Kích hoạt tài khoản</h1>
+                    <div className="h1">Kích hoạt tài khoản</div>
                     {
                         enable ? (<p> Tài khoản đã kích hoạt thành công, bạn hãy <Link to="/login" style={{color: "red"}}>đăng
                                 nhập</Link> để tiếp tục sử dụng dịch vụ!</p>) :

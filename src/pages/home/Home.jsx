@@ -10,11 +10,15 @@ import {Carousel} from "react-responsive-carousel";
 import {Link} from "react-router-dom";
 import {MdVilla} from "react-icons/md";
 import {get3NewBlog} from "../../api/blog/BlogAPI.js";
+import {get4ProductWithFirstImage, getAllProductWithFirstImage} from "../../api/product/ProductAPI.jsx";
+import {getFinishedProjectsByTitle} from "../../api/finished/FinishedProjectAPI.js";
 
 function Home() {
     useScrollToTop()
 
     const [blogList, setBlogList] = useState([]);
+    const [projectList, setProjectList] = useState([]);
+    const [productList, setProductList] = useState([]);
     const getShortDescription = (description) => {
         const words = description.split(' ');
         const shortWords = words.slice(0, 50);
@@ -33,6 +37,16 @@ function Home() {
         get3NewBlog().then(
             result => {
                 setBlogList(result.blogList);
+            }
+        ).catch(error => console.log(error))
+        getFinishedProjectsByTitle(0, "", 6).then(
+            result => {
+                setProjectList(result.projectList);
+            }
+        )
+        get4ProductWithFirstImage().then(
+            result =>{
+                setProductList(result.productList);
             }
         ).catch(error => console.log(error))
     }, []);
@@ -58,70 +72,50 @@ function Home() {
                             <h1 className="mb-5">Dự án đã thi công</h1>
                         </div>
                     </div>
-                    <div className="row justify-content-center mb-4">
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaBuilding className="icon-a" size={'2em'}/>
-                                CHUNG CƯ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <FaHome className="icon-a" size={'2em'}/>
-                                NHÀ PHỐ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <MdVilla className="icon-a" size={'2em'}/>
-                                BIỆT THỰ
-                            </button>
-                        </div>
-                        <div className="col-2">
-                            <button type="button" className="btn btn-outline-dark btn-block icon-button">
-                                <IoDesktopSharp className="icon-a" size={'2em'}/>
-                                VĂN PHÒNG
-                            </button>
-                        </div>
-                    </div>
+                    {/*<div className="row justify-content-center mb-4">*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <FaBuilding className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        CHUNG CƯ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <FaHome className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        NHÀ PHỐ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <MdVilla className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        BIỆT THỰ*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*    /!*<div className="col-2">*!/*/}
+                    {/*    /!*    <button type="button" className="btn btn-outline-dark btn-block icon-button">*!/*/}
+                    {/*    /!*        <IoDesktopSharp className="icon-a" size={'2em'}/>*!/*/}
+                    {/*    /!*        VĂN PHÒNG*!/*/}
+                    {/*    /!*    </button>*!/*/}
+                    {/*    /!*</div>*!/*/}
+                    {/*</div>*/}
                     <div className="row">
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-4 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
+                        {
+                            projectList.map(project => (
+                                <div className="col-md-6 col-lg-4 mb-2 p-1" key={project.projectId}>
+                                    <div className="hotel-room text-center">
+                                        <Link to={`/finished-project/detail-finished/${project.projectId}`} className="d-block mb-0 thumbnail"
+                                              style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '270px'}}
+                                        >
+                                            <img src={project.image}
+                                                 alt="Image"
+                                                 className="img-fluid"
+                                                 style={{objectFit: 'contain'}}
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="text-right" style={{fontSize:"130%"}}>
                         <Link to="/finished-project">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
@@ -168,42 +162,31 @@ function Home() {
                     </div>
                 </div>
             </div>
-            <div className="site-section">
+            <div className="site-section bg-light">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
                             <h1 className="mb-3">Sản Phẩm Nội Thất</h1>
-                            <h5>Các sản phẩm của chúng tôi</h5>
+                            <h5 className="h5">Các sản phẩm của chúng tôi</h5>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_1.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
+                        {productList.map(product => (
+                            <div key={product.productId} className="col-md-6 col-lg-3 mb-2 p-1">
+                            <Link  to={`/product/${product.productId}`}>
+                                    <div className="hotel-room text-center">
+                                        <a href="#" className="d-block mb-0 thumbnail"
+                                           style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}
+                                        >
+                                            <img src={product.image} alt="Image" className="img-fluid" style={{objectFit: 'contain'}}/>
+                                        </a>
+                                    </div>
+                            </Link>
                             </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_2.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
-                        <div className="col-md-6 col-lg-3 mb-2 p-1">
-                            <div className="hotel-room text-center">
-                                <a href="#" className="d-block mb-0 thumbnail"><img src="/images/img_3.jpg" alt="Image"
-                                                                                    className="img-fluid"/></a>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                     <div className="text-right" style={{fontSize: "130%"}}>
-                        <Link to="/showroom">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
+                        <Link to="/product">Xem thêm <span className="icon-arrow-circle-right"></span></Link>
                     </div>
                 </div>
             </div>
@@ -228,18 +211,18 @@ function Home() {
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
                             <h1 className="mb-3">Bài viết</h1>
-                            <h5>Các bài viết gần đây</h5>
+                            <h5 className="h5">Các bài viết gần đây</h5>
                         </div>
                     </div>
                     {
                         blogList.map(blog => (
-                            <Link to={`/blog/${blog.blogId}`}>
-                                <div className="row bg-white mb-5 pt-4" key={blog.blogId}>
+                            <Link key={blog.blogId} to={`/blog/${blog.blogId}`}>
+                                <div className="row bg-white mb-5 pt-4" >
                                     <div className="col-3">
                                         <div className="media-with-text">
                                             <div className="img-border-sm mb-4">
-                                                <div className="popup-vimeo image-play">
-                                                    <img src={blog.image} alt="" className="img-fluid"/>
+                                                <div className="popup-vimeo image-play" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>
+                                                    <img src={blog.image} alt="" className="img-fluid" style={{objectFit: 'contain'}}/>
                                                 </div>
                                             </div>
                                         </div>

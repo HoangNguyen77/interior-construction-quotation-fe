@@ -168,92 +168,97 @@ function Register(){
     ///////////////////////////////////////////////////////////////////////////////
 
     return(
-        <div className="container">
-            <div className="h1 mt-5 text-center">Đăng ký</div>
-            <div className="w-50 mb-3 col-md-6 col-12 mx-auto">
-                <form onSubmit={handleSubmit} className="form">
-                    <div className="mb-3">
-                        <label htmlFor="username" className="form-label">Tên đăng nhập</label>
-                        <input
-                            type="text"
-                            id="username"
-                            className="form-control"
-                            value={username}
-                            onChange={handleUsernameChange}
-                        />
-                        <div style={{color: "red"}}>{errorUsername}</div>
+        <div>
+            <div className="bg-blur"></div>
+            <div className="centered-form">
+                <div className="container" style={{borderRadius: '20px', zIndex:'3', backgroundColor:'#ffffff'}}>
+                    <div className="h1 mt-5 text-center">Đăng ký</div>
+                    <div className="w-50 mb-3 col-md-6 col-12 mx-auto pt-2" style={{borderTop: '1px solid #BBBBBBFF'}}>
+                        <form onSubmit={handleSubmit} className="form">
+                            <div className="mb-3">
+                                <label htmlFor="username" className="form-label">Tên đăng nhập</label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    className="form-control"
+                                    value={username}
+                                    onChange={handleUsernameChange}
+                                />
+                                <div style={{color: "red"}}>{errorUsername}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    className="form-control"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                />
+                                <div style={{color: "red"}}>{errorEmail}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Mật khẩu</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    className="form-control"
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                />
+                                <div style={{color: "red"}}>{errorPassword}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="passwordAgain" className="form-label">Nhập lại mật khẩu</label>
+                                <input
+                                    type="password"
+                                    id="passwordAgain"
+                                    className="form-control"
+                                    value={passwordAgain}
+                                    onChange={handlePasswordAgainChange}
+                                />
+                                <div style={{color: "red"}}>{errorPasswordAgain}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="firstName" className="form-label">Họ đệm</label>
+                                <input
+                                    type="text"
+                                    id="hoDem"
+                                    className="form-control"
+                                    value={firstName}
+                                    onChange={handleFirstNameChange}
+                                />
+                                <div style={{color: "red"}}>{errorFirstName}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="lastName" className="form-label">Tên</label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    className="form-control"
+                                    value={lastName}
+                                    onChange={handleLastNameChange}
+                                />
+                                <div style={{color: "red"}}>{errorLastName}</div>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="phonenumber" className="form-label">Số điện thoại</label>
+                                <input
+                                    type="text"
+                                    id="phonenumber"
+                                    className="form-control"
+                                    value={phonenumber}
+                                    onChange={handlePhonenumberChange}
+                                />
+                                <div style={{color: "red"}}>{errorPhonenumber}</div>
+                            </div>
+                            <div className="text-center">
+                                <button type="submit" className="btn btn-primary" style={{backgroundColor: "red"}}>Đăng Ký</button>
+                            </div>
+                        </form>
+                        <Link to="/login" style={{color: "blue"}}>Trở lại trang đăng nhập</Link>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input
-                            type="text"
-                            id="email"
-                            className="form-control"
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
-                        <div style={{color: "red"}}>{errorEmail}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">Mật khẩu</label>
-                        <input
-                            type="password"
-                            id="password"
-                            className="form-control"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
-                        <div style={{color: "red"}}>{errorPassword}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="passwordAgain" className="form-label">Nhập lại mật khẩu</label>
-                        <input
-                            type="password"
-                            id="passwordAgain"
-                            className="form-control"
-                            value={passwordAgain}
-                            onChange={handlePasswordAgainChange}
-                        />
-                        <div style={{color: "red"}}>{errorPasswordAgain}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="firstName" className="form-label">Họ đệm</label>
-                        <input
-                            type="text"
-                            id="hoDem"
-                            className="form-control"
-                            value={firstName}
-                            onChange={handleFirstNameChange}
-                        />
-                        <div style={{color: "red"}}>{errorFirstName}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="lastName" className="form-label">Tên</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            className="form-control"
-                            value={lastName}
-                            onChange={handleLastNameChange}
-                        />
-                        <div style={{color: "red"}}>{errorLastName}</div>
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="phonenumber" className="form-label">Số điện thoại</label>
-                        <input
-                            type="text"
-                            id="phonenumber"
-                            className="form-control"
-                            value={phonenumber}
-                            onChange={handlePhonenumberChange}
-                        />
-                        <div style={{color: "red"}}>{errorPhonenumber}</div>
-                    </div>
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary" style={{backgroundColor: "red"}}>Đăng Ký</button>
-                    </div>
-                </form>
-                <Link to="/login" style={{color: "blue"}}>Trở lại trang đăng nhập</Link>
+                </div>
             </div>
         </div>
     )
