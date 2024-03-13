@@ -70,7 +70,7 @@ function Header() {
                                                             <Link className="dropdown-item" to="/admin">Dashboard</Link>)
                                                     }
                                                     {
-                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/quotation-calculator">Báo giá của bạn</Link>)
+                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/customer-quotation">Báo giá của bạn</Link>)
                                                     }
                                                     <div className="dropdown-divider"></div>
                                                     <a className="dropdown-item" style={{ cursor: "pointer" }}

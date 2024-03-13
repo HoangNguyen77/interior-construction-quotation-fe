@@ -1,8 +1,6 @@
 import {my_request} from "../Request.js";
 import {getFirstImageOfProduct} from "./ProductImageAPI.jsx";
 import axios from "axios";
-import product from "../../pages/showroom/Product.jsx";
-import blogList from "../../pages/blog/components/BlogList.jsx";
 async function getProduct(url){
     const productList = [];
     const response = await my_request(url);
@@ -185,10 +183,6 @@ export async function getProductById(productId){
 }
 export async function getAllRoomTypes(page){
     const url = `http://localhost:8080/type-room?${page}&size=20`
-    return getRoomType(url);
-}
-export async function getRoomTypeByName(keyword){
-    const url= `http://localhost:8080/type-room/search/findByRoomNameContaining?typeName=${keyword}&page=0&size=20`;
     return getRoomType(url);
 }
 export async function getRoomTypeById(roomId){

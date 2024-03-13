@@ -20,11 +20,11 @@ function QuotationCalculator(){
                     </div>
                 </div>
             </div>
-            
+
             <section className="container my-4">
                 <RawMaterialQuotePage />
             </section>
-            
+
             <Footer/>
         </div>
     )
