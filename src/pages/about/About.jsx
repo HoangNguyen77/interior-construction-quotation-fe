@@ -79,13 +79,15 @@ function About() {
                     <div className="row">
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a className = "d-block mb-1 thumbnail"><img
+                                <a className="d-block mb-1 thumbnail"><img
                                     src="/images/congchien.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
-                                    <p className="text-left mb-3">Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
-                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
+                                    <p className="text-left mb-3">Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội
+                                        thất xuất sắc, kết hợp tinh
+                                        tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian
+                                        sống
                                         độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện.</p>
 
                                 </div>
@@ -99,10 +101,8 @@ function About() {
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
 
-                                   <p className="text-left mb-3">  Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
-                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
-                                       độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. </p>
-
+                                    <p className="text-left mb-3"> Nguyễn Huy Hoàng, giám đốc kỹ thuật Vivadeco, có hơn 30 năm
+                                        kinh nghiệm lập trình, người sinh ra đế chế Google.</p>
                                 </div>
                             </div>
                         </div>
@@ -110,26 +110,28 @@ function About() {
 
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a className="d-block mb-4 thumbnail"><img
+                                <a className="d-block mb-1 thumbnail"><img
                                     src="/images/chicuong.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Phạm Chí Cường</a></h3>
-                                    <p className="text-left mb-3"> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
+                                    <p className="text-left mb-3"> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus -
+                                        Weimar.
                                         Với cơ hội làm việc cùng nhà thiết kế nổi tiếng Philippe Starck trong nhiều dự
-                                        án quan trọng là  sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
+                                        án quan trọng là sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
 
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a className="d-block mb-5 thumbnail"><img src="/images/cd.jpg"
-                                                                                    alt="Image" className="img-fluid"
-                                /></a>
+                                <a className="d-block mb-1 thumbnail"><img
+                                    src="/images/cd.jpg"
+                                    alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Tôn Chí Dũng</a></h3>
-                                    <p className="text-left mb-3">Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế
+                                    <p className="text-left mb-3">Người được mệnh danh -Phù thủy thành Lilo- với việc
+                                        đã làm rất nhiều thiết kế
                                         mang tính chất vĩ đại.
                                         Ông là một trong số ít người từng học và làm việc tại University of Arts
                                         London.</p>
