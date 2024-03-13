@@ -1,8 +1,6 @@
 import {my_request} from "../Request.js";
 import {getFirstImageOfProduct} from "./ProductImageAPI.jsx";
-import axios from "axios";
-import product from "../../pages/showroom/Product.jsx";
-import blogList from "../../pages/blog/components/BlogList.jsx";
+
 async function getProduct(url){
     const productList = [];
     const response = await my_request(url);
@@ -21,14 +19,52 @@ async function getProduct(url){
             unitId: responseData[key].unitId
         });
     }
-        return {productList: productList, totalProducts: totalProducts, totalPages: totalPages};
-    }
-
-
+    return {productList: productList, totalProducts: totalProducts, totalPages: totalPages};
+}
 export async function getAllProducts(page){
     const url = `http://localhost:8080/detail-product?size=9&page=${page}`
     return getProduct(url);
 }
+// export async function getAllProductWithFirstImage(page) {
+//     const url = `http://localhost:8080/detail-product?size=9&page=${page}`;
+//     try {
+//         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+//         const responseData = response._embedded.products;
+//         const totalPages = response.page.totalPages;
+//         const totalProducts = response.page.totalElements;
+//
+//         const productDetailsPromises = responseData.map(async (product) => {
+//             try {
+//                 const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
+//
+//                 // Check if imageDetails is not null before accessing imageData
+//                 const image = imageDetails ? imageDetails.imageData : null;
+//
+//                 return {
+//                     ...product,
+//                     image: image
+//                 };
+//             } catch (error) {
+//                 console.error("Error retrieving image details:", error);
+//                 return {
+//                     ...product,
+//                     image: null // Set image to null if there's an error or if imageDetails is null
+//                 };
+//             }
+//         });
+//
+//         // Wait for all promises to resolve
+//         const productList = await Promise.all(productDetailsPromises);
+//         console.log(productList);
+//         console.log(totalProducts);
+//         console.log(totalPages)
+//         return { productList, totalProducts, totalPages };
+//     } catch (error) {
+//         console.error("Error", error);
+//         return null;
+//     }
+// }
+
 export async function getAllProductWithFirstImage(page) {
     const url = `http://localhost:8080/detail-product?size=9&page=${page}`;
     try {
@@ -36,22 +72,19 @@ export async function getAllProductWithFirstImage(page) {
         const responseData = response._embedded.products;
         const totalPages = response.page.totalPages;
         const totalProducts = response.page.totalElements;
-
         const productDetailsPromises = responseData.map(async (product) => {
             try {
                 const [imageDetails, productRequest] = await Promise.all([
                     getFirstImageOfProduct(product.productId),
                     getProductRequestById(product.productId)
                 ]);
-
                 // Check if imageDetails is not null before accessing imageData
                 const image = imageDetails ? imageDetails.imageData : null;
-
                 return {
                     ...product,
                     image: image,
                     unitName: productRequest.unitName,
-                    typeName: productRequest.typeName
+                    typeRoom: productRequest.typeRoom
                 };
             } catch (error) {
                 console.error("Error retrieving product details:", error);
@@ -63,6 +96,7 @@ export async function getAllProductWithFirstImage(page) {
                 };
             }
         });
+
         // Wait for all promises to resolve
         const productList = await Promise.all(productDetailsPromises);
         console.log(productList);
@@ -74,6 +108,8 @@ export async function getAllProductWithFirstImage(page) {
         return null;
     }
 }
+
+
 export async function get4ProductWithFirstImage() {
     const url = `http://localhost:8080/detail-product?size=4`;
     try {
@@ -83,10 +119,8 @@ export async function get4ProductWithFirstImage() {
         const productDetailsPromises = responseData.map(async (product) => {
             try {
                 const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
-
                 // Check if imageDetails is not null before accessing imageData
                 const image = imageDetails ? imageDetails.imageData : null;
-
                 return {
                     ...product,
                     image: image
@@ -99,7 +133,6 @@ export async function get4ProductWithFirstImage() {
                 };
             }
         });
-
         // Wait for all promises to resolve
         const productList = await Promise.all(productDetailsPromises);
         console.log(productList);
@@ -110,6 +143,52 @@ export async function get4ProductWithFirstImage() {
         return null;
     }
 }
+
+
+// export async function getAllProductWithFirstImageByName(keyword, page) {
+//     const url = `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=${page}&size=9`;
+//     try {
+//         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
+//         const responseData = response._embedded.products;
+//         const totalPages = response.page.totalPages;
+//         const totalProducts = response.page.totalElements;
+//
+//         const productDetailsPromises = responseData.map(async (product) => {
+//             try {
+//                 const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
+//
+//                 // Check if imageDetails is not null before accessing imageData
+//                 const image = imageDetails ? imageDetails.imageData : null;
+//
+//                 return {
+//                     ...product,
+//                     image: image
+//                 };
+//             } catch (error) {
+//                 console.error("Error retrieving image details:", error);
+//                 return {
+//                     ...product,
+//                     image: null // Set image to null if there's an error or if imageDetails is null
+//                 };
+//             }
+//         });
+//
+//         // Wait for all promises to resolve
+//         const productList = await Promise.all(productDetailsPromises);
+//         console.log(productList);
+//         console.log(totalProducts);
+//         console.log(totalPages)
+//         return { productList, totalProducts, totalPages };
+//     } catch (error) {
+//         console.error("Error", error);
+//         return null;
+//     }
+// }
+export async function getProductByName(keyword){
+    const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
+    return getProduct(url);
+}
+
 export async function getAllProductWithFirstImageByName(keyword, page) {
     const url = `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=${page}&size=9`;
     try {
@@ -117,15 +196,13 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
         const responseData = response._embedded.products;
         const totalPages = response.page.totalPages;
         const totalProducts = response.page.totalElements;
-
         const productDetailsPromises = responseData.map(async (product) => {
             try {
                 const productRequest = await getProductRequestById(product.productId);
-
                 return {
                     ...product,
                     unitName: productRequest.unitName,
-                    typeName: productRequest.typeName
+                    typeRoom: productRequest.typeRoom
                 };
             } catch (error) {
                 console.error("Error retrieving product details:", error);
@@ -136,7 +213,6 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
                 };
             }
         });
-
         // Wait for all promises to resolve
         const productList = await Promise.all(productDetailsPromises);
         console.log(productList);
@@ -148,23 +224,16 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
         return null;
     }
 }
-export async function getProductByName(keyword){
-    const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
-    return getProduct(url);
-}
+
 export async function getProductById(productId){
 
     const url = `http://localhost:8080/detail-product/${productId}`;
-
     try {
         const response =  await fetch(url);
-
         if(!response.ok){
             throw new Error('Gặp lỗi trong quá trình gọi API!')
         }
-
         const productData = await response.json();
-
         if(productData){
             return {
                 productId: productData.productId,
@@ -183,14 +252,35 @@ export async function getProductById(productId){
         return null;
     }
 }
+
+// export async function getRelatedProductsByCategoryId(categoryId, page) {
+//     try {
+//         // Fetch category products based on categoryId
+//         const categoryProductUrl = `http://localhost:8080/category-product/search/findByTypeRoom_RoomId?roomId=${categoryId}`;
+//         const categoryProductResponse = await my_request(categoryProductUrl);
+//
+//         // Extract typeProduct IDs
+//         const typeProductIds = categoryProductResponse._embedded.categoryProducts.map(categoryProduct => categoryProduct.typeProduct.id);
+//
+//         // Fetch related products based on typeProduct IDs
+//         const relatedProductsUrl = `http://localhost:8080/detail-product/search/findByTypeProduct_TypeIdIn?typeId=${typeProductIds}&page=${page}&size=9`;
+//         return getProduct(relatedProductsUrl);
+//     } catch (error) {
+//         console.error("Error", error);
+//         return null;
+//     }
+// }
+
 export async function getAllRoomTypes(page){
     const url = `http://localhost:8080/type-room?${page}&size=20`
     return getRoomType(url);
 }
+
 export async function getRoomTypeByName(keyword){
     const url= `http://localhost:8080/type-room/search/findByRoomNameContaining?typeName=${keyword}&page=0&size=20`;
     return getRoomType(url);
 }
+
 export async function getRoomTypeById(roomId){
     const url = `http://localhost:8080/type-room/${roomId}`;
     try {
@@ -198,9 +288,7 @@ export async function getRoomTypeById(roomId){
         if(!response.ok){
             throw new Error('Gặp lỗi trong quá trình gọi API!')
         }
-
         const roomTypeData = await response.json();
-
         if(roomTypeData){
             return {
                 roomId: roomTypeData.roomId,
@@ -229,7 +317,6 @@ async function getRoomType(url){
     }
     return {roomTypeList: roomTypeList, totalRoomTypes: totalRoomTypes, totalPages: totalPages};
 }
-
 async function getCategory(url){
     const categoryList =[];
     const response = await my_request(url);
@@ -247,12 +334,10 @@ async function getCategory(url){
         // , totalCategories: totalCategories, totalPages: totalPages
     };
 }
-
 export async function getAllCategory(page){
     const url = `http://localhost:8080/category-product?${page}&size=99`
     return getCategory(url);
 }
-
 export async function getCategoryByIdWithRoomId(categoryId){
     const url = `http://localhost:8080/category-product/search/findCategoryWithRoomById?categoryId=${categoryId}`;
     try {
@@ -260,9 +345,7 @@ export async function getCategoryByIdWithRoomId(categoryId){
         if(!response.ok){
             throw new Error('Gặp lỗi trong quá trình gọi API!')
         }
-
         const categoryData = await response.json();
-
         if(categoryData){
             return {
                 categoryId: categoryData.categoryId,
@@ -294,12 +377,10 @@ export async function getAllCategoryWithRoomName(){
         // , totalCategories: totalCategories, totalPages: totalPages
     };
 }
-
 export async function getCategoryByRoomId(roomId){
     const url = `http://localhost:8080/category-product/search/findByTypeRoom_RoomId?roomId=${roomId}`;
     return getCategory(url);
 }
-
 async function getUnit(url){
     const unitList =[];
     const response = await my_request(url);
@@ -314,52 +395,43 @@ async function getUnit(url){
     return {unitList: unitList};
 }
 
+export async function getUnitById(unitId){
+    const url = `http://localhost:8080/unit/search/findByUnitId{?unitId}=${unitId}`;
+    try {
+        const response =  await fetch(url);
+        if(!response.ok){
+            throw new Error('Gặp lỗi trong quá trình gọi API!')
+        }
+
+        const unitData = await response.json();
+
+        if(unitData){
+            return {
+                unitId: unitData.unitId,
+                unitName: unitData.unitName,
+            }
+        }else{
+            throw new Error('không tồn tài!');
+        }
+    } catch (error) {
+        console.error("Error", error);
+        return null;
+    }
+}
 export async function getAllUnit(){
     const url = `http://localhost:8080/unit`
     return getUnit(url);
-}
-export async function getRelatedProduct(roomId){
-    const url = `http://localhost:8080/detail-product/search/findByTypeProduct_CategoryProduct_TypeRoom_RoomId?roomId=${roomId}&page=0&size=3`
-    try{
-        const response = await my_request(url);
-        const responseData = response._embedded.products;
-
-        const productDetailPromises = responseData.map(async (product) =>{
-            try{
-                const imageDetails = await getFirstImageOfProduct(product.productId);
-                return{
-                    ...product,
-                    image: imageDetails.imageData
-                };
-            }catch (e){
-                console.error('Error fetching image details for product:', e);
-                return product;
-            }
-        });
-
-        const productList = await Promise.all(productDetailPromises);
-        console.log(productList);
-        return { productList };
-
-    }catch (e){
-        console.error("Error", e);
-        return null;
-    }
 }
 
 export async function getProductRequestById(productId){
 
     const url = `http://localhost:8080/detail-product/search/findProductRequestById?productId=${productId}`;
-
     try {
         const response =  await fetch(url);
-
         if(!response.ok){
             throw new Error('Gặp lỗi trong quá trình gọi API!')
         }
-
         const productData = await response.json();
-
         if(productData){
             return {
                 productId: productData.productId,
@@ -405,3 +477,32 @@ export async function addQuotation(quotationRequest) {
 
 
 
+
+export async function getRelatedProduct(roomId){
+    const url = `http://localhost:8080/detail-product/search/findByTypeProduct_CategoryProduct_TypeRoom_RoomId?roomId=${roomId}&page=0&size=3`
+    try{
+        const response = await my_request(url);
+        const responseData = response._embedded.products;
+
+        const productDetailPromises = responseData.map(async (product) =>{
+            try{
+                const imageDetails = await getFirstImageOfProduct(product.productId);
+                return{
+                    ...product,
+                    image: imageDetails.imageData
+                };
+            }catch (e){
+                console.error('Error fetching image details for product:', e);
+                return product;
+            }
+        });
+
+        const productList = await Promise.all(productDetailPromises);
+        console.log(productList);
+        return { productList };
+
+    }catch (e){
+        console.error("Error", e);
+        return null;
+    }
+}
