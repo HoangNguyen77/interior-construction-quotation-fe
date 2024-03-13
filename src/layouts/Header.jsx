@@ -1,13 +1,12 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {isToken, isTokenExpired, logout} from "../utils/JwtService.js";
+import {getRoleByToken, isToken, isTokenExpired, logout} from "../utils/JwtService.js";
 import { jwtDecode } from "jwt-decode";
 
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
     return (
-
         <div className="site-wrap">
 
             <div className="site-navbar-wrap js-site-navbar bg-white">
@@ -27,31 +26,30 @@ function Header() {
                                                 href="#" className="site-menu-toggle js-menu-toggle"><span
                                                 className="icon-menu h3"></span></a></div>
                                             <ul className="site-menu js-clone-nav d-none d-lg-block">
-                                                <li className={location.pathname === "/home" ? "active" : ""}>
+                                                <li className={location.pathname.startsWith("/home") ? "active" : ""}>
                                                     <Link to="/">Trang chủ</Link>
                                                 </li>
-                                                <li className={location.pathname === "/showroom" ? "active" : ""}>
-                                                    <Link to="/showroom">Showroom</Link>
+                                                <li className={location.pathname.startsWith("/product") ? "active" : ""}>
+                                                    <Link to="/product">Showroom</Link>
                                                 </li>
-                                                <li className={location.pathname === "/finished-project" ? "active" : ""}>
+                                                <li className={location.pathname.startsWith("/finished-project") ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
                                                 </li>
-                                                <li className={location.pathname === "/quotation-category" ? "active has-children" : "has-children"}>
-                                                    <Link to="/quotation-category">Các Loại thi công nội thất</Link>
-                                                    <ul className="dropdown arrow-top">
-                                                        <li><a href="">Thi công nhà đất</a></li>
-                                                        <li><a href="">Thi công chung cư</a></li>
-                                                        <li><a href="">Thi công phòng khách</a></li>
-                                                        <li><a href="">Thi công phòng ngủ</a></li>
-                                                        <li><a href="">Thi công phòng bếp</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li className={location.pathname === "/blog" ? "active" : ""}><Link
-                                                    to="/blog">Blog</Link></li>
-                                                <li className={location.pathname === "/quotation-calculator" ? "active" : ""}>
+                                                {/*<li className={location.pathname.startsWith("/quotation-category") ? "active has-children" : "has-children"}>*/}
+                                                {/*    <Link to="/quotation-category">Các Loại thi công nội thất</Link>*/}
+                                                {/*    <ul className="dropdown arrow-top">*/}
+                                                {/*        <li><a href="">Thi công nhà đất</a></li>*/}
+                                                {/*        <li><a href="">Thi công chung cư</a></li>*/}
+                                                {/*        <li><a href="">Thi công biệt thự</a></li>*/}
+                                                {/*        <li><a href="">Thi công văn phòng</a></li>*/}
+                                                {/*    </ul>*/}
+                                                {/*</li>*/}
+                                                <li className={location.pathname.startsWith("/blog") ? "active" : ""}>
+                                                    <Link to="/blog">Blog</Link></li>
+                                                <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}>
                                                     <Link to="/quotation-calculator">Báo giá</Link></li>
-                                                <li className={location.pathname === "/about" ? "active" : ""}><Link
-                                                    to="/about">Về chúng tôi</Link></li>
+                                                <li className={location.pathname.startsWith("/about") ? "active" : ""}>
+                                                    <Link to="/about">Về chúng tôi</Link></li>
                                             </ul>
                                         </div>
                                     </nav>
@@ -67,7 +65,13 @@ function Header() {
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                                                     <Link className="dropdown-item" to="/info">Thông tin của bạn</Link>
-                                                    <a className="dropdown-item" href="#">Báo giá</a>
+                                                    {
+                                                        (getRoleByToken() === "ADMIN") && (
+                                                            <Link className="dropdown-item" to="/admin">Dashboard</Link>)
+                                                    }
+                                                    {
+                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/quotation-calculator">Báo giá của bạn</Link>)
+                                                    }
                                                     <div className="dropdown-divider"></div>
                                                     <a className="dropdown-item" style={{ cursor: "pointer" }}
                                                        onClick={() => {
@@ -79,8 +83,7 @@ function Header() {
                                         :
                                         (
                                             <div className="col-2">
-                                                <Link to="/login" className="btn btn-secondary" style={{color: "black"}}>Đăng
-                                                    nhập</Link>
+                                                <Link to="/login" className="btn btn-secondary" style={{color: " npm"}}>ĐĂNG NHẬP</Link>
                                             </div>
                                         )
                                 }

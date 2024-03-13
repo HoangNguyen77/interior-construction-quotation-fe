@@ -448,6 +448,11 @@
 		}
 	}
 }
+.medium
+{
+	text-transform: uppercase;
+
+}
 
 .block-16 {
 	figure {
@@ -579,6 +584,7 @@
 		text-transform: uppercase;
 	}
 }
+
 
 .site-block-27 {
 	ul {
@@ -1023,6 +1029,7 @@
 	color: rgba($black, .4);
 }
 
+
 .section-heading {
 	h2 {
 		position: relative;
@@ -1130,8 +1137,8 @@
 	.heading {
 		font-size: 20px;
 		text-transform: uppercase;
-		a {
-			color: $black;
+	 {
+			color: red;
 		}
 	}
 	.hotel-room-body {

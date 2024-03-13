@@ -481,8 +481,10 @@ pre {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px; }
+  margin-right: -100px;
+  margin-left: -100px;
+  margin-bottom: 30px; /* Thêm margin dưới để tạo khoảng cách rộng hơn trước khi tự động xuống dòng */
+}
 
 .no-gutters {
   margin-right: 0;
@@ -3714,7 +3716,23 @@ input[type="button"].btn-block {
   bottom: 0;
   left: 0;
   padding: 1.25rem; }
+.col-img-center{
+margin-left: -500px;
+}
+.quy-trinh-large
+{
+  font-size: 30px;
+  color: #0b0b0b;
+  /*font-weight: bolder;*/
 
+}
+.quy-trinh-medium
+{
+  font-size: 20px;
+  color: #0b0b0b;
+  /*font-weight: bolder;*/
+
+}
 .card-img {
   width: 100%;
   border-radius: calc(0.25rem - 1px); }
