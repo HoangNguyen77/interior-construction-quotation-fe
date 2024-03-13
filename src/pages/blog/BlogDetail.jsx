@@ -89,8 +89,8 @@ const BlogDetail = () => {
                         <Carousel showThumbs={false}>
                             {
                                 imageList.map((img, index) => (
-                                    <div key={index}>
-                                        <img src={img.imageData} alt=""/>
+                                    <div key={index} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '600px'}}>
+                                        <img src={img.imageData} alt="" style={{objectFit: 'contain'}}/>
                                     </div>
                                 ))
                             }
@@ -112,7 +112,7 @@ const BlogDetail = () => {
                     {
                         randomBlogList.map(blog => (
                             <Link to={`/blog/${blog.blogId}`}>
-                                <div className="row bg-white mb-5 pt-4" key={blog.blogId}>
+                                <div className="row bg-light mb-5 pt-4" key={blog.blogId}>
                                     <div className="col-3">
                                         <div className="media-with-text">
                                             <div className="img-border-sm mb-4">

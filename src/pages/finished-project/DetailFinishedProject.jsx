@@ -58,7 +58,7 @@ function DetailFinished() {
                 </div>
             </div>
 
-            <div className="site-section" ref={sectionRef}>
+            <div className="site-section bg-light" ref={sectionRef}>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 col-lg-6 mb-5">
