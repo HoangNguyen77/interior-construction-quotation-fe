@@ -49,7 +49,7 @@ export async function getAllProductWithFirstImage(page) {
                     ...product,
                     image: image,
                     unitName: productRequest.unitName,
-                    typeRoom: productRequest.typeRoom
+                    typeName: productRequest.typeName
                 };
             } catch (error) {
                 console.error("Error retrieving product details:", error);
@@ -128,7 +128,7 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
                 return {
                     ...product,
                     unitName: productRequest.unitName,
-                    typeRoom: productRequest.typeRoom
+                    typeName: productRequest.typeName
                 };
             } catch (error) {
                 console.error("Error retrieving product details:", error);

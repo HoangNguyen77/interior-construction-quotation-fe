@@ -145,6 +145,13 @@ const Description = () => {
                 });
         }
     }, [roomId]);
+
+    const getShortTypeName = (typeName) => {
+        const words = typeName.split(' ');
+        const shortWords = words.slice(0, 5);
+        const shortTypeName = shortWords.join(' ');
+        return shortTypeName;
+    };
     const handleModalToggle = () => {
         setIsModalOpen(!isModalOpen);
     };
@@ -631,7 +638,7 @@ const Description = () => {
                         <div className='col-span-1 text-[#348EED]'>ID</div>
                         <div className='col-span-2 text-[#348EED]'>Hình ảnh</div>
                         <div className='col-span-2 text-[#348EED]'>Sản phẩm</div>
-                        <div className='col-span-2 text-[#348EED]'>Chất liệu</div>
+                        <div className='col-span-2 text-[#348EED]'>Mô tả</div>
                         <div className='col-span-2 text-[#348EED]'>Dài - Rộng - Cao</div>
                         <div className='col-span-1 text-[#348EED]'>Giá thành</div>
                         <div className='col-span-1 text-[#348EED]'>Đơn vị</div>
@@ -648,7 +655,7 @@ const Description = () => {
                                 </div>
                                 <div
                                     className='col-span-2 text-black flex flex-col justify-center'>{product.name}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'></div>
+                                <div className='col-span-2 text-black flex flex-col justify-center'>{product.typeName}</div>
                                 <div
                                     className='col-span-2 text-black flex flex-col justify-center'>{product.length} - {product.width} - {product.height}</div>
                                 <div

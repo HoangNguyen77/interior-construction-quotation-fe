@@ -5,14 +5,14 @@ import TypeRoom from './ManageShowroom/Typeroom&Product';
 import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
 import ManageQuotation from "./ManageQuotation.jsx";
-import RequireAdmin from "./RequireAdmin.jsx";
+// import RequireAdmin from "./RequireAdmin.jsx";
 import {toast} from "react-toastify";
 import {
   getIdUserByToken, isToken, isTokenExpired,
 } from "../../utils/JwtService.js";
 import {Link} from "react-router-dom";
 
-const MainAdminPage = () => {
+const MainAdmin = () => {
   const [selectedTab, setSelectedTab] = useState(-1);
 
   const handleTabClick = (index) => {
@@ -112,5 +112,4 @@ const MainAdminPage = () => {
       </div>
   );
 };
-const MainAdmin = RequireAdmin(MainAdminPage)
 export default MainAdmin;
