@@ -27,46 +27,6 @@ export async function getAllProducts(page){
     const url = `http://localhost:8080/detail-product?size=9&page=${page}`
     return getProduct(url);
 }
-// export async function getAllProductWithFirstImage(page) {
-//     const url = `http://localhost:8080/detail-product?size=9&page=${page}`;
-//     try {
-//         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
-//         const responseData = response._embedded.products;
-//         const totalPages = response.page.totalPages;
-//         const totalProducts = response.page.totalElements;
-//
-//         const productDetailsPromises = responseData.map(async (product) => {
-//             try {
-//                 const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
-//
-//                 // Check if imageDetails is not null before accessing imageData
-//                 const image = imageDetails ? imageDetails.imageData : null;
-//
-//                 return {
-//                     ...product,
-//                     image: image
-//                 };
-//             } catch (error) {
-//                 console.error("Error retrieving image details:", error);
-//                 return {
-//                     ...product,
-//                     image: null // Set image to null if there's an error or if imageDetails is null
-//                 };
-//             }
-//         });
-//
-//         // Wait for all promises to resolve
-//         const productList = await Promise.all(productDetailsPromises);
-//         console.log(productList);
-//         console.log(totalProducts);
-//         console.log(totalPages)
-//         return { productList, totalProducts, totalPages };
-//     } catch (error) {
-//         console.error("Error", error);
-//         return null;
-//     }
-// }
-
 export async function getAllProductWithFirstImage(page) {
     const url = `http://localhost:8080/detail-product?size=9&page=${page}`;
     try {
@@ -77,27 +37,20 @@ export async function getAllProductWithFirstImage(page) {
 
         const productDetailsPromises = responseData.map(async (product) => {
             try {
-                const [imageDetails, productRequest] = await Promise.all([
-                    getFirstImageOfProduct(product.productId),
-                    getProductRequestById(product.productId)
-                ]);
+                const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
 
                 // Check if imageDetails is not null before accessing imageData
                 const image = imageDetails ? imageDetails.imageData : null;
 
                 return {
                     ...product,
-                    image: image,
-                    unitName: productRequest.unitName,
-                    typeRoom: productRequest.typeRoom
+                    image: image
                 };
             } catch (error) {
-                console.error("Error retrieving product details:", error);
+                console.error("Error retrieving image details:", error);
                 return {
                     ...product,
-                    image: null, // Set image to null if there's an error or if imageDetails is null
-                    unitName: null,
-                    typeRoom: null
+                    image: null // Set image to null if there's an error or if imageDetails is null
                 };
             }
         });
@@ -106,14 +59,13 @@ export async function getAllProductWithFirstImage(page) {
         const productList = await Promise.all(productDetailsPromises);
         console.log(productList);
         console.log(totalProducts);
-        console.log(totalPages);
+        console.log(totalPages)
         return { productList, totalProducts, totalPages };
     } catch (error) {
         console.error("Error", error);
         return null;
     }
 }
-
 
 export async function get4ProductWithFirstImage() {
     const url = `http://localhost:8080/detail-product?size=4`;
@@ -153,50 +105,6 @@ export async function get4ProductWithFirstImage() {
 }
 
 
-// export async function getAllProductWithFirstImageByName(keyword, page) {
-//     const url = `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=${page}&size=9`;
-//     try {
-//         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
-//         const responseData = response._embedded.products;
-//         const totalPages = response.page.totalPages;
-//         const totalProducts = response.page.totalElements;
-//
-//         const productDetailsPromises = responseData.map(async (product) => {
-//             try {
-//                 const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
-//
-//                 // Check if imageDetails is not null before accessing imageData
-//                 const image = imageDetails ? imageDetails.imageData : null;
-//
-//                 return {
-//                     ...product,
-//                     image: image
-//                 };
-//             } catch (error) {
-//                 console.error("Error retrieving image details:", error);
-//                 return {
-//                     ...product,
-//                     image: null // Set image to null if there's an error or if imageDetails is null
-//                 };
-//             }
-//         });
-//
-//         // Wait for all promises to resolve
-//         const productList = await Promise.all(productDetailsPromises);
-//         console.log(productList);
-//         console.log(totalProducts);
-//         console.log(totalPages)
-//         return { productList, totalProducts, totalPages };
-//     } catch (error) {
-//         console.error("Error", error);
-//         return null;
-//     }
-// }
-export async function getProductByName(keyword){
-    const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
-    return getProduct(url);
-}
-
 export async function getAllProductWithFirstImageByName(keyword, page) {
     const url = `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=${page}&size=9`;
     try {
@@ -207,19 +115,20 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
 
         const productDetailsPromises = responseData.map(async (product) => {
             try {
-                const productRequest = await getProductRequestById(product.productId);
+                const [imageDetails] = await Promise.all([getFirstImageOfProduct(product.productId)]);
+
+                // Check if imageDetails is not null before accessing imageData
+                const image = imageDetails ? imageDetails.imageData : null;
 
                 return {
                     ...product,
-                    unitName: productRequest.unitName,
-                    typeRoom: productRequest.typeRoom
+                    image: image
                 };
             } catch (error) {
-                console.error("Error retrieving product details:", error);
+                console.error("Error retrieving image details:", error);
                 return {
                     ...product,
-                    unitName: null,
-                    typeRoom: null
+                    image: null // Set image to null if there's an error or if imageDetails is null
                 };
             }
         });
@@ -234,6 +143,10 @@ export async function getAllProductWithFirstImageByName(keyword, page) {
         console.error("Error", error);
         return null;
     }
+}
+export async function getProductByName(keyword){
+    const url= `http://localhost:8080/detail-product/search/findByNameContaining?name=${keyword}&page=0&size=9`;
+    return getProduct(url);
 }
 
 export async function getProductById(productId){
@@ -468,7 +381,6 @@ export async function getProductRequestById(productId){
                 length: productData.length,
                 unitPrice: productData.unitPrice,
                 unitId: productData.unitId,
-                unitName: productData.unitName,
                 height : productData.height,
                 typeName : productData.typeName,
                 categoryId: productData.categoryId,

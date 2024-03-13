@@ -86,7 +86,6 @@ const TypeRoom = () => {
 
     const handleModalProductToggle = () => {
         setIsModalProductOpen(!isModalProductOpen);
-        setUpdate(false);
     };
 
     const handleModalRoomToogleClose = () => {
@@ -132,7 +131,6 @@ const TypeRoom = () => {
                 if (response.ok) {
                     setIsChanged(!isChanged);
                     setCurrentPage(1);
-                    setIsModalTypeRoomOpen(!isModalTypeRoomOpen);
                     setRoomName("");
                     toast.success("Thêm loại phòng thành công");
                 } else {
@@ -160,7 +158,6 @@ const TypeRoom = () => {
                 )
                 if (response.ok) {
                     setIsChanged(!isChanged);
-                    setIsModalTypeRoomOpen(!isModalTypeRoomOpen);
                     setCurrentPage(1);
                     setRoomName("");
                     toast.success("Chỉnh sửa loại phòng thành công");
@@ -173,7 +170,6 @@ const TypeRoom = () => {
         }
     }
     const handleButtonUpdateRoom = async (roomId) => {
-        setIsModalTypeRoomOpen(true);
         setUpdate(true);
         setRoomId(roomId);
         try {
@@ -262,10 +258,9 @@ const TypeRoom = () => {
 
                 if (response.ok) {
                     setIsChanged(!isChanged);
-                    setIsModalProductOpen(!isModalProductOpen);
                     setCurrentPage(1);
                     setCategoryName("");
-                    setRoomId(0);
+                    setRoomId("");
                     toast.success("Thêm sản phẩm thành công");
                 } else {
                     toast.warning("Đã xảy ra lỗi trong quá trình thêm sản phẩm phòng!");
@@ -341,10 +336,9 @@ const TypeRoom = () => {
 
                 if (response.ok) {
                     setIsChanged(!isChanged);
-                    setIsModalProductOpen(!isModalProductOpen);
                     setCurrentPage(1);
                     setCategoryName("");
-                    setRoomId(0);
+                    setRoomId("");
                     setCategoryId(0)
                     toast.success("Chỉnh loại sửa sản phẩm thành công");
                 } else {
@@ -492,7 +486,7 @@ const TypeRoom = () => {
                                             onClick={handleModalCategoryToogleClose}>Đóng
                                     </button>
                                     <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'
-                                            onClick={update? handleUpdateCategory : handleCreateCategory}
+                                            onClick={update ? handleUpdateCategory : handleCreateCategory}
                                     >Lưu
                                     </button>
                                 </div>
