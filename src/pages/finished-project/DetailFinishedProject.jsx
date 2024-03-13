@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import Carousel from 'react-bootstrap/Carousel';
+import { Carousel } from 'react-responsive-carousel';
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
@@ -19,6 +19,12 @@ function DetailFinished() {
     const [content, setContent] = useState("");
     const [finishedDate, setFinishedDate] = useState("");
     const [imageList, setImageList] = useState([]);
+    const getShortDescription = (description) => {
+        const words = description.split(' ');
+        const shortWords = words.slice(0, 50);
+        const shortDescription = shortWords.join(' ');
+        return shortDescription;
+    };
     const formattedDate = (createdDate) => {
         const date = new Date(createdDate);
         const day = String(date.getDate()).padStart(2, '0');
@@ -61,28 +67,38 @@ function DetailFinished() {
             <div className="site-section bg-light" ref={sectionRef}>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6 col-lg-6 mb-5">
-                            <Carousel
-                                prevLabel={null}
-                                nextLabel={null}
-                            >
-                                {imageList.map((image, index) => (
-                                    <Carousel.Item key={index}>
-                                        <img className="d-block w-100" src={image.imageData}
-                                             alt={`Slide ${index + 1}`}/>
-                                    </Carousel.Item>
+                        {/*<div className="col-md-6 col-lg-6 mb-5">*/}
+                        {/*    <Carousel*/}
+                        {/*        prevLabel={null}*/}
+                        {/*        nextLabel={null}*/}
+                        {/*    >*/}
+                        {/*        {imageList.map((image, index) => (*/}
+                        {/*            <Carousel.Item key={index}>*/}
+                        {/*                <img className="d-block w-100" src={image.imageData}*/}
+                        {/*                     alt={`Slide ${index + 1}`}/>*/}
+                        {/*            </Carousel.Item>*/}
+                        {/*        ))}*/}
+                        {/*    </Carousel>*/}
+                        {/*</div>*/}
+                        <div className="col-md-8">
+                            <Carousel showThumbs={true}>
+                                {imageList.map((img, index) => (
+                                    <div key={index} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '600px'}}>
+                                        <img src={img.imageData} alt="" style={{objectFit: 'contain'}}/>
+                                    </div>
                                 ))}
                             </Carousel>
                         </div>
 
-                        <div className="col-md-6 col-lg-6 mb-5 ">
+                        <div className="col-md-4 ">
                             <div className="media-with-text ">
                                 <div className=" mx-auto text-center mb-1 section-heading">
                                     <div className="h2 mb-3">{title}</div>
                                 </div>
                                 <span className="mb-3 d-block post-date">{formattedDate(finishedDate)}</span>
                                 <div className="media-with-text">
-                                    <div className="h5" style={{color: '#00000080'}}>{content}</div>
+                                    <div className="h5"
+                                         style={{color: '#00000080'}}>{getShortDescription(content)}</div>
                                 </div>
                             </div>
                         </div>
