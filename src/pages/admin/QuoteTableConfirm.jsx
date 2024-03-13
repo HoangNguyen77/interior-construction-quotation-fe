@@ -1,35 +1,31 @@
-import { Button, Input, InputNumber, Popconfirm, Select, Table } from 'antd';
+import { Input, Modal, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const QuoteTableConfirm = () => {
-  const [rawMaterial, setRawMaterial] = useState([]);
-  const [dataSource, setDataSource] = useState([
-    {
-        key: '0',
-        Furniture: 'Bàn',
-        Length: '12',
-        Width: '32',
-        Height: '43',
-        Quantity: 2, // Default quantity set to 1
-        TotalCost: 46000,
-        Note:'Ban khong gi',
-      }
-  ]);
-  const [count, setCount] = useState(0);
+const QuoteTableConfirm = ({ selectedQuotationItem }) => {
+  const [dataSource, setDataSource] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0); // State to track total price
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!selectedQuotationItem) {
+        // console.log("selectedQuotationItem is null or undefined");
+        return;
+      }
+
       try {
-        const response = await axios.get('https://furniture-quote.azurewebsites.net/rawMaterial/getAllRawMaterial?page=0&size=23&sort=id', {
+        const response = await axios.get(`http://localhost:8080/quotation-list/${selectedQuotationItem}/quotationDetailList`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem("token")}`,
           }
         });
+
         if (response.status === 200) {
-          setRawMaterial(response.data.data.content);
+          setDataSource(response.data._embedded.quotationDetails);
+          calculateTotalPrice(response.data._embedded.quotationDetails); // Calculate initial total price
         } else {
           throw new Error('Network response was not ok');
         }
@@ -37,181 +33,150 @@ const QuoteTableConfirm = () => {
         console.error('There was a problem with the request:', error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [selectedQuotationItem]);
 
-  const handleDelete = (key) => {
-    setDataSource(dataSource.filter((item) => item.key !== key));
+  const calculateTotalPrice = (data) => {
+    const totalPrice = data.reduce((acc, cur) => acc + parseFloat(cur.realTotalPrice), 0);
+    setTotalPrice(totalPrice);
   };
 
-  const handleAdd = () => {
-    const newData = {
-        key: count + 1,
-        Furniture: 'Bàn',
-        Length: '12',
-        Width: '32',
-        Height: '43',
-        Unit: 'M2',
-        Quantity: 2, // Default quantity set to 1
-        UnitPrice: 2300,
-        TotalCost: 46000,
-        Note:'Ban khong gi',
-      };
-    setDataSource([...dataSource, newData]);
-    console.log([...dataSource, newData])
-    setCount(count + 1);
-  };
-
-  const handleSave = (row) => {
+  const handlePriceChange = (value, key) => {
     const newData = dataSource.map((item) => {
-      if (item.key === row.key) {
-        const totalCost = (row.Quantity || 0) * (row.UnitPrice || 0);
-        return { ...item, ...row, TotalCost: totalCost };
+      if (item.detailId === key) {
+        return { ...item, realTotalPrice: value };
       }
       return item;
     });
     setDataSource(newData);
+    calculateTotalPrice(newData);
   };
 
-  const handleRawMaterialChange = (value, key) => {
-    const newData = dataSource.map((item) => {
-      if (item.key === key) {
-        const selectedRawMaterial = rawMaterial.find(f => f.name === value);
-        const totalCost = (item.M2 || 0) * (selectedRawMaterial?.pricePerM2 || 0);
-        return {
-          ...item,
-          RawMaterial: value,
-          pricePerM2: selectedRawMaterial?.pricePerM2 || '',
-          TotalCost: totalCost
-        };
-      }
-      return item;
-    });
-    setDataSource(newData);
-    console.log(newData)
+  const handleOk = () => {
+    // Show confirmation modal
+    setModalVisible(true);
+  };
+
+  const handleConfirm = async () => {
+    // Prepare data to send
+    const dataToSend = dataSource.map(item => ({
+      detailId: item.detailId,
+      realPrice: item.realTotalPrice,
+      note: item.note
+    }));
+
+    try {
+      const response = await axios.post(`http://localhost:8080/your-api-endpoint`, {
+        listId: selectedQuotationItem,
+        details: dataToSend
+      });
+
+      // Handle success response
+      console.log('Data sent successfully:', response.data);
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+
+    // Close modal after sending data
+    setModalVisible(false);
   };
 
   const columns = [
     {
       title: 'Loại phòng',
-      dataIndex: 'RoomType',
-      width: '10%',
-      render: (_, record) => (
-        <span>{record.RoomType}</span>
-      ),
+      dataIndex: 'typeRoom',
+      // width: '10%',
     },
     {
-      title: 'Sản phẩm', dataIndex: 'Product', width: '10%'
-      , render: (text) => (
-        <span>{text}</span>
-      ),
+      title: 'Sản phẩm',
+      dataIndex: 'typeProduct',
+      // width: '10%'
     },
-    { title: 'Dài', dataIndex: 'Length', width: '10%', 
-    render: (__, record) => (
-        <span>
-            {record.Length}
-        </span>
-    ),
-  },
-    { title: 'Rộng', dataIndex: 'Width', width: '10%',
-    render: (__, record) => (
-
-        <span>
-            {record.Width}
-        </span>
-    )
-
-  },
-    { title: 'Cao', dataIndex: 'Height', width: '10%',
-    render: (__, record) => (
-        <span>
-            {record.Height}
-        </span>
-    )
-  },
+    {
+      title: 'Dài',
+      dataIndex: 'length',
+      // width: '10%',
+    },
+    {
+      title: 'Rộng',
+      dataIndex: 'width',
+      // width: '10%',
+    },
+    {
+      title: 'Cao',
+      dataIndex: 'height',
+      // width: '10%',
+    },
     {
       title: 'Số lượng',
-      dataIndex: 'operation',
-        width: '10%',
+      dataIndex: 'quantity',
+      // width: '10%',
+    },
+    {
+      title: 'Tổng Tiền',
+      dataIndex: 'estimateTotalPrice',
+      // width: '20%',
+    },
+    {
+      title: 'Giá thực tế',
+      dataIndex: 'realTotalPrice',
+      // width: '25%',
       render: (_, record) => (
-        <span>
-            {
-                record.Quantity
-            }
-        </span>
+          <Input
+              value={record.realTotalPrice}
+              onChange={(e) => handlePriceChange(e.target.value, record.detailId)}
+          />
       ),
     },
-    { 
-        title: 'Tổng Tiền', 
-        dataIndex: 'TotalCost', 
-        width: '20%',
-        render: (_, record) => (
+    {
+      title: 'Ghi chú',
+      dataIndex: 'note',
+      width: 100,
+      render: (_, record) => (
           <Input
-            placeholder="1"
-            type="number"
-            value={record.TotalCost}
-            onChange={(e) => handleSave({ ...record, TotalCost: e.target.value })}
-            className='w-[100px]'
-            />
-        ),
-      },
-    {
-        title: 'Ghi chú',
-        dataIndex: 'Note',
-        width: '20%',
-        render: (_, record) => (
-            <span>
-                {record.Note}
-            </span>
-
-        ),
-    },
-    {
-        title: 'Thao tác',
-        dataIndex: 'operation',
-        render: (_, record) => (
-            dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)} className='bg-blue-500 text-white p-2 rounded-sm'>
-                Accept
-            </Popconfirm>
-            ) : null
-        ),
+              value={record.note}
+              onChange={(e) => handleNoteChange(e.target.value, record.detailId)}
+          />
+      ),
     },
   ];
 
   return (
-    <div className='table-container'>
-      <div className='quotetable-title'>
-        <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
-        {/* <button type="button" class="btn btn-primar" onClick={handleAdd}
-            style={{
-                backgroundColor: 'blue',
-                color: 'white',
-            }}
-        >Add</button> */}
+      <div className='table-container'>
+        <div className='quotetable-title'>
+          <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
+        </div>
+        <Table
+            bordered
+            dataSource={dataSource}
+            columns={columns}
+            pagination={false}
+            rowKey="detailId"
+            footer={() => (
+                <div>
+                  <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
+                  <span>{totalPrice}</span>
+                </div>
+            )}
+        />
+
+        <Modal
+            title="Confirmation"
+            visible={modalVisible}
+            onOk={handleConfirm}
+            onCancel={() => setModalVisible(false)}
+            footer={null} // Disable default footer
+        >
+          <p>Are you sure you want to confirm?</p>
+          <div style={{ textAlign: 'right' }}>
+            <button onClick={handleConfirm}>Confirm</button>
+            <button onClick={() => setModalVisible(false)}>Cancel</button>
+          </div>
+        </Modal>
+
+        <button onClick={handleOk}>OK</button>
       </div>
-      <Table
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        rowKey="key"
-      />
-      <div className=''
-        style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginTop: 20,
-        }}
-      >
-      {/* <button type="button" class="btn btn-primar" onClick={handleAdd}
-            style={{
-                backgroundColor: 'green',
-                color: 'white',
-            }}
-        >Send</button>   */}
-      </div>
-    </div>
   );
 };
 

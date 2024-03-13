@@ -30,7 +30,6 @@ const ProductProps = (props) => {
                             </a>
                             <div className='hotel-room-body'>
                                 <h3 className="heading mb-0"><a href="#">{props.product.name}</a></h3>
-                                <p className="price">Price: {props.product.unitPrice}</p>
                             </div>
                         </div>
             </Link>
