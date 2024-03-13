@@ -48,7 +48,7 @@ class ManageUser extends Component {
                     keyword: searchValue,
                     filterBy: filterBy, // Truyền filterBy như một query parameter
                     page: currentPage - 1,
-                    size: 8,
+                    size: 5,
                     sort: 'userId,desc'
                 }
             });
@@ -270,11 +270,10 @@ class ManageUser extends Component {
                             <div key={user.userId} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>{user.userId}</div>
                                 <div
-                                    className='col-span-1 text-black flex flex-col justify-center'>{user.username}</div>
-
+                                    className='col-span-1 text-black flex flex-col justify-center' style={{ wordWrap: 'break-word' }}>{user.username}</div>
                                 <div
-                                    className='col-span-2 text-black flex flex-col justify-center'>{`${user.firstName} ${user.lastName}`}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'>{user.email}</div>
+                                    className='col-span-2 text-black flex flex-col justify-center' style={{ wordWrap: 'break-word' }}>{`${user.firstName} ${user.lastName}`}</div>
+                                <div className='col-span-2 text-black flex flex-col justify-center' style={{ wordWrap: 'break-word' }}>{user.email}</div>
                                 <div
                                     className='col-span-2 text-black flex flex-col justify-center'>{user.phonenumber}</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
