@@ -80,11 +80,13 @@ const TypeRoom = () => {
     }, [currentPage, isChanged]);
 
     const handleModalTypeRoomToggle = () => {
+        setUpdate(false);
         setIsModalTypeRoomOpen(!isModalTypeRoomOpen);
     };
 
 
     const handleModalProductToggle = () => {
+        setUpdate(false);
         setIsModalProductOpen(!isModalProductOpen);
     };
 
@@ -170,6 +172,7 @@ const TypeRoom = () => {
         }
     }
     const handleButtonUpdateRoom = async (roomId) => {
+        setIsModalTypeRoomOpen(true);
         setUpdate(true);
         setRoomId(roomId);
         try {
