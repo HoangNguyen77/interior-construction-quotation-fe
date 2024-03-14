@@ -232,6 +232,7 @@ const ManageQuotationCustomer = () => {
         });
     };
 
+
     const handleQuotationList = async (headerId) => {
         setModeShow2(!isModeShow2);
         try {
@@ -252,9 +253,20 @@ const ManageQuotationCustomer = () => {
                 const status = statusResponse.data;
                 return {...quotation, status}
             })
-            const quotaionWithStatus = await Promise.all(quotaionWithStatusPromises);
+            const quotationWithStatus = await Promise.all(quotaionWithStatusPromises);
+            const quotationWithHeaderPromises = quotationWithStatus.map( async (quotation) =>{
+                const quotationHeaderResponse = await axios.get(quotation._links.quotationHeader.href, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    }
+                });
+                const quotationHeader = quotationHeaderResponse.data;
+                return {...quotation, quotationHeader}
+            })
+            const quotationWithHeader = await Promise.all(quotationWithHeaderPromises);
             // Handle the response data as needed
-            setQuotationList(quotaionWithStatus);
+            setQuotationList(quotationWithHeader);
 
         } catch (error) {
             console.error('Error fetching quotation list:', error);
@@ -272,6 +284,43 @@ const ManageQuotationCustomer = () => {
         setIsModalOpenAntd(true);
     };
 
+    const handleFinalizeQuotation = (listId, headerId) => {
+        console.log("listId: " + listId);
+        console.log("headerId:" + headerId);
+        confirm({
+            title: 'Do you want to accept this quotation?',
+            icon: <FontAwesomeIcon icon={faCheck} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
+            onOk() {
+                finalizeQuotation(listId, headerId)
+                    .then((data) => {
+                        // Show notification for successful deletion
+                        message.success("ok");
+                        // Update the data displayed on the page after deletion
+                        fetchData();
+                        fetchData2();
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting quotation header:', error);
+                        // Show notification for error
+
+                    });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+
+    }
+    const finalizeQuotation = async (listId, headerId) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/quotation/finalize-quotation?quotation-list-id=${listId}&quotation-header-id=${headerId}`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error confirm quotation:', error);
+            throw error;
+        }
+    };
     const handleOk = () => {
         setIsModalOpenAntd(false);
     };
@@ -364,7 +413,7 @@ const ManageQuotationCustomer = () => {
                                             <div className='flex justify-end gap-2'>
                                                 {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
                                                 <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
-                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -381,9 +430,9 @@ const ManageQuotationCustomer = () => {
                                     <div className='col-span-1 text-[#348EED]'>ID</div>
                                     <div className='col-span-2 text-[#348EED]'>Ngày Tạo</div>
                                     <div className='col-span-2 text-[#348EED]'>Giá ước tính</div>
-                                    <div className='col-span-1 text-[#348EED]'>Giá thực tế</div>
-                                    <div className='col-span-1 text-[#348EED]'>Trạng Thái</div>
-                                    <div className='col-span-3 text-[#348EED]'>Hành động</div>
+                                    <div className='col-span-2 text-[#348EED]'>Giá thực tế</div>
+                                    <div className='col-span-2 text-[#348EED]'>Trạng Thái</div>
+                                    <div className='col-span-1 text-[#348EED]'></div>
                                 </div>
 
                                 {quotationList.map((item, index) => (
@@ -393,18 +442,21 @@ const ManageQuotationCustomer = () => {
                                         <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
                                         <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
                                         <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.status.statusName}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.status.statusName}</div>
                                         {/* Render other fields as needed */}
                                         {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
                                         <div className='col-span-1 text-black flex flex-col justify-center'>
-                                            <div className='flex justify-end gap-2' >
+                                            <div className='flex justify-end gap-2'>
                                                 {/* <Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
 
-                                                <div onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
-                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                                                <div
+                                                    onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
+                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
                                                 </div>
-
+                                                <div onClick={() => handleFinalizeQuotation(item.listId, item.quotationHeader.headerId)}>
+                                                    <Icon classIcon={faCheck} color={"black"} size={"20px"}/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
