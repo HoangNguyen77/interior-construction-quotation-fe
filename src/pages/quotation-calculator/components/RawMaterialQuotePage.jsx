@@ -36,6 +36,7 @@ const RawMaterialQuotePage = () => {
       quantity: item.Quantity
     }));
 
+
     // Call the addQuotation function and pass the quotationDetails
     const result = await addQuotation(quotationDetails);
     if (result) {
