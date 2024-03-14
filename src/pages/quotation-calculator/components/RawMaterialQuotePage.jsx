@@ -37,7 +37,6 @@ const RawMaterialQuotePage = () => {
     }));
 
 
-
     // Call the addQuotation function and pass the quotationDetails
     const result = await addQuotation(quotationDetails);
     if (result) {
