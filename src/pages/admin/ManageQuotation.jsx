@@ -36,6 +36,8 @@ const ManageQuotation = () => {
     const [initialArr, setInitialArr] = useState([])
     const [headerS2, setHeaderS2] = useState([])
     const [quotationList, setQuotationList] = useState([]);
+    const [totalQuotation1, setTotalQuotation1] = useState(0);
+    const [totalQuotation2, setTotalQuotation2] = useState(0);
     const fetchData = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/quotation-header`, {
@@ -95,6 +97,7 @@ const ManageQuotation = () => {
             // Filter out null values (headers with list status != 1)
             const filteredQuotationData = quotationData.filter(data => data !== null);
             // console.log(filteredQuotationData);
+            setTotalQuotation1(filteredQuotationData.length);
             setInitialArr(filteredQuotationData)
         } catch (error) {
             console.error('There was a problem fetching quotation headers:', error);
@@ -144,7 +147,7 @@ const ManageQuotation = () => {
                     const listStatus = statusResponse.data.statusId;
 
                     // Check if status is 1
-                    if (listStatus !== 1) {
+                    if (listStatus !== 1 && listStatus !== 4) {
                         const listID = listData[0].listId;
                         return {
                             quotationHeader,
@@ -164,6 +167,7 @@ const ManageQuotation = () => {
             // Filter out null values (headers with list status != 1)
             const filteredQuotationData = quotationData.filter(data => data !== null);
             // console.log(filteredQuotationData);
+            setTotalQuotation2(filteredQuotationData.length);
             setHeaderS2(filteredQuotationData)
         } catch (error) {
             console.error('There was a problem fetching quotation headers:', error);
@@ -351,7 +355,7 @@ const ManageQuotation = () => {
                 </div>
                 <div className='absolute top-[40px] right-0 w-[300px] h-[110px] rounded-[5px] bg-white shadow1 flex flex-col justify-center text-right px-[30px]'>
                     <div>
-                        <div className='text-[24px] text-black'>56</div>
+                        <div className='text-[24px] text-black'>{totalQuotation2}</div>
                         <div className='text-[24px] text-black'>Các đơn đang trong quá trình xử lý</div>
                     </div>
                 </div>
@@ -361,7 +365,7 @@ const ManageQuotation = () => {
                 </div>
                 <div className='absolute top-[40px] right-[350px] w-[300px] h-[110px] rounded-[5px] bg-white shadow1 flex flex-col justify-center text-right px-[30px]'>
                     <div>
-                        <div className='text-[24px] text-black'>1254</div>
+                        <div className='text-[24px] text-black'>{totalQuotation1}</div>
                         <div className='text-[24px] text-black'>Các đơn đang chờ chấp nhận</div>
                     </div>
                 </div>
@@ -370,7 +374,7 @@ const ManageQuotation = () => {
 
             <div className='table-all-posts h-auto mt-[50px]'>
                 <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
-                    {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
+                    {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`CÁC LẦN BÁO GIÁ`)}
                     {
                         !isModeShow2 && (
                             <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>

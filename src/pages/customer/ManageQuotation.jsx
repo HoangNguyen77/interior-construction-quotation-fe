@@ -157,7 +157,7 @@ const ManageQuotationCustomer = () => {
                     const listStatus = statusResponse.data.statusId;
 
                     // Check if status is 1
-                    if (listStatus !== 1) {
+                    if (listStatus !== 1 && listStatus !== 4) {
                         const listID = listData[0].listId;
                         return {
                             quotationHeader,
