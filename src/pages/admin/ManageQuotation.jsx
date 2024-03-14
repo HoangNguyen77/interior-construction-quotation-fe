@@ -294,8 +294,21 @@ const ManageQuotation = () => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 }
             });
+            const list = response.data._embedded.quotationLists;
+            const quotaionWithStatusPromises = list.map( async (quotation) =>{
+                const statusResponse = await axios.get(quotation._links.status.href, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    }
+                });
+                const status = statusResponse.data;
+                return {...quotation, status}
+            })
+            const quotaionWithStatus = await Promise.all(quotaionWithStatusPromises);
             // Handle the response data as needed
-            setQuotationList(response.data._embedded.quotationLists);
+            setQuotationList(quotaionWithStatus);
+
         } catch (error) {
             console.error('Error fetching quotation list:', error);
         }
@@ -465,7 +478,7 @@ const ManageQuotation = () => {
                                     <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
                                     <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>Đang tính toán báo giá</div>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.status.statusName}</div>
                                     {/* Render other fields as needed */}
                                     {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
                                     <div className='col-span-1 text-black flex flex-col justify-center'>

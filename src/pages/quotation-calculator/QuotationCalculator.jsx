@@ -21,7 +21,7 @@ function QuotationCalculator(){
                 </div>
             </div>
 
-            <section className="container my-4">
+            <section className="m-4 my-4">
                 <RawMaterialQuotePage />
             </section>
 

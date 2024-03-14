@@ -100,7 +100,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
     },
     {
       title: 'Sản phẩm',
-      dataIndex: 'typeProduct',
+      dataIndex: 'productName',
       // width: '10%'
     },
     {

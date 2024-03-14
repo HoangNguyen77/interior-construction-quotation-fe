@@ -27,15 +27,51 @@ const RawMaterialQuotePage = () => {
     }
   ]);
   const userId = parseInt(getIdUserByToken());
+  // const handleAddQuotationDetail = async () => {
+  //   const quotationDetails = dataSource.map(item => {
+  //     const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
+  //     return {
+  //       customerID: userId,
+  //       productID: productId,
+  //       estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
+  //       quantity: item.Quantity
+  //     };
+  //   });
+  //
+  //   console.log("Quotation Details:", quotationDetails); // Log the quotationDetails array
+  //
+  //   // Call the addQuotation function and pass the quotationDetails
+  //   const result = await addQuotation(quotationDetails);
+  //   if (result) {
+  //     message.success("Quotation details added successfully.");
+  //   } else {
+  //     // Show error message
+  //     message.error("Failed to add quotation details.");
+  //   }
+  // };
   const handleAddQuotationDetail = async () => {
+    const quotationDetails = dataSource.map(item => {
+      const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
 
-    const quotationDetails = dataSource.map(item => ({
-      customerID: userId,
-      productID: item.Product[0].value,
-      estimateTotalPrice: item.UnitPrice, // Assuming UnitPrice is the estimate total price
-      quantity: item.Quantity
-    }));
+      // Check if a product is selected
+      if (item.Product.length > 0 && item.RoomType) {
+        const selectedProduct = item.Product.find(product => product.value === item.RoomType);
+        const productId = selectedProduct ? selectedProduct.value : '';
 
+        return {
+          customerID: userId,
+          productID: productId,
+          estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
+          quantity: item.Quantity
+        };
+      } else {
+        // Handle case where no product is selected
+        console.error("No product selected for item:", item);
+        return null; // Return null if no product is selected
+      }
+    }).filter(Boolean); // Filter out null values
+
+    console.log("Quotation Details:", quotationDetails); // Log the quotationDetails array
 
     // Call the addQuotation function and pass the quotationDetails
     const result = await addQuotation(quotationDetails);
@@ -196,12 +232,9 @@ const RawMaterialQuotePage = () => {
 
   const handleRawMaterialChange = (value, key) => {
     const selectedProduct = dataSource.find(item => item.key === key);
-
-    // Find the selected product from the Product array
     const selectedProductInfo = selectedProduct.Product.find(product => product.value === value);
-    console.log(selectedProductInfo)
-    // Update the dimensions and other properties based on the selected product
-    const newData = dataSource.map((item) => {
+
+    const newData = dataSource.map(item => {
       if (item.key === key) {
         return {
           ...item,
@@ -210,7 +243,8 @@ const RawMaterialQuotePage = () => {
           Length: selectedProductInfo.length,
           Width: selectedProductInfo.width,
           Height: selectedProductInfo.height,
-          UnitPrice: selectedProductInfo.unitPrice
+          UnitPrice: selectedProductInfo.unitPrice,
+          productID: value // Assign the selected product's value as productID
         };
       }
       return item;
@@ -252,7 +286,7 @@ const RawMaterialQuotePage = () => {
       render: (_, record) => (
           <Select
               showSearch
-              placeholder="Select a Room Type"
+              placeholder="Chọn phòng"
               optionFilterProp="children"
               onChange={(value) => handleRoomTypeChange(value, record.key)}
               filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -268,7 +302,7 @@ const RawMaterialQuotePage = () => {
       render: (text, record) => (
           <Select
               showSearch
-              placeholder="Select a RawMaterial"
+              placeholder="Chọn sản phẩm"
               optionFilterProp="children"
               onChange={(value) => handleRawMaterialChange(value, record.key)}
               filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
@@ -394,7 +428,7 @@ const RawMaterialQuotePage = () => {
       render: (_, record) => (
           dataSource.length >= 1 ? (
               <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)} className='bg-red-500 text-white p-2 rounded-sm'>
-                Delete
+                Xóa
               </Popconfirm>
           ) : null
       ),
@@ -426,9 +460,9 @@ const RawMaterialQuotePage = () => {
           <button type="button" className="btn btn-primary" onClick={handleAdd}
                   style={{
                     backgroundColor: 'blue',
-                    color: 'black',
+                    color: 'White',
                   }}
-          >Add</button>
+          >Thêm</button>
         </div>
         <Table
             bordered
@@ -449,7 +483,7 @@ const RawMaterialQuotePage = () => {
                     backgroundColor: 'green',
                     color: 'white',
                   }}
-          >Send</button>
+          >Gửi</button>
         </div>
       </div>
 
