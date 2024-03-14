@@ -456,7 +456,7 @@ const RawMaterialQuotePage = () => {
           </Modal>
         </div>
         <div className='quotetable-title'>
-          <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
+          <Title level={2}>Bảng Tạm Tính Giá Thi Công Nội Thất</Title>
           <button type="button" className="btn btn-primary" onClick={handleAdd}
                   style={{
                     backgroundColor: 'blue',
