@@ -15,7 +15,7 @@ import QuoteTableConfirm from './QuoteTableConfirm';
 import axios from 'axios';
 import {
     getIdUserByToken
-  } from "../../utils/JwtService";
+} from "../../utils/JwtService";
 import Header from "../../layouts/Header.jsx";
 const { confirm } = Modal;
 
@@ -45,7 +45,7 @@ const ManageQuotationCustomer = () => {
     const [quotationList, setQuotationList] = useState([]);
     const userId = parseInt(getIdUserByToken());
     console.log(userId)
-   
+
     const fetchData = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/users/${userId}/customerQuotationHeaders`, {
@@ -120,7 +120,7 @@ const ManageQuotationCustomer = () => {
     }, []);
     const fetchData2 = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/users/${userId}/customerQuotationHeaders`, {
+            const response = await axios.get(`http://localhost:8080/quotation-header`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
@@ -241,8 +241,21 @@ const ManageQuotationCustomer = () => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
                 }
             });
+            const list = response.data._embedded.quotationLists;
+            const quotaionWithStatusPromises = list.map( async (quotation) =>{
+                const statusResponse = await axios.get(quotation._links.status.href, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    }
+                });
+                const status = statusResponse.data;
+                return {...quotation, status}
+            })
+            const quotaionWithStatus = await Promise.all(quotaionWithStatusPromises);
             // Handle the response data as needed
-            setQuotationList(response.data._embedded.quotationLists);
+            setQuotationList(quotaionWithStatus);
+
         } catch (error) {
             console.error('Error fetching quotation list:', error);
         }
@@ -265,147 +278,147 @@ const ManageQuotationCustomer = () => {
 
     const handleCancel = () => {
         setIsModalOpenAntd(false);
-       fetchData();
-       fetchData2();
-       handleQuotationList();
+        fetchData();
+        fetchData2();
+        handleQuotationList();
     };
 
     return (
         <div>
-        <div className='h-auto pl-3'>
-            <div className='table-all-posts h-auto mt-[50px]'>
-                <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
-                    {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
-                    {
-                        !isModeShow2 && (
-                            <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>
-                                <Icon classIcon={faRepeat} color={"white"} size={"24px"} />
+            <div className='h-auto pl-3'>
+                <div className='table-all-posts h-auto mt-[50px]'>
+                    <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
+                        {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
+                        {
+                            !isModeShow2 && (
+                                <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>
+                                    <Icon classIcon={faRepeat} color={"white"} size={"24px"} />
+                                </div>
+                            )
+                        }
+                        {
+                            isModeShow2 && (
+                                <div
+                                    className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
+                                    onClick={handleModeShow2Toggle}>
+                                    <Icon classIcon={faArrowLeft} color={"white"} size={"24px"} />
+                                </div>
+                            )
+                        }
+                    </div>
+                    {/* {console.log(selectedQuotationItem+"AHAHAH")} */}
+                    {isModeShow === false ? (
+                        <>
+                            <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+                                {/** iterate from initialArr*/}
+                                <div className='grid grid-cols-10 py-3 gap-2'>
+                                    <div className='col-span-1 text-[#348EED]'>ID</div>
+                                    <div className='col-span-3 text-[#348EED]'>Họ và tên</div>
+                                    {/* <div className='col-span-3 text-[#348EED]'>Địa chỉ</div> */}
+                                    <div className='col-span-3 text-[#348EED]'>Email</div>
+                                    <div className='col-span-2 text-[#348EED]'>Số điện thoại</div>
+                                    <div className='col-span-1 text-[#348EED]'></div>
+                                </div>
+                                {
+                                    initialArr.map((item, index) => {
+                                            // {console.log(initialArr)}
+                                            return (
+                                                <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                                    <div className='col-span-3 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
+                                                    {/* <div className='col-span-3 text-black flex flex-col justify-center'>{item.address}</div> */}
+                                                    <div className='col-span-3 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                                    <div className='col-span- text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                                    <div className='col-span-1 text-black flex flex-col justify-center'>
+                                                        <div className='flex justify-end gap-2'>
+                                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
+                                                            {/* <Button onClick={() => showConfirmChangeStatusTo2(item.quotationHeader.headerId)} icon={<Icon classIcon={faCheck} color={"black"} size={"20px"} />} /> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                    )}
+
                             </div>
-                        )
-                    }
-                    {
-                        isModeShow2 && (
-                            <div
-                                className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
-                                onClick={handleModeShow2Toggle}>
-                                <Icon classIcon={faArrowLeft} color={"white"} size={"24px"} />
-                            </div>
-                        )
-                    }
-                </div>
-{/* {console.log(selectedQuotationItem+"AHAHAH")} */}
-                {isModeShow === false ? (
-                    <>
-                        <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-                            {/** iterate from initialArr*/}
-                            <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#348EED]'>ID</div>
-                                <div className='col-span-3 text-[#348EED]'>Họ và tên</div>
-                                {/* <div className='col-span-3 text-[#348EED]'>Địa chỉ</div> */}
-                                <div className='col-span-3 text-[#348EED]'>Email</div>
-                                <div className='col-span-2 text-[#348EED]'>Số điện thoại</div>
-                                <div className='col-span-1 text-[#348EED]'></div>
-                            </div>
-                            {
-                                initialArr.map((item, index) => {
-                                    // {console.log(initialArr)}
-                                    return (
-                                        <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                            <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                            <div className='col-span-3 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                            {/* <div className='col-span-3 text-black flex flex-col justify-center'>{item.address}</div> */}
-                                            <div className='col-span-3 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                            <div className='col-span- text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
-                                            <div className='col-span-1 text-black flex flex-col justify-center'>
-                                                <div className='flex justify-end gap-2'>
-                                                    <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
-                                                    {/* <Button onClick={() => showConfirmChangeStatusTo2(item.quotationHeader.headerId)} icon={<Icon classIcon={faCheck} color={"black"} size={"20px"} />} /> */}
+                        </>
+                    ) : isModeShow2 === false ? (
+                        <>
+                            <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+                                <div className='grid grid-cols-7 py-3 gap-2'>
+                                    <div className='col-span-1 text-[#60B664]'>ID</div>
+                                    <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
+                                    <div className='col-span-2 text-[#60B664]'>Email</div>
+                                    <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>
+                                    <div className='col-span-1 text-[#60B664]'></div>
+                                </div>
+                                {headerS2.map((item, index) => (
+
+                                    <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
+                                        {/* {console.log("ok", )} */}
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>
+                                            <div className='flex justify-end gap-2'>
+                                                {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
+                                                <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
+                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
                                                 </div>
                                             </div>
                                         </div>
-                                    )
-                                }
-                                )}
-
-                        </div>
-                    </>
-                ) : isModeShow2 === false ? (
-                    <>
-                        <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-                            <div className='grid grid-cols-7 py-3 gap-2'>
-                                <div className='col-span-1 text-[#60B664]'>ID</div>
-                                <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
-                                <div className='col-span-2 text-[#60B664]'>Email</div>
-                                <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>
-                                <div className='col-span-1 text-[#60B664]'></div>
+                                    </div>
+                                ))}
                             </div>
-                            {headerS2.map((item, index) => (
+                        </>
+                    ) : (
+                        <>
 
-                                <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
-                                    {/* {console.log("ok", )} */}
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>
-                                        <div className='flex justify-end gap-2'>
-                                            {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
-                                            <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
-                                                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+
+                            <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
+                                <div className='grid grid-cols-10 py-3 gap-2'>
+                                    <div className='col-span-1 text-[#348EED]'>ID</div>
+                                    <div className='col-span-2 text-[#348EED]'>Ngày Tạo</div>
+                                    <div className='col-span-2 text-[#348EED]'>Giá ước tính</div>
+                                    <div className='col-span-1 text-[#348EED]'>Giá thực tế</div>
+                                    <div className='col-span-1 text-[#348EED]'>Trạng Thái</div>
+                                    <div className='col-span-3 text-[#348EED]'>Hành động</div>
+                                </div>
+
+                                {quotationList.map((item, index) => (
+
+                                    <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
+                                        {/* {console.log("hok" + JSON.stringify(item))} */}
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.status.statusName}</div>
+                                        {/* Render other fields as needed */}
+                                        {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>
+                                            <div className='flex justify-end gap-2' >
+                                                {/* <Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
+
+                                                <div onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
+                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                ) : (
-                    <>
+                                ))}
 
-
-                        <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-                            <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#348EED]'>ID</div>
-                                <div className='col-span-2 text-[#348EED]'>Ngày Tạo</div>
-                                <div className='col-span-2 text-[#348EED]'>Giá ước tính</div>
-                                <div className='col-span-1 text-[#348EED]'>Giá thực tế</div>
-                                <div className='col-span-1 text-[#348EED]'>Trạng Thái</div>
-                                <div className='col-span-3 text-[#348EED]'>Hành động</div>
                             </div>
+                        </>
+                    )}
 
-                            {quotationList.map((item, index) => (
-
-                                <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
-                                    {/* {console.log("hok" + JSON.stringify(item))} */}
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>Đang tính toán báo giá</div>
-                                    {/* Render other fields as needed */}
-                                    {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>
-                                        <div className='flex justify-end gap-2' >
-                                        {/* <Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
-
-                                            <div onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
-                                                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
-                                            </div>
-                                             
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-
-                        </div>
-                    </>
-                )}
-
+                </div>
+                <Modal visible={isModalOpenAntd} style={{ minWidth: '1400px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
+                    {selectedQuotationItem && <QuoteTableConfirm selectedQuotationItem={selectedQuotationItem} />}
+                </Modal>
             </div>
-            <Modal visible={isModalOpenAntd} style={{ minWidth: '1400px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
-                {selectedQuotationItem && <QuoteTableConfirm selectedQuotationItem={selectedQuotationItem} />}
-            </Modal>
-        </div>
         </div>
     )
 }
