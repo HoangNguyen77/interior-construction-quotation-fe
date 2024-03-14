@@ -106,38 +106,36 @@ const RawMaterialQuotePage = () => {
     setCount(count + 1);
   };
   const handleSave = (row) => {
-    const totalCost = calculateTotalCost(row); // Recalculate total cost based on updated quantity
+    // Ensure that the Product array is not empty
+    if (row.Product.length > 0) {
+      // Find the selected product information based on the RoomType
+      const selectedProductInfo = row.Product.find(product => product.value === row.RoomType);
+      // If selectedProductInfo is not null, set the Unit property from the product information
+      if (selectedProductInfo) {
+        row.Unit = selectedProductInfo.unit;
+      }
+    }
+
+    // Recalculate total cost based on updated quantity and dimensions
+    const totalCost = calculateTotalCost(row);
+
+    // Update the TotalCost property in the row object
+    row.TotalCost = totalCost;
+
+    // Update the dataSource with the modified row object
     const newData = dataSource.map((item) => {
       if (item.key === row.key) {
-        return { ...item, ...row, TotalCost: totalCost }; // Update total cost with the recalculated value
+        return { ...item, ...row };
       }
       return item;
     });
-    setDataSource(newData); // Update dataSource with the new data
+
+    // Update the state with the new dataSource
+    setDataSource(newData);
   };
 
 
-  const calculateTotalCost = (row) => {
-    let totalCost = 0;
-    // Convert Quantity to a number before performing calculations
-    const quantity = parseInt(row.Quantity || 0);
-    // Calculate total cost based on the selected unit
-    switch (row.Unit) {
-      case 'cái':
-        totalCost = quantity * parseFloat(row.UnitPrice || 0);
-        break;
-      case 'md':
-        totalCost = parseInt(row.Length || 0) * parseFloat(row.UnitPrice || 0) * quantity;
-        break;
-      case 'm2':
-        totalCost = parseInt(row.Length || 0) * parseInt(row.Width || 0) * parseFloat(row.UnitPrice || 0) * quantity;
-        break;
-      default:
-        totalCost = 0;
-    }
-    console.log("Calculated Total Cost:", totalCost); // Log để kiểm tra giá trị mới của TotalCost
-    return totalCost;
-  };
+
 
   const handleRoomTypeChange = async (value, key) => {
     try {
@@ -222,13 +220,28 @@ const RawMaterialQuotePage = () => {
     handleSave(newData.find(item => item.key === key));
   };
 
-
-
-
-
-
-
-
+  const calculateTotalCost = (row) => {
+    let totalCost = 0;
+    // Convert Quantity to a number before performing calculations
+    const quantity = parseInt(row.Quantity || 0);
+    // Calculate total cost based on the selected unit
+    switch (row.Unit) {
+      case 'cái':
+        totalCost = quantity * parseFloat(row.UnitPrice || 11);
+        break;
+      case 'md':
+        totalCost = parseInt(row.Length || 0) * parseFloat(row.UnitPrice || 0) * quantity;
+        break;
+      case 'm2':
+        totalCost = parseInt(row.Length || 0) * parseInt(row.Width || 0) * parseFloat(row.UnitPrice || 0) * quantity;
+        break;
+      default:
+        totalCost = 0;
+    }
+    console.log(row.height)
+    console.log("Calculated Total Cost:", totalCost); // Log để kiểm tra giá trị mới của TotalCost
+    return totalCost;
+  };
 
   const columns = [
 
@@ -265,38 +278,71 @@ const RawMaterialQuotePage = () => {
       ),
     },
     {
-      title: 'Dài',
-      dataIndex: 'Length',
-      width: '10%',
-      render: (_, record) => {
-        const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
-        const length = selectedProductInfo ? selectedProductInfo.length : '';
-
-        return <span>{length}</span>;
-      },
+      title: 'Dài', dataIndex: 'Length', width: '10%',
+      render: (__, record) => (
+          <Input
+              placeholder="1"
+              type="number"
+              value={record.Length}
+              onChange={(e) => handleSave({ ...record, Length: e.target.value })}
+          />
+      ),
     },
+    // {
+    //   title: 'Dài',
+    //   dataIndex: 'Length',
+    //   width: '10%',
+    //   render: (_, record) => {
+    //     const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+    //     const length = selectedProductInfo ? selectedProductInfo.length : '';
+    //
+    //     return <span>{length}</span>;
+    //   },
+    // },
     {
-      title: 'Rộng',
-      dataIndex: 'Width',
-      width: '10%',
-      render: (_, record) => {
-        const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
-        const width = selectedProductInfo ? selectedProductInfo.width : '';
-
-        return <span>{width}</span>;
-      },
+      title: 'Rộng', dataIndex: 'Width', width: '10%',
+      render: (__, record) => (
+          <Input
+              placeholder="1"
+              type="number"
+              value={record.Width}
+              onChange={(e) => handleSave({ ...record, Width: e.target.value })}
+          />
+      )
     },
+    // {
+    //   title: 'Rộng',
+    //   dataIndex: 'Width',
+    //   width: '10%',
+    //   render: (_, record) => {
+    //     const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+    //     const width = selectedProductInfo ? selectedProductInfo.width : '';
+    //
+    //     return <span>{width}</span>;
+    //   },
+    // },
     {
-      title: 'Cao',
-      dataIndex: 'Height',
-      width: '10%',
-      render: (_, record) => {
-        const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
-        const height = selectedProductInfo ? selectedProductInfo.height : '';
-
-        return <span>{height}</span>;
-      },
+      title: 'Cao', dataIndex: 'Height', width: '10%',
+      render: (__, record) => (
+          <Input
+              placeholder="1"
+              type="number"
+              value={record.Height}
+              onChange={(e) => handleSave({ ...record, Height: e.target.value })}
+          />
+      )
     },
+    // {
+    //   title: 'Cao',
+    //   dataIndex: 'Height',
+    //   width: '10%',
+    //   render: (_, record) => {
+    //     const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+    //     const height = selectedProductInfo ? selectedProductInfo.height : '';
+    //
+    //     return <span>{height}</span>;
+    //   },
+    // },
     {
       title: 'Đơn Vị',
       dataIndex: 'Unit',
@@ -323,15 +369,23 @@ const RawMaterialQuotePage = () => {
     },
     {
       title: 'Giá tiền',
-      dataIndex: 'UnitPrice',
+      dataIndex: 'TotalCost', // Change to TotalCost to display the calculated price
       width: '10%',
-      render: (_, record) => {
-        const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
-        const unitPrice = selectedProductInfo ? selectedProductInfo.unitPrice : '';
-
-        return <span>{unitPrice} VND</span>;
+      render: (totalCost, record) => {
+        return <span>{totalCost} VND</span>;
       },
     },
+    // {
+    //   title: 'Giá tiền',
+    //   dataIndex: 'UnitPrice',
+    //   width: '10%',
+    //   render: (_, record) => {
+    //     const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+    //     const unitPrice = selectedProductInfo ? selectedProductInfo.unitPrice : '';
+    //
+    //     return <span>{unitPrice} VND</span>;
+    //   },
+    // },
 
 
     {

@@ -16,6 +16,7 @@ import axios from 'axios';
 import {
     getIdUserByToken
   } from "../../utils/JwtService";
+import Header from "../../layouts/Header.jsx";
 const { confirm } = Modal;
 
 
@@ -270,9 +271,8 @@ const ManageQuotationCustomer = () => {
     };
 
     return (
+        <div>
         <div className='h-auto pl-3'>
-         
-
             <div className='table-all-posts h-auto mt-[50px]'>
                 <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
                     {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
@@ -405,6 +405,7 @@ const ManageQuotationCustomer = () => {
             <Modal visible={isModalOpenAntd} style={{ minWidth: '1400px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
                 {selectedQuotationItem && <QuoteTableConfirm selectedQuotationItem={selectedQuotationItem} />}
             </Modal>
+        </div>
         </div>
     )
 }
