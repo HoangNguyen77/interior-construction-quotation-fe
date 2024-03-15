@@ -4,7 +4,10 @@ import {
     faSearch,
     faPlus,
     faTrashCan,
-    faPencil
+    faPencil,
+    faChair, // Ví dụ: icon ghế
+    faBed,   // Ví dụ: icon giường
+    faTable,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     getAllProductWithFirstImage,
@@ -53,7 +56,7 @@ const Description = () => {
     const [roomId, setRoomId] = useState("");
     const [unitList, setUnitList] = useState([]);
     const [productId, setProductId] = useState(0);
-
+    const [totalProduct, setTotalProduct] = useState(0);
     const [currentSearch, setCurrentSearch] = useState("");
     const [search, setSearch] = useState("")
     const [isChanged, setIsChanged] = useState(false);
@@ -66,7 +69,6 @@ const Description = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [totalProduct, setTotalProduct] = useState(0);
 //Error product field
     const [errorImages, setErrorImages] = useState("");
     const [errorName, setErrorName] = useState("");
@@ -479,6 +481,21 @@ const Description = () => {
                                                                                              color={"black"}
                                                                                              size={"24px"}/>
                 </div>
+
+
+                <div
+                    className='absolute z-10 top-0 right-[190px] w-[80px] h-[80px] bg-[#60B664] text-[24px] font-bold text-white text-center flex flex-col justify-center rounded-[10px] shadow1'>
+                    <Icon classIcon={faChair} color={"white"} size={"32px"}/>
+                </div>
+                <div
+                    className='absolute top-[40px] right-0 w-[300px] h-[110px] rounded-[5px] bg-white shadow1 flex flex-col justify-center text-right px-[30px]'>
+                    <div>
+                        <div className='text-[24px] text-black'>{totalProduct}</div>
+                        <div className='text-[24px] text-black'>Tổng sản phẩm</div>
+                    </div>
+                </div>
+
+
             </div>
 
             {isModalOpen && (
