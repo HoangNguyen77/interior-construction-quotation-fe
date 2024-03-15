@@ -38,6 +38,33 @@ const ManageQuotation = () => {
     const [quotationList, setQuotationList] = useState([]);
     const [totalQuotation1, setTotalQuotation1] = useState(0);
     const [totalQuotation2, setTotalQuotation2] = useState(0);
+
+    const getWarningByDate = (listCreateDate) => {
+        const currentDate = new Date();
+        const createDate = new Date(listCreateDate);
+
+        // Tính số mili giây giữa ngày hiện tại và ngày tạo
+        const differenceInTime = currentDate.getTime() - createDate.getTime();
+
+        // Tính số ngày chênh lệch
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        let textColor = "";
+
+        if (differenceInDays >= 2) {
+            textColor = 'red'; // Màu đỏ nếu lớn hơn hoặc bằng 2 ngày
+        } else if (differenceInDays >= 1) {
+            textColor = '#FFD700'; // Màu vàng nếu lớn hơn hoặc bằng 1 ngày
+        } else {
+            textColor = 'green'; // Màu mặc định nếu ít hơn 1 ngày
+        }
+
+        return (
+            <div style={{color: textColor}}>
+                {listCreateDate}
+            </div>
+        );
+    };
+
     const fetchData = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/quotation-header`, {
@@ -79,9 +106,11 @@ const ManageQuotation = () => {
                     // Check if status is 1
                     if (listStatus === 1) {
                         const listID = listData[0].listId;
+                        const listCreateDate = listData[0].createdDate;
                         return {
                             quotationHeader,
                             customerInfo,
+                            listCreateDate,
                             listID
                         };
                     } else {
@@ -400,7 +429,7 @@ const ManageQuotation = () => {
                             <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#348EED]'>ID khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Họ và tên khách hàng</div>
-                                {/* <div className='col-span-3 text-[#348EED]'>Địa chỉ</div> */}
+                                 <div className='col-span-3 text-[#348EED]'>Ngày báo giá</div>
                                 <div className='col-span-2 text-[#348EED]'>Email</div>
                                 <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
@@ -412,7 +441,7 @@ const ManageQuotation = () => {
                                             <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
                                                 <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                                {/* <div className='col-span-3 text-black flex flex-col justify-center'>{item.address}</div> */}
+                                                 <div className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate)}</div>
                                                 <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
