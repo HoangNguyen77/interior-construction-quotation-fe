@@ -103,37 +103,38 @@ const BlogDetail = () => {
                 </div>
             </div>
             <div className="site-section bg-white">
+
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 mx-auto text-center mb-1 section-heading">
                             <h1 className="mb-3">Các bài viết liên quan</h1>
                         </div>
                     </div>
-                    {
-                        randomBlogList.map(blog => (
-                            <Link to={`/blog/${blog.blogId}`}>
-                                <div className="row bg-light mb-5 pt-4" key={blog.blogId}>
-                                    <div className="col-3">
-                                        <div className="media-with-text">
-                                            <div className="img-border-sm mb-4">
-                                                <div className="popup-vimeo image-play">
-                                                    <img src={blog.image} alt="" className="img-fluid"/>
-                                                </div>
+                    {randomBlogList.map(blog => (
+                        <Link to={`/blog/${blog.blogId}`} key={blog.blogId}>
+                            <div className="row bg-light mb-5 pt-4">
+                                <div className="col-md-3">
+                                    <div className="media-with-text">
+                                        <div className="img-border-sm mb-4">
+                                            <div className="popup-vimeo image-play">
+                                                <img src={blog.image} alt="" className="img-fluid"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-9">
-                                        <div className="media-with-text">
-                                            <div className="h2 heading mb-0" style={{fontSize: '25px'}}>{blog.title}</div>
-                                            <span
-                                                className="mb-3 d-block post-date">{format(new Date(blog.createdDate), 'MMM do, yyyy')}</span>
-                                            <p style={{color: '#00000080'}}>{getShortDescription(blog.description)}</p>
-                                        </div>
+                                </div>
+                                <div className="col-md-9">
+                                    <div className="media-with-text">
+                                        <h2 className="heading mb-0" style={{fontSize: '25px'}}>{blog.title}</h2>
+                                        <span className="mb-3 d-block post-date">
+                        {format(new Date(blog.createdDate), 'MMM do, yyyy')}
+                    </span>
+                                        <p style={{color: '#00000080'}}>{getShortDescription(blog.description)}</p>
                                     </div>
                                 </div>
-                            </Link>
-                        ))
-                    }
+                            </div>
+                        </Link>
+                    ))}
+
                 </div>
             </div>
             <Footer/>
