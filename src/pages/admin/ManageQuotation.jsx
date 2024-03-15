@@ -13,6 +13,7 @@ import {
 import { Button, Modal, message } from 'antd';
 import QuoteTableConfirm from './QuoteTableConfirm';
 import axios from 'axios';
+import {getValidCurrency} from "../../utils/Validation.js";
 const { confirm } = Modal;
 const Icon = ({ classIcon, color, size }) => {
     const iconSize = {
@@ -545,8 +546,8 @@ const ManageQuotation = () => {
                                     {/* {console.log("hok" + JSON.stringify(item))} */}
                                     <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
                                     <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
+                                    <div className='col-span-2 text-black flex flex-col justify-center'>{getValidCurrency(item.estimateTotalPrice)}</div>
+                                    <div className='col-span-1 text-black flex flex-col justify-center'>{getValidCurrency(item.realTotalPrice)}</div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>{item.status.statusName}</div>
                                     {/* Render other fields as needed */}
                                     {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
