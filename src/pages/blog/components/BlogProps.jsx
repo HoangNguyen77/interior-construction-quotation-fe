@@ -53,7 +53,7 @@ const BlogProps = (props) => {
                     </div>
                     <div className="col-9">
                         <div className="media-with-text">
-                            <h2 className="heading mb-0" style={{fontSize: '25px'}}>{props.blog.title}</h2>
+                            <h2 className="heading mb-0" style={{fontSize: '25px'}}>{getShortDescription(props.blog.title)}</h2>
                             <span className="mb-3 d-block post-date">{formattedDate}</span>
                             <p style={{color: '#00000080'}}>{getShortDescription(props.blog.description)}...</p>
                         </div>
