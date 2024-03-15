@@ -39,7 +39,7 @@ const ManageQuotation = () => {
     const [totalQuotation1, setTotalQuotation1] = useState(0);
     const [totalQuotation2, setTotalQuotation2] = useState(0);
 
-    const getWarningByDate = (date) => {
+    const getWarningByDate = (date, isCreateDay) => {
         const currentDate = new Date();
         const targetDate = new Date(date);
 
@@ -51,9 +51,13 @@ const ManageQuotation = () => {
 
         let textColor = "";
 
-        if (differenceInDays >= 2) {
+        if(differenceInDays >= 7 && !isCreateDay) {
+            textColor = 'red'
+        }else if ( differenceInDays >= 3 && !isCreateDay) {
+            textColor = '#FFD700'
+        }else if (differenceInDays >= 2 && isCreateDay) {
             textColor = 'red'; // Màu đỏ nếu lớn hơn hoặc bằng 2 ngày
-        } else if (differenceInDays >= 1) {
+        } else if (differenceInDays >= 1 && isCreateDay) {
             textColor = '#FFD700'; // Màu vàng nếu lớn hơn hoặc bằng 1 ngày
         } else {
             textColor = 'green'; // Màu xanh lá cây mặc định nếu ít hơn 1 ngày
@@ -61,7 +65,7 @@ const ManageQuotation = () => {
 
         return (
             <div style={{color: textColor}}>
-                {date}
+                {isCreateDay ? date : `${differenceInDays} ngày`}
             </div>
         );
     };
@@ -435,7 +439,7 @@ const ManageQuotation = () => {
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             {/** iterate from initialArr*/}
                             <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#348EED]'>ID khách hàng</div>
+                                <div className='col-span-1 text-[#348EED]'>ID</div>
                                 <div className='col-span-2 text-[#348EED]'>Họ và tên khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Email</div>
                                 <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
@@ -458,7 +462,7 @@ const ManageQuotation = () => {
                                                 <div
                                                     className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
                                                 <div
-                                                    className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate)}
+                                                    className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate,true)}
                                                 </div>
 
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
@@ -504,7 +508,7 @@ const ManageQuotation = () => {
                                     <div
                                         className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
                                     <div
-                                        className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listReceiptDate)}
+                                        className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listReceiptDate, false)}
                                     </div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                         <div className='flex justify-end gap-2'>
