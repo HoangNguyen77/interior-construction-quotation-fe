@@ -150,41 +150,45 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
   ];
 
   return (
-    <div className='table-container'>
-      <div className='quotetable-title'>
-        <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
-      </div>
-      <Table
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        rowKey="detailId"
-        footer={() => (
-          <div>
-            <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
-            <span>{getValidCurrency(totalPrice)}</span>
-            {/* <span>{totalPrice}</span> */}
-          </div>
-        )}
-      />
-
-      <Modal
-        title="Confirmation"
-        visible={modalVisible}
-        onOk={handleConfirm}
-        onCancel={() => setModalVisible(false)}
-        footer={null}
-      >
-        <p>Are you sure you want to confirm?</p>
-        <div style={{ textAlign: 'right' }}>
-          <button onClick={handleConfirm}>Confirm</button>
-          <button onClick={() => setModalVisible(false)}>Cancel</button>
+      <div className='table-container'>
+        <div className='quotetable-title'>
+          <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
         </div>
-      </Modal>
+        <Table
+            bordered
+            dataSource={dataSource}
+            columns={columns}
+            pagination={false}
+            rowKey="detailId"
+            footer={() => (
+                <div>
+                  <span style={{fontWeight: 'bold'}}>Tổng Tiền: </span>
+                  <span>{getValidCurrency(totalPrice)}</span>
+                  {/* <span>{totalPrice}</span> */}
+                </div>
+            )}
+        />
 
-      <button onClick={handleOk}>OK</button>
-    </div>
+        <Modal
+            visible={modalVisible}
+            onOk={handleConfirm}
+            onCancel={() => setModalVisible(false)}
+            footer={null}
+        >
+          <p>Xác nhận đơn báo giá?</p>
+          <div style={{textAlign: 'right'}}>
+            <button onClick={() => setModalVisible(false)} className="border-green-500 text-black-">Thoát</button>
+            <button onClick={handleConfirm} className="border-green-500 text-green-500">Đồng ý</button>
+          </div>
+        </Modal>
+
+
+        <button onClick={handleOk} className="text-green-500 text-lg font-semibold px-8 py-4 rounded-lg block mx-auto">
+          Xác nhận
+        </button>
+
+
+      </div>
   );
 };
 

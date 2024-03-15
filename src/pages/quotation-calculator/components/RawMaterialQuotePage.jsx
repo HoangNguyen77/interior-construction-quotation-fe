@@ -10,6 +10,8 @@ import {
 import {
   getValidCurrency
 } from "../../../utils/Validation.js";
+
+
 const RawMaterialQuotePage = () => {
   const [rawMaterial, setRawMaterial] = useState([]);
   const [type, setType] = useState([]);
@@ -79,10 +81,10 @@ const RawMaterialQuotePage = () => {
     // Call the addQuotation function and pass the quotationDetails
     const result = await addQuotation(quotationDetails);
     if (result) {
-      message.success("Quotation details added successfully.");
+      message.success("Thêm đơn báo giá thành công");
     } else {
       // Show error message
-      message.error("Failed to add quotation details.");
+      message.error("Thêm đơn báo giá thất bại");
     }
   };
 
@@ -425,17 +427,34 @@ const RawMaterialQuotePage = () => {
     // },
 
 
-    {
-      title: 'Thao tác',
-      dataIndex: 'operation',
+
+  {
+    title: 'Thao tác',
+        dataIndex: 'operation',
       render: (_, record) => (
-          dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)} className='bg-red-500 text-white p-2 rounded-sm'>
-                Xóa
-              </Popconfirm>
-          ) : null
-      ),
-    },
+      dataSource.length >= 1 ? (
+          <Popconfirm
+              title="Bạn có chắc chắn muốn xóa?"
+              onConfirm={() => handleDelete(record.key)}
+              okText="Xác nhận"
+              cancelText="Hủy"
+              okButtonProps={{ className: 'bg-red-500 text-black  rounded-sm' }}
+              cancelButtonProps={{ className: 'bg-gray-500 text-black  rounded-sm' }}
+          >
+            <Button type="primary" danger> {/* Sử dụng Button từ Ant Design, với type="primary" và danger */}
+              Xoá
+            </Button>
+          </Popconfirm>
+      ) : null
+  ),
+  },
+
+
+
+
+
+
+
   ];
 
   const handleClose = () => {

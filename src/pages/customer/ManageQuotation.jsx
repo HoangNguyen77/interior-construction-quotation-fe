@@ -211,21 +211,19 @@ const ManageQuotationCustomer = () => {
 
     const showConfirmDelete = (headerId) => {
         confirm({
-            title: 'Do you want to delete this item?',
-            icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
+            title: 'Xoá yêu cầu báo giá?',
+                okText: 'Xoá',
+            cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
+            okButtonProps: { className: 'text-red-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
             onOk() {
                 deleteQuotationHeader(headerId)
                     .then((data) => {
-                        // Show notification for successful deletion
-                        message.success("ok");
-                        // Update the data displayed on the page after deletion
+                        message.success("Đã xoá đơn báo giá");
                         fetchData();
                         fetchData2();
                     })
                     .catch((error) => {
                         console.error('Error deleting quotation header:', error);
-                        // Show notification for error
-
                     });
             },
             onCancel() {
@@ -233,6 +231,7 @@ const ManageQuotationCustomer = () => {
             },
         });
     };
+
 
 
     const handleQuotationList = async (headerId) => {
@@ -290,29 +289,28 @@ const ManageQuotationCustomer = () => {
         console.log("listId: " + listId);
         console.log("headerId:" + headerId);
         confirm({
-            title: 'Do you want to accept this quotation?',
-            icon: <FontAwesomeIcon icon={faCheck} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
+            title: 'Xác nhận đơn báo giá?',
+            okText: 'Xác nhận',
+            cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
+            okButtonProps: { className: 'text-green-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
             onOk() {
                 finalizeQuotation(listId, headerId)
                     .then((data) => {
-                        // Show notification for successful deletion
-                        message.success("ok");
-                        // Update the data displayed on the page after deletion
+                        message.success("Đã chấp nhận đơn báo giá");
                         fetchData();
                         fetchData2();
                     })
                     .catch((error) => {
-                        console.error('Error deleting quotation header:', error);
-                        // Show notification for error
-
+                        console.error('Lỗi khi xóa tiêu đề báo giá:', error);
                     });
             },
             onCancel() {
                 console.log('Cancel');
             },
         });
-
     }
+
+
     const finalizeQuotation = async (listId, headerId) => {
         try {
             const response = await axios.put(`http://localhost:8080/quotation/finalize-quotation?quotation-list-id=${listId}&quotation-header-id=${headerId}`);
