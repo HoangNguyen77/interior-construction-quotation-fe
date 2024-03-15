@@ -10,6 +10,7 @@ import {
     faArrowLeft,
     faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Button, Modal, message } from 'antd';
 import QuoteTableConfirm from './QuoteTableConfirm';
 import axios from 'axios';
@@ -17,6 +18,7 @@ import {
     getIdUserByToken
 } from "../../utils/JwtService";
 import Header from "../../layouts/Header.jsx";
+import {getValidCurrency} from "../../utils/Validation.js";
 const { confirm } = Modal;
 
 
@@ -441,8 +443,8 @@ const ManageQuotationCustomer = () => {
                                         {/* {console.log("hok" + JSON.stringify(item))} */}
                                         <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
                                         <div className='col-span-2 text-black flex flex-col justify-center'>{item.createdDate}</div>
-                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.estimateTotalPrice}</div>
-                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.realTotalPrice}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{getValidCurrency(item.estimateTotalPrice)}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{getValidCurrency(item.realTotalPrice)}</div>
                                         <div className='col-span-2 text-black flex flex-col justify-center'>{item.status.statusName}</div>
                                         {/* Render other fields as needed */}
                                         {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
