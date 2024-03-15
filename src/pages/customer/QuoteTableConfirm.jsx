@@ -2,6 +2,7 @@ import { Input, Modal, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {getValidCurrency} from "../../utils/Validation.js";
 
 const QuoteTableConfirm = ({ selectedQuotationItem }) => {
   const [dataSource, setDataSource] = useState([]);
@@ -119,11 +120,13 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
     {
       title: 'Tổng Tiền',
       dataIndex: 'estimateTotalPrice',
+      render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
       // width: '20%',
     },
     {
       title: 'Giá thực tế',
       dataIndex: 'realTotalPrice',
+      render: (realTotalPrice) => getValidCurrency(realTotalPrice),
       width: 120
       // width: '25%',
       // render: (_, record) => (
@@ -160,7 +163,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
         footer={() => (
           <div>
             <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
-            <span>{totalPrice}</span>
+            <span>{getValidCurrency(totalPrice)}</span>
             {/* <span>{totalPrice}</span> */}
           </div>
         )}
