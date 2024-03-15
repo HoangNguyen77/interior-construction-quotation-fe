@@ -7,6 +7,9 @@ import { addQuotation } from "../../../api/product/ProductAPI";
 import {
   getIdUserByToken
 } from "../../../utils/JwtService.js";
+import {
+  getValidCurrency
+} from "../../../utils/Validation.js";
 const RawMaterialQuotePage = () => {
   const [rawMaterial, setRawMaterial] = useState([]);
   const [type, setType] = useState([]);
@@ -406,7 +409,7 @@ const RawMaterialQuotePage = () => {
       dataIndex: 'TotalCost', // Change to TotalCost to display the calculated price
       width: '10%',
       render: (totalCost, record) => {
-        return <span>{totalCost} VND</span>;
+        return <span>{getValidCurrency(totalCost)}</span>;
       },
     },
     // {
