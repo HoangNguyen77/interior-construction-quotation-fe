@@ -265,12 +265,12 @@ const TypeRoom = () => {
                     setCurrentPage(1);
                     setCategoryName("");
                     setRoomId("");
-                    toast.success("Thêm sản phẩm thành công");
+                    toast.success("Thêm loại sản phẩm thành công");
                 } else {
-                    toast.warning("Đã xảy ra lỗi trong quá trình thêm sản phẩm phòng!");
+                    toast.warning("Đã xảy ra lỗi trong quá trình thêm loại sản phẩm!");
                 }
             } catch (error) {
-                toast.warning("Đã xảy ra lỗi trong quá trình thêm sản phẩm phòng!");
+                toast.warning("Đã xảy ra lỗi trong quá trình thêm loại sản phẩm!");
             }
         }
     }
@@ -344,12 +344,12 @@ const TypeRoom = () => {
                     setCategoryName("");
                     setRoomId("");
                     setCategoryId(0)
-                    toast.success("Chỉnh loại sửa sản phẩm thành công");
+                    toast.success("Chỉnh loại sửa loại sản phẩm thành công");
                 } else {
-                    toast.warning("Đã xảy ra lỗi trong quá trình chỉnh loại sửa sản phẩm phòng!");
+                    toast.warning("Đã xảy ra lỗi trong quá trình chỉnh sửa loại sản phẩm!");
                 }
             } catch (error) {
-                toast.warning("Đã xảy ra lỗi trong quá trình chỉnh sửa loại sản phẩm phòng!");
+                toast.warning("Đã xảy ra lỗi trong quá trình chỉnh sửa loại sản phẩm!");
             }
         }
     }
@@ -381,7 +381,7 @@ const TypeRoom = () => {
     return (
         <div className='h-auto pl-3'>
             <div className='w-full h-[150px]'>
-                <div className='title-admin'>QUẢN LÝ LOẠI PHÒNG VÀ SẢN PHẨM</div>
+                <div className='title-admin'>QUẢN LÝ LOẠI PHÒNG VÀ LOẠI SẢN PHẨM</div>
                 <div className='grid grid-cols-10 gap-[100px] pt-5'>
                     <div className="col-span-4 flex flex-col justify-between">
 
@@ -476,7 +476,7 @@ const TypeRoom = () => {
                                 </div>
 
                                 <div className='flex justify-between text-black text-[24px] mt-3'>
-                                    <div className='w-2/5 h-[50px] flex flex-col justify-center'>Tên sản phẩm</div>
+                                    <div className='w-2/5 h-[50px] flex flex-col justify-center'>Tên loại sản phẩm</div>
                                     <input
                                         className='w-3/5 h-[50px] shadow1 border-2 border-[#858585] rounded-[5px] px-2 bg-[#EAEDF2]'
                                         value={categoryName}
@@ -500,8 +500,8 @@ const TypeRoom = () => {
 
                         <div>
                             <div
-                                className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>SẢN
-                                PHẨM
+                                className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>
+                                LOẠI SẢN PHẨM
                                 {!isModalProductOpen && (<div
                                         className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer'
                                         onClick={handleModalProductToggle}>
@@ -513,7 +513,7 @@ const TypeRoom = () => {
                                 <div className='grid grid-cols-6 py-3 gap-2'>
                                     <div className='col-span-1 text-[#348EED]'>ID</div>
                                     <div className='col-span-2 text-[#348EED]'>Tên loại phòng</div>
-                                    <div className='col-span-2 text-[#348EED]'>Tên sản phẩm</div>
+                                    <div className='col-span-2 text-[#348EED]'>Tên loại sản phẩm</div>
                                     <div className='col-span-1 text-[#60B664]'></div>
                                 </div>
                                 <div className='overflow-y-auto h-[44vh] pr-3'>
