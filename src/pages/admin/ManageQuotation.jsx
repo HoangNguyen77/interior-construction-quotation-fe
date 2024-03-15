@@ -39,15 +39,16 @@ const ManageQuotation = () => {
     const [totalQuotation1, setTotalQuotation1] = useState(0);
     const [totalQuotation2, setTotalQuotation2] = useState(0);
 
-    const getWarningByDate = (listCreateDate) => {
+    const getWarningByDate = (date) => {
         const currentDate = new Date();
-        const createDate = new Date(listCreateDate);
+        const targetDate = new Date(date);
 
-        // Tính số mili giây giữa ngày hiện tại và ngày tạo
-        const differenceInTime = currentDate.getTime() - createDate.getTime();
+        // Tính số mili giây giữa ngày hiện tại và ngày đích
+        const differenceInTime = currentDate.getTime() - targetDate.getTime();
 
         // Tính số ngày chênh lệch
-        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        let differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
         let textColor = "";
 
         if (differenceInDays >= 2) {
@@ -55,15 +56,19 @@ const ManageQuotation = () => {
         } else if (differenceInDays >= 1) {
             textColor = '#FFD700'; // Màu vàng nếu lớn hơn hoặc bằng 1 ngày
         } else {
-            textColor = 'green'; // Màu mặc định nếu ít hơn 1 ngày
+            textColor = 'green'; // Màu xanh lá cây mặc định nếu ít hơn 1 ngày
         }
 
         return (
             <div style={{color: textColor}}>
-                {listCreateDate}
+                {date}
             </div>
         );
     };
+
+
+
+
 
     const fetchData = async () => {
         try {
@@ -178,9 +183,12 @@ const ManageQuotation = () => {
                     // Check if status is 1
                     if (listStatus !== 1 && listStatus !== 4) {
                         const listID = listData[0].listId;
+                        const listReceiptDate = listData[0].createdDate;
+
                         return {
                             quotationHeader,
                             customerInfo,
+                            listReceiptDate,
                             listID
                         };
                     } else {
@@ -429,26 +437,40 @@ const ManageQuotation = () => {
                             <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#348EED]'>ID khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Họ và tên khách hàng</div>
-                                 <div className='col-span-3 text-[#348EED]'>Ngày báo giá</div>
                                 <div className='col-span-2 text-[#348EED]'>Email</div>
                                 <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
+                                <div className='col-span-3 text-[#348EED]'>Ngày báo giá</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
                             </div>
                             {
                                 initialArr.map((item, index) => {
                                         // {console.log(initialArr)}
                                         return (
-                                            <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                                <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                                <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                                 <div className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate)}</div>
-                                                <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                                <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                            <div key={index}
+                                                 className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                                <div
+                                                    className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                                <div className='col-span-2 text-black flex flex-col justify-center'>
+                                                    <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
+                                                </div>
+                                                <div
+                                                    className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                                <div
+                                                    className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                                <div
+                                                    className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate)}
+                                                </div>
+
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
-                                                    {console.log("lisy "+JSON.stringify(item.listID))}
+                                                    {console.log("lisy " + JSON.stringify(item.listID))}
                                                     <div className='flex justify-end gap-2'>
-                                                        <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
-                                                        <Button onClick={() => showConfirmChangeStatusTo2(item.listID)} icon={<Icon classIcon={faCheck} color={"black"} size={"20px"} />} />
+                                                        <Button
+                                                            onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
+                                                            icon={<Icon classIcon={faTrashCan} color={"black"}
+                                                                        size={"20px"}/>}/>
+                                                        <Button onClick={() => showConfirmChangeStatusTo2(item.listID)}
+                                                                icon={<Icon classIcon={faCheck} color={"black"}
+                                                                            size={"20px"}/>}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -461,26 +483,36 @@ const ManageQuotation = () => {
                 ) : isModeShow2 === false ? (
                     <>
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-                            <div className='grid grid-cols-7 py-3 gap-2'>
+                            <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#60B664]'>ID</div>
                                 <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
                                 <div className='col-span-2 text-[#60B664]'>Email</div>
                                 <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>
+                                <div className='col-span-3 text-[#60B664]'>Ngày nhận báo giá</div>
                                 <div className='col-span-1 text-[#60B664]'></div>
                             </div>
                             {headerS2.map((item, index) => (
 
-                                <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
+                                <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
                                     {/* {console.log("ok", )} */}
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                    <div
+                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                    <div className='col-span-2 text-black flex flex-col justify-center'>
+                                        <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span></div>
+                                    <div
+                                        className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                    <div
+                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                    <div
+                                        className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listReceiptDate)}
+                                    </div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                         <div className='flex justify-end gap-2'>
-                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
+                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
+                                                    icon={<Icon classIcon={faTrashCan} color={"black"}
+                                                                size={"20px"}/>}/>
                                             <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
-                                                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
+                                                <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
                                             </div>
                                         </div>
                                     </div>
