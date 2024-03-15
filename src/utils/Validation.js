@@ -1,4 +1,30 @@
 // KIỂM TRA TÊN ĐĂNG NHẬP ////////////////////////////////////////////////
+
+
+
+export const getValidCurrency = (money) => {
+    // Kiểm tra nếu money không phải là số hoặc là số âm
+    if (isNaN(money) || money < 0) {
+        return ""; // Trả về chuỗi rỗng nếu không hợp lệ
+    }
+
+    // Tạo options để định dạng số
+    const options = {
+        style: 'currency',
+        currency: 'VND'
+    };
+
+    // Sử dụng toLocaleString để định dạng số thành chuỗi tiền tệ
+    const formattedMoney = money.toLocaleString('vi-VN', options);
+
+    return formattedMoney; // Trả về chuỗi tiền tệ đã định dạng
+};
+
+
+
+
+
+
 export const checkUsername = async (setErrorUsername, username) => {
     if(username.trim()===""){
         setErrorUsername("Thông tin bắt buộc");
