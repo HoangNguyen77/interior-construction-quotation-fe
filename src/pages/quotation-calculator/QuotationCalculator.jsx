@@ -1,11 +1,26 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 import RawMaterialQuotePage from "./components/RawMaterialQuotePage.jsx";
+import {isToken, isTokenExpired} from "../../utils/JwtService.js";
+import {useNavigate} from "react-router-dom";
 
 function QuotationCalculator(){
+
+    const navigation = useNavigate();
+    const sectionRef = useRef(null);
+
     useScrollToTop()
+    useEffect(() => {
+        if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/login");
+        // Cuộn xuống phần section khi trang được tải
+        sectionRef.current.scrollIntoView({behavior: 'smooth'});
+    }, []);
+
+
+
+
     return(
         <div>
             <Header/>
@@ -21,7 +36,7 @@ function QuotationCalculator(){
                 </div>
             </div>
 
-            <section className="m-4 my-4">
+            <section className="m-4 my-4" ref={sectionRef}>
                 <RawMaterialQuotePage />
             </section>
 

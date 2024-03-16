@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import Header from "../../layouts/Header.jsx";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {
     getIdUserByToken,
     getRoleByToken,
@@ -13,11 +13,17 @@ import Footer from "../../layouts/Footer.jsx";
 import {checkInput, checkPassword, checkPasswordAgain, checkPhonenumber} from "../../utils/Validation.js";
 import {jwtDecode} from "jwt-decode";
 import {toast} from "react-toastify";
+import ManageQuotationCustomer from "./ManageQuotation.jsx";
 
 function Profile() {
 
     const sectionRef = useRef(null);
     const sectionRef2 = useRef(null);
+    const sectionRefQuotation = useRef((null));
+    const location = useLocation();
+
+
+
     const userId = parseInt(getIdUserByToken());
     const navigation = useNavigate();
 
@@ -51,10 +57,11 @@ function Profile() {
 
 
     useEffect(() => {
-        if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/login");
-        // Cuộn xuống phần section khi trang được tải
-        sectionRef.current.scrollIntoView({behavior: 'smooth'});
-
+        if (location.pathname === '/customer-quotation') {
+            sectionRefQuotation.current.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
         const url = `http://localhost:8080/users/${userId}`;
 
         async function fetchData() {
@@ -89,7 +96,7 @@ function Profile() {
             .catch(error => {
                 console.error('Fetch data error:', error);
             });
-    }, []); // [] đảm bảo useEffect chỉ chạy một lần sau khi component được render
+    }, [location.pathname]); // [] đảm bảo useEffect chỉ chạy một lần sau khi component được render
 
     const handleFirstNameChange = (e) => {
         // Thay đổi giá trị
@@ -221,8 +228,6 @@ function Profile() {
                 <div className="container">
                     <div className="h2">Thông tin của bạn</div>
                     <hr/>
-
-
 
 
                     <div className="mt-3 ml-3">
@@ -358,6 +363,12 @@ function Profile() {
 
                 </div>
             </div>
+
+            <div style={{marginBottom: '70px'}} ref={sectionRefQuotation}>
+                <ManageQuotationCustomer/>
+            </div>
+
+
             <Footer/>
 
         </div>

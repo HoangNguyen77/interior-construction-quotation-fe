@@ -52,7 +52,7 @@ function App() {
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
                     <Route path='/staff/blog-form' element={<BlogForm/>}></Route>
                     <Route path='/403' element={<Page403/>}></Route>
-                    <Route path='/customer-quotation' element={<ManageQuotationCustomer/>}></Route>
+                    <Route path='/customer-quotation' element={<Profile/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

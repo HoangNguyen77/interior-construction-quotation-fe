@@ -1,11 +1,17 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import useScrollToTop from "../../utils/ScrollToTop.jsx";
 
 function About() {
     useScrollToTop()
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        sectionRef.current.scrollIntoView({behavior: 'smooth'});
+
+    }, []);
     return (
         <div>
             <Header/>
@@ -22,6 +28,7 @@ function About() {
                 </div>
             </div>
 
+            <div ref={sectionRef}></div>
 
             <div className="site-section">
                 <div className="container">
@@ -79,13 +86,15 @@ function About() {
                     <div className="row">
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
-                                <a className = "d-block mb-1 thumbnail"><img
+                                <a className="d-block mb-1 thumbnail"><img
                                     src="/images/congchien.jpg"
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
-                                    <p className="text-left mb-3">Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
-                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
+                                    <p className="text-left mb-3">Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội
+                                        thất xuất sắc, kết hợp tinh
+                                        tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian
+                                        sống
                                         độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện.</p>
 
                                 </div>
@@ -99,9 +108,11 @@ function About() {
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Nguyễn Công Chiến</a></h3>
 
-                                   <p className="text-left mb-3">  Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế nội thất xuất sắc, kết hợp tinh
-                                    tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian sống
-                                       độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. </p>
+                                    <p className="text-left mb-3"> Nguyễn Công Chiến, CEO VivarDecor, là nhà thiết kế
+                                        nội thất xuất sắc, kết hợp tinh
+                                        tế giữa truyền thống và hiện đại. Lãnh đạo đầy tầm nhìn, ông tạo ra không gian
+                                        sống
+                                        độc đáo và góp phần tích cực vào cộng đồng qua hoạt động từ thiện. </p>
 
                                 </div>
                             </div>
@@ -115,9 +126,10 @@ function About() {
                                     alt="Image" className="img-fluid"/></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Phạm Chí Cường</a></h3>
-                                    <p className="text-left mb-3"> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus - Weimar.
+                                    <p className="text-left mb-3"> Bắt đầu sự nghiệp ấn tượng từ Đại học Bauhaus -
+                                        Weimar.
                                         Với cơ hội làm việc cùng nhà thiết kế nổi tiếng Philippe Starck trong nhiều dự
-                                        án quan trọng là  sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
+                                        án quan trọng là sự kết hợp giữa kiến thức chuyên sâu và tầm nhìn sáng tạo</p>
 
                                 </div>
                             </div>
@@ -125,11 +137,12 @@ function About() {
                         <div className="col-md-3 mb-5 mb-md-0">
                             <div className="hotel-room text-center">
                                 <a className="d-block mb-5 thumbnail"><img src="/images/cd.jpg"
-                                                                                    alt="Image" className="img-fluid"
+                                                                           alt="Image" className="img-fluid"
                                 /></a>
                                 <div className="p-4">
                                     <h3 className="heading mb-3"><a href="#">Tôn Chí Dũng</a></h3>
-                                    <p className="text-left mb-3">Người được mệnh danh -Phù thủy thành LonDon- với việc đã làm rất nhiều thiết kế
+                                    <p className="text-left mb-3">Người được mệnh danh -Phù thủy thành LonDon- với việc
+                                        đã làm rất nhiều thiết kế
                                         mang tính chất vĩ đại.
                                         Ông là một trong số ít người từng học và làm việc tại University of Arts
                                         London.</p>
@@ -235,7 +248,7 @@ function About() {
                             {/* <span className="icon-wrap">
                     <span className="icon icon-play"></span>
                   </span>*/}
-                            <span >
+                            <span>
                                     <img src="/images/quytrinh.jpg" alt="" className="img-thumnail"/>
 
 
@@ -249,9 +262,11 @@ function About() {
                                 <h2 className="mb-5">Xin chào</h2>
                             </div>*/}
 
-                            <p className="h1">VivaDecor sở hữu quy trình khép kín với tiêu chí ba <a style={{color:"black", fontSize: "35px"}}>KHÔNG</a>:
-                        </p>
-                            <p className="display-5 text-black"> <strong className="h3">✔ KHÔNG</strong> trung gian phân phối </p>
+                            <p className="h1">VivaDecor sở hữu quy trình khép kín với tiêu chí ba <a
+                                style={{color: "black", fontSize: "35px"}}>KHÔNG</a>:
+                            </p>
+                            <p className="display-5 text-black"><strong className="h3">✔ KHÔNG</strong> trung gian phân
+                                phối </p>
                             <p className="display-5 text-black"><strong className="h3">✔ KHÔNG</strong> thợ khoán</p>
                             <p className="display-5 text-black"><strong className="h3">✔ KHÔNG</strong> thuê xưởng bên
                                 thứ ba
@@ -263,8 +278,8 @@ function About() {
                             {/*<p><a href="https://vimeo.com/629819635" className="popup-vimeo text-uppercase">Xem Video <span className="icon-arrow-right small"></span></a></p>*/}
                         </div>
 
-                        <div className="col-md-10 mx-auto"  >
-                            <span >
+                        <div className="col-md-10 mx-auto">
+                            <span>
                                     <img src="/images/sodoquytrinh.jpg" alt="Image" className="img-fluid"/>
 
 
@@ -284,8 +299,10 @@ function About() {
                         </div>
                         <div className="row">
                             <div className=" mx-auto text-center">
-                                <p className="mb-3"> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất hiện nay.
-                                    Với diện tích 800m², tách biệt các không gian thành 10 phong cách nội thất khác nhau, cùng với 1 phòng vật liệu và tư vấn. </p>
+                                <p className="mb-3"> Là một trong những showroom mang lại trải nghiệm mua sắm tốt nhất
+                                    hiện nay.
+                                    Với diện tích 800m², tách biệt các không gian thành 10 phong cách nội thất khác
+                                    nhau, cùng với 1 phòng vật liệu và tư vấn. </p>
 
                             </div>
                         </div>
@@ -318,18 +335,18 @@ function About() {
 
                         <div className="col-md-6 col-lg-3">
                             <a href="/images/7.jpg" className="image-popup img-opacity"><img src="/images/7.jpg"
-                                                                                                 alt="Image"
-                                                                                                 className="img-fluid"/></a>
+                                                                                             alt="Image"
+                                                                                             className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <a href="/images/43.jpg" className="image-popup img-opacity"><img src="/images/43.jpg"
-                                                                                                alt="Image"
-                                                                                                className="img-fluid"/></a>
+                                                                                              alt="Image"
+                                                                                              className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <a href="/images/5.jpg" className="image-popup img-opacity"><img src="/images/5.jpg"
-                                                                                                 alt="Image"
-                                                                                                 className="img-fluid"/></a>
+                                                                                             alt="Image"
+                                                                                             className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
                             <a href="/images/img_3.jpg" className="image-popup img-opacity"><img src="/images/img_3.jpg"
