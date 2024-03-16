@@ -91,10 +91,12 @@ const ManageQuotationCustomer = () => {
                     // Check if status is 1
                     if (listStatus === 1) {
                         const listID = listData[0].listId;
+                        const createDate = listData[0].createdDate;
                         return {
                             quotationHeader,
                             customerInfo,
-                            listID
+                            listID,
+                            createDate
                         };
                     } else {
                         return null; // Skip this quotationHeader if status is not 1
@@ -161,10 +163,12 @@ const ManageQuotationCustomer = () => {
                     // Check if status is 1
                     if (listStatus !== 1 && listStatus !== 4) {
                         const listID = listData[0].listId;
+                        const createDate = listData[0].createdDate;
                         return {
                             quotationHeader,
                             customerInfo,
-                            listID
+                            listID,
+                            createDate
                         };
                     } else {
                         return null; // Skip this quotationHeader if status is not 1
@@ -362,25 +366,36 @@ const ManageQuotationCustomer = () => {
                                 {/** iterate from initialArr*/}
                                 <div className='grid grid-cols-10 py-3 gap-2'>
                                     <div className='col-span-1 text-[#348EED]'>ID</div>
-                                    <div className='col-span-3 text-[#348EED]'>Họ và tên</div>
-                                    {/* <div className='col-span-3 text-[#348EED]'>Địa chỉ</div> */}
-                                    <div className='col-span-3 text-[#348EED]'>Email</div>
+                                    <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
+                                    <div className='col-span-2 text-[#348EED]'>Email</div>
                                     <div className='col-span-2 text-[#348EED]'>Số điện thoại</div>
+                                    <div className='col-span-2 text-[#348EED]'>Ngày báo giá</div>
                                     <div className='col-span-1 text-[#348EED]'></div>
                                 </div>
                                 {
                                     initialArr.map((item, index) => {
                                             // {console.log(initialArr)}
                                             return (
-                                                <div key={index} className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
-                                                    <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                                    <div className='col-span-3 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                                    {/* <div className='col-span-3 text-black flex flex-col justify-center'>{item.address}</div> */}
-                                                    <div className='col-span-3 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                                    <div className='col-span- text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                                <div key={index}
+                                                     className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
+                                                    <div
+                                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                                    <div className='col-span-2 text-black flex flex-col justify-center'>
+                                                        <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
+                                                    </div>
+                                                    <div
+                                                        className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                                    <div
+                                                        className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                                    <div
+                                                        className='col-span-2 text-black flex flex-col justify-center'>{item.createDate}</div>
+
                                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                                         <div className='flex justify-end gap-2'>
-                                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
+                                                            <Button
+                                                                onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
+                                                                icon={<Icon classIcon={faTrashCan} color={"black"}
+                                                                            size={"20px"}/>}/>
                                                             {/* <Button onClick={() => showConfirmChangeStatusTo2(item.quotationHeader.headerId)} icon={<Icon classIcon={faCheck} color={"black"} size={"20px"} />} /> */}
                                                         </div>
                                                     </div>
@@ -394,21 +409,31 @@ const ManageQuotationCustomer = () => {
                     ) : isModeShow2 === false ? (
                         <>
                             <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
-                                <div className='grid grid-cols-7 py-3 gap-2'>
+                                <div className='grid grid-cols-10 py-3 gap-2'>
                                     <div className='col-span-1 text-[#60B664]'>ID</div>
                                     <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
                                     <div className='col-span-2 text-[#60B664]'>Email</div>
-                                    <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>
+                                    <div className='col-span-2 text-[#60B664]'>Số điện thoại</div>
+                                    <div className='col-span-2 text-[#60B664]'>Ngày báo giá</div>
                                     <div className='col-span-1 text-[#60B664]'></div>
                                 </div>
                                 {headerS2.map((item, index) => (
 
-                                    <div className='grid grid-cols-7 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
+                                    <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'
+                                         key={index}>
                                         {/* {console.log("ok", )} */}
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                        <div className='col-span-2 text-black flex flex-col justify-center'><span>{item.customerInfo.firstName}  {item.customerInfo.lastName}</span></div>
-                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                        <div
+                                            className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>
+                                            <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
+                                        </div>
+                                        <div
+                                            className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                        <div
+                                            className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                        <div
+                                            className='col-span-2 text-black flex flex-col justify-center'>{item.createDate}</div>
+
                                         <div className='col-span-1 text-black flex flex-col justify-center'>
                                             <div className='flex justify-end gap-2'>
                                                 {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
