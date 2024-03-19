@@ -9,6 +9,8 @@ import {
     faRepeat,
     faArrowLeft,
     faCheck,
+    faEye,
+
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Button, Modal, message } from 'antd';
@@ -296,7 +298,7 @@ const ManageQuotationCustomer = () => {
             title: 'Xác nhận đơn báo giá?',
             okText: 'Xác nhận',
             cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
-            okButtonProps: { className: 'text-green-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
+            okButtonProps: { className: 'text-green-500' }, // Thiết lập màu chữ của nút Delete thành đỏ
             onOk() {
                 finalizeQuotation(listId, headerId)
                     .then((data) => {
@@ -331,9 +333,9 @@ const ManageQuotationCustomer = () => {
 
     const handleCancel = () => {
         setIsModalOpenAntd(false);
-        fetchData();
-        fetchData2();
-        handleQuotationList();
+        // fetchData();
+        // fetchData2();
+        // handleQuotationList();
     };
 
     return (
@@ -437,9 +439,13 @@ const ManageQuotationCustomer = () => {
                                         <div className='col-span-1 text-black flex flex-col justify-center'>
                                             <div className='flex justify-end gap-2'>
                                                 {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
-                                                <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
-                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
-                                                </div>
+                                                <Button
+                                                    onClick={() => handleQuotationList(item.quotationHeader.headerId)}
+                                                    icon={<Icon classIcon={faEye} color={"black"}
+                                                                size={"20px"}/>}/>
+                                                {/*<div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>*/}
+                                                {/*    <Icon classIcon={faEye} color={"black"} size={"20px"}/>*/}
+                                                {/*</div>*/}
                                             </div>
                                         </div>
                                     </div>
@@ -475,13 +481,21 @@ const ManageQuotationCustomer = () => {
                                             <div className='flex justify-end gap-2'>
                                                 {/* <Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
 
-                                                <div
-                                                    onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
-                                                    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
-                                                </div>
-                                                <div onClick={() => handleFinalizeQuotation(item.listId, item.quotationHeader.headerId)}>
-                                                    <Icon classIcon={faCheck} color={"black"} size={"20px"}/>
-                                                </div>
+                                                <Button
+                                                    onClick={() => handleOpenQuote(item.listId)}
+                                                    icon={<Icon classIcon={faPencil} color={"black"}
+                                                                size={"20px"}/>}/>
+                                                {/*<div*/}
+                                                {/*    onClick={() => handleOpenQuote(item.listId)}> /!* Pass the selected quotation item *!/*/}
+                                                {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
+                                                {/*</div>*/}
+                                                <Button
+                                                    onClick={() => handleFinalizeQuotation(item.listId, item.quotationHeader.headerId)}
+                                                    icon={<Icon classIcon={faCheck} color={"black"}
+                                                                size={"20px"}/>}/>
+                                                {/*<div onClick={() => handleFinalizeQuotation(item.listId, item.quotationHeader.headerId)}>*/}
+                                                {/*    <Icon classIcon={faCheck} color={"black"} size={"20px"}/>*/}
+                                                {/*</div>*/}
                                             </div>
                                         </div>
                                     </div>

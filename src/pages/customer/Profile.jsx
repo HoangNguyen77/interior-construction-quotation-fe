@@ -210,7 +210,7 @@ function Profile() {
     return (
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_1.jpg)"}}
+            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_5.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">

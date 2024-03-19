@@ -8,7 +8,7 @@ import {
     faUser,
     faRepeat,
     faArrowLeft,
-    faCheck,
+    faCheck, faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button, Modal, message } from 'antd';
 import QuoteTableConfirm from './QuoteTableConfirm';
@@ -265,8 +265,12 @@ const ManageQuotation = () => {
     };
     const showConfirmDelete = (headerId) => {
         confirm({
-            title: 'Do you want to delete this item?',
-            icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
+            title: 'Bạn có muốn xóa báo giá này?',
+            okText: 'Chấp nhận',
+            okButtonProps: {className: 'confirm-button'},
+            cancelText: 'Hủy bỏ',
+            cancelButtonProps: {className: 'cancel-button'},
+            // icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
             onOk() {
                 deleteQuotationHeader(headerId)
                     .then((data) => {
@@ -289,8 +293,12 @@ const ManageQuotation = () => {
     };
     const showConfirmDeleteList = (headerId) => {
         confirm({
-            title: 'Do you want to delete this item?',
-            icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
+            title: 'Bạn có muốn xóa báo giá này?',
+            okText: 'Chấp nhận',
+            okButtonProps: {className: 'confirm-button'},
+            cancelText: 'Hủy bỏ',
+            cancelButtonProps: {className: 'cancel-button'},
+            // icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
             onOk() {
                 deleteQuotationHeaderList(headerId)
                     .then((data) => {
@@ -345,17 +353,20 @@ const ManageQuotation = () => {
         setIsModalOpenAntd(false)
     };
     const calcelCancel = () => {
-
         setModalCfCancleVisible(false);
     };
     const showConfirmChangeStatusTo2 = (headerId) => {
         confirm({
             title: 'Bạn có muốn chuyển trạng thái đơn hàng này thành "Đang xử lý"?',
+            okText: 'Chấp nhận',
+            okButtonProps: {className: 'confirm-button'},
+            cancelText: 'Hủy bỏ',
+            cancelButtonProps: {className: 'cancel-button'},
             onOk() {
                 approveQuotationHeader(headerId)
                     .then((data) => {
                         // Show notification for successful deletion
-                        message.success("ok");
+                        message.success("Đã chấp nhận xử lý báo giá");
                         // Update the data displayed on the page after deletion
                         fetchData();
                         fetchData2();
@@ -579,9 +590,11 @@ const ManageQuotation = () => {
                                             <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
                                                     icon={<Icon classIcon={faTrashCan} color={"black"}
                                                                 size={"20px"}/>}/>
-                                            <div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>
-                                                <Icon classIcon={faPencil} color={"black"} size={"20px"}/>
-                                            </div>
+                                            <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)}
+                                            icon={<Icon classIcon={faEye} color={"black"} size={"20px"}/>}/>
+                                            {/*<div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>*/}
+                                            {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
+                                            {/*</div>*/}
                                         </div>
                                     </div>
                                 </div>
@@ -597,7 +610,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-2 text-[#348EED]'>Giá ước tính</div>
                                 <div className='col-span-1 text-[#348EED]'>Giá thực tế</div>
                                 <div className='col-span-1 text-[#348EED]'>Trạng Thái</div>
-                                <div className='col-span-3 text-[#348EED]'>Hành động</div>
+                                {/*<div className='col-span-3 text-[#348EED]'>Hành động</div>*/}
                             </div>
 
                             {quotationList.map((item, index) => (
@@ -613,11 +626,12 @@ const ManageQuotation = () => {
                                     {/* <div className='col-span-1 text-black flex flex-col justify-center'>Render other fields as needed</div> */}
                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                         <div className='flex justify-end gap-2' >
-                                            <Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
-
-                                            <div onClick={() => handleOpenQuote(item.listId)}> {/* Pass the selected quotation item */}
-                                                <Icon classIcon={faPencil} color={"black"} size={"20px"} />
-                                            </div>
+                                            {/*<Button onClick={() => showConfirmDeleteList(item.listId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />*/}
+                                            <Button onClick={() => handleOpenQuote(item.listId)}
+                                                    icon={<Icon classIcon={faPencil} color={"black"} size={"20px"} />} />
+                                            {/*<div onClick={() => handleOpenQuote(item.listId)}> /!* Pass the selected quotation item *!/*/}
+                                            {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"} />*/}
+                                            {/*</div>*/}
 
                                         </div>
                                     </div>
@@ -634,11 +648,11 @@ const ManageQuotation = () => {
                 style={{ minWidth: '1000px', minHeight: '600px' }}
                 onCancel={() => setIsModalOpenAntd(false)}
                 footer={[
-                    <Button key="back" onClick={handleCancel}>
-                        Cancel
+                    <Button key="back" className="cancel-button" onClick={handleCancel}>
+                        Hủy
                     </Button>,
-                    <Button key="submit" type="primary" onClick={handleOpenConfirm}>
-                        Submit
+                    <Button key="submit" className="confirm-button" onClick={handleOpenConfirm} >
+                        Gửi Báo Giá
                     </Button>,
                 ]}
             >
@@ -653,14 +667,14 @@ const ManageQuotation = () => {
                 )}
             </Modal>
             <Modal
-                title="Are you sure to save this ?"
+                title="Bạn có muốn gửi báo giá này?"
                 visible={modalVisible}
                 onOk={handleConfirm}
                 onCancel={() => setModalVisible(false)}
             >
             </Modal>
             <Modal
-                title="This change do not save! Close it?"
+                title="Mọi sự thay đổi sẽ không được lưu lại! Bạn có muốn đóng?"
                 visible={modalCfCancleVisible}
                 onOk={handleOpenCancelConfirm}
                 onCancel={calcelCancel}

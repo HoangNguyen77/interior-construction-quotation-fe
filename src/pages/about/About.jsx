@@ -15,7 +15,7 @@ function About() {
     return (
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_4.jpg)"}}
+            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_2.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">

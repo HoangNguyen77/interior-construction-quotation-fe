@@ -45,7 +45,7 @@ function Header() {
                                                 {/*    </ul>*/}
                                                 {/*</li>*/}
                                                 <li className={location.pathname.startsWith("/blog") ? "active" : ""}>
-                                                    <Link to="/blog">Blog</Link></li>
+                                                    <Link to="/blog">Bài Viết</Link></li>
                                                 <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}>
                                                     <Link to="/quotation-calculator">Báo giá</Link></li>
                                                 <li className={location.pathname.startsWith("/about") ? "active" : ""}>

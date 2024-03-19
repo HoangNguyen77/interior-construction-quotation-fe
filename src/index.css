@@ -66,3 +66,11 @@
     position: relative;
     z-index: 2; /* Đảm bảo nó ở trên lớp làm mờ */
 }
+
+.cancel-button {
+    @apply bg-red-600 hover:bg-red-700 text-white font-bold rounded;
+}
+
+.confirm-button {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-bold rounded;
+}

@@ -1454,3 +1454,13 @@ a {
   width: 100%; /* Set width to fit the container */
   text-align: center; /* Center the icon */
 }
+
+.btn-cancel {
+  background-color: #f5222d; /* Ant Design error color */
+  color: #fff;
+}
+
+.btn-confirm {
+  background-color: #1890ff; /* Ant Design primary color */
+  color: #fff;
+}

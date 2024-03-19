@@ -51,13 +51,13 @@ const Finished = () => {
     return(
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_4.jpg)"}} data-aos="fade"
+            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_8.jpg)"}} data-aos="fade"
                  data-stellar-background-ratio="0.5">
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-md-7 text-center" data-aos="fade">
                             <span className="caption mb-3">VivaDecor</span>
-                            <h1 className="mb-4">Finished Project</h1>
+                            <h1 className="mb-4">Dự Án Đã Thi Công</h1>
                         </div>
                     </div>
                 </div>
