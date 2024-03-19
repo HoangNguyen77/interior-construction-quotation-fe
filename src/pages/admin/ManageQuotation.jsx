@@ -39,6 +39,11 @@ const ManageQuotation = () => {
     const [quotationList, setQuotationList] = useState([]);
     const [totalQuotation1, setTotalQuotation1] = useState(0);
     const [totalQuotation2, setTotalQuotation2] = useState(0);
+    const [dataSource, setDataSource] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalCfCancleVisible, setModalCfCancleVisible] = useState(false);
+
 
     const getWarningByDate = (date, isCreateDay) => {
         const currentDate = new Date();
@@ -306,8 +311,43 @@ const ManageQuotation = () => {
             },
         });
     };
+    const handleConfirm = async () => {
+        setModalVisible(false);
+        setIsModalOpenAntd(false);
 
+        const dataToSend = dataSource.map(item => ({
+            detailId: item.detailId,
+            realPrice: item.realTotalPrice,
+            note: item.note
+        }));
 
+        try {
+            const response = await axios.put(`http://localhost:8080/quotation/update-quotation-detail?totalPrice=${totalPrice}`, dataToSend, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                }
+            });
+            handleCancelReloadDetails();
+            message.success("update success!")
+            console.log('Data sent successfully:', response.data);
+        } catch (error) {
+            console.error('Error sending data:', error);
+        }
+        setModalVisible(false);
+    };
+    const handleOpenConfirm = () => {
+        setModalVisible(true);
+    };
+    const handleOpenCancelConfirm = () => {
+
+        setModalCfCancleVisible(false);
+        setIsModalOpenAntd(false)
+    };
+    const calcelCancel = () => {
+
+        setModalCfCancleVisible(false);
+    };
     const showConfirmChangeStatusTo2 = (headerId) => {
         confirm({
             title: 'Bạn có muốn chuyển trạng thái đơn hàng này thành "Đang xử lý"?',
@@ -360,8 +400,8 @@ const ManageQuotation = () => {
         }
     }
 
-    const [selectedQuotationItem, setSelectedQuotationItem] = useState(null); // Initialize selectedQuotationItem state
-
+    const [selectedQuotationItem, setSelectedQuotationItem] = useState();
+    // Initialize selectedQuotationItem state
     //modal
     const [isModalOpenAntd, setIsModalOpenAntd] = useState(false);
 
@@ -370,15 +410,38 @@ const ManageQuotation = () => {
         setIsModalOpenAntd(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpenAntd(false);
-    };
+    const handleCancel = async () => {
+        setModalCfCancleVisible(true);
 
-    const handleCancel = () => {
-        setIsModalOpenAntd(false);
-        fetchData();
-        fetchData2();
-        handleQuotationList();
+    };
+    const handleCancelReloadDetails = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/quotation-list/search/findByQuotationHeader_HeaderId?headerId=${selectedHeaderId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                }
+            });
+
+            const list = response.data._embedded.quotationLists;
+            const quotaionWithStatusPromises = list.map(async (quotation) => {
+                const statusResponse = await axios.get(quotation._links.status.href, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    }
+                });
+                const status = statusResponse.data;
+                return { ...quotation, status }
+            })
+            const quotaionWithStatus = await Promise.all(quotaionWithStatusPromises);
+            // Handle the response data as needed
+            console.log("hahaahah " + quotaionWithStatus)
+            setQuotationList(quotaionWithStatus);
+
+        } catch (error) {
+            console.error('Error fetching quotation list:', error);
+        }
     };
 
     return (
@@ -467,7 +530,7 @@ const ManageQuotation = () => {
                                                 </div>
 
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
-                                                    {console.log("lisy " + JSON.stringify(item.listID))}
+                                                    {/*{console.log("lisy " + JSON.stringify(item.listID))}*/}
                                                     <div className='flex justify-end gap-2'>
                                                         <Button
                                                             onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
@@ -527,9 +590,6 @@ const ManageQuotation = () => {
                     </>
                 ) : (
                     <>
-
-
-                        {console.log(selectedQuotationItem)}
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             <div className='grid grid-cols-10 py-3 gap-2'>
                                 <div className='col-span-1 text-[#348EED]'>ID</div>
@@ -569,8 +629,42 @@ const ManageQuotation = () => {
                 )}
 
             </div>
-            <Modal visible={isModalOpenAntd} style={{ minWidth: '1400px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
-                {selectedQuotationItem && <QuoteTableConfirm selectedQuotationItem={selectedQuotationItem} />}
+            <Modal
+                visible={isModalOpenAntd}
+                style={{ minWidth: '1000px', minHeight: '600px' }}
+                onCancel={() => setIsModalOpenAntd(false)}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Cancel
+                    </Button>,
+                    <Button key="submit" type="primary" onClick={handleOpenConfirm}>
+                        Submit
+                    </Button>,
+                ]}
+            >
+                {selectedQuotationItem && (
+                    <QuoteTableConfirm
+                        selectedQuotationItem={selectedQuotationItem}
+                        dataSource={dataSource}
+                        setDataSource={setDataSource}
+                        totalPrice={totalPrice}
+                        setTotalPrice={setTotalPrice}
+                    />
+                )}
+            </Modal>
+            <Modal
+                title="Are you sure to save this ?"
+                visible={modalVisible}
+                onOk={handleConfirm}
+                onCancel={() => setModalVisible(false)}
+            >
+            </Modal>
+            <Modal
+                title="This change do not save! Close it?"
+                visible={modalCfCancleVisible}
+                onOk={handleOpenCancelConfirm}
+                onCancel={calcelCancel}
+            >
             </Modal>
         </div>
     )

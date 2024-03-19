@@ -4,15 +4,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {getValidCurrency} from "../../utils/Validation.js";
 
-const QuoteTableConfirm = ({ selectedQuotationItem }) => {
-  const [dataSource, setDataSource] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0); // State to track total price
-  const [modalVisible, setModalVisible] = useState(false);
+const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, totalPrice, setTotalPrice}) => {
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       if (!selectedQuotationItem) {
-        // console.log("selectedQuotationItem is null or undefined");
         return;
       }
 
@@ -60,49 +58,19 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
       }
       return item;
     });
-    setDataSource(newData); // Update the dataSource state with the new data
-  };
-  const handleOk = () => {
-    // Show confirmation modal
-    setModalVisible(true);
+    setDataSource(newData);
   };
 
-  const handleConfirm = async () => {
-    // Prepare data to send
-    const dataToSend = dataSource.map(item => ({
-      detailId: item.detailId,
-      realPrice: item.realTotalPrice,
-      note: item.note
-    }));
 
-    try {
-      const response = await axios.put(`http://localhost:8080/quotation/update-quotation-detail?totalPrice=${totalPrice}`, dataToSend, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem("token")}`,
-        }
-      });
-
-      // Handle success response
-      console.log('Data sent successfully:', response.data);
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
-
-    // Close modal after sending data
-    setModalVisible(false);
-  };
 
   const columns = [
     {
       title: 'Loại phòng',
       dataIndex: 'typeRoom',
-      // width: '10%',
     },
     {
       title: 'Sản phẩm',
       dataIndex: 'productName',
-      // width: '10%'
     },
     {
       title: 'Dài',
@@ -129,11 +97,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
       dataIndex: 'estimateTotalPrice',
       render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
       width: 130,
-
-      // width: '20%',
     },
-
-
     {
       title: 'Giá thực tế',
       dataIndex: 'realTotalPrice',
@@ -145,11 +109,6 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
           />
       ),
     },
-
-
-
-
-
     {
       title: 'Ghi chú',
       dataIndex: 'note',
@@ -177,27 +136,10 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
             footer={() => (
                 <div>
                   <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
-                  <span>{getValidCurrency(getValidCurrency(totalPrice))}</span>
-                  {/* <span>{totalPrice}</span> */}
+                  <span>{totalPrice}</span>
                 </div>
             )}
         />
-
-        <Modal
-            title="Confirmation"
-            visible={modalVisible}
-            onOk={handleConfirm}
-            onCancel={() => setModalVisible(false)}
-            footer={null}
-        >
-          <p>Are you sure you want to confirm?</p>
-          <div style={{ textAlign: 'right' }}>
-            <button onClick={handleConfirm}>Confirm</button>
-            <button onClick={() => setModalVisible(false)}>Cancel</button>
-          </div>
-        </Modal>
-
-        <button onClick={handleOk}>OK</button>
       </div>
   );
 };
