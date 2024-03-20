@@ -2,9 +2,9 @@ import { Input, Modal, Table } from 'antd';
 import Title from 'antd/es/typography/Title';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {getValidCurrency} from "../../utils/Validation.js";
+import { getValidCurrency } from "../../utils/Validation.js";
 
-const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, totalPrice, setTotalPrice}) => {
+const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, totalPrice, setTotalPrice }) => {
 
 
 
@@ -40,11 +40,14 @@ const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, 
     const totalPrice = data.reduce((acc, cur) => acc + parseFloat(cur.realTotalPrice), 0);
     setTotalPrice(totalPrice);
   };
-
   const handlePriceChange = (value, key) => {
     const newData = dataSource.map((item) => {
       if (item.detailId === key) {
-        return { ...item, realTotalPrice: value };
+        let error = '';
+        if (isNaN(value) || Number(value) <= 0) {
+          error = 'Giá thực tế phải là một số lớn hơn 0';
+        }
+        return { ...item, realTotalPrice: value, error: { ...item.error, realTotalPrice: error } };
       }
       return item;
     });
@@ -54,10 +57,22 @@ const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, 
   const handleNoteChange = (value, key) => {
     const newData = dataSource.map((item) => {
       if (item.detailId === key) {
-        return { ...item, note: value }; // Update the 'note' property
+        // Initialize errors object if it does not exist
+        const errors = item.errors ? { ...item.errors } : { realPrice: '', note: '' };
+
+        // Validate note
+        if (!value || value.trim().length === 0) {
+          errors.note = "Ghi chú không được để trống."; // Set error message for note
+        } else {
+          errors.note = ""; // Clear error message if validation passes
+        }
+
+        // Return updated item with new note value and potentially updated errors
+        return { ...item, note: value, errors };
       }
       return item;
     });
+
     setDataSource(newData);
   };
 
@@ -103,10 +118,13 @@ const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, 
       dataIndex: 'realTotalPrice',
       width: 120,
       render: (_, record) => (
-          <Input
-              value={record.realTotalPrice}
-              onChange={(e) => handlePriceChange(e.target.value, record.detailId)}
-          />
+          <>
+            <Input
+                value={record.realTotalPrice}
+                onChange={(e) => handlePriceChange(e.target.value, record.detailId)}
+            />
+            {record.error?.realTotalPrice && <div style={{ color: 'red' }}>{record.error.realTotalPrice}</div>}
+          </>
       ),
     },
     {
@@ -114,10 +132,14 @@ const QuoteTableConfirm = ({ selectedQuotationItem , dataSource, setDataSource, 
       dataIndex: 'note',
       width: 300,
       render: (_, record) => (
-          <Input
-              value={record.note}
-              onChange={(e) => handleNoteChange(e.target.value, record.detailId)} // Call handleNoteChange on change
-          />
+          <>
+            <Input
+                value={record.note}
+                onChange={(e) => handleNoteChange(e.target.value, record.detailId)} // Call handleNoteChange on change
+            />
+            {record.errors && record.errors.note && <div style={{ color: 'red' }}>{record.errors.note}</div>}
+          </>
+
       ),
     },
   ];

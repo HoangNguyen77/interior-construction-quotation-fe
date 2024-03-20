@@ -13,7 +13,7 @@ import {
 import { Button, Modal, message } from 'antd';
 import QuoteTableConfirm from './QuoteTableConfirm';
 import axios from 'axios';
-import {getValidCurrency} from "../../utils/Validation.js";
+import { getValidCurrency } from "../../utils/Validation.js";
 const { confirm } = Modal;
 const Icon = ({ classIcon, color, size }) => {
     const iconSize = {
@@ -57,11 +57,11 @@ const ManageQuotation = () => {
 
         let textColor = "";
 
-        if(differenceInDays >= 7 && !isCreateDay) {
+        if (differenceInDays >= 7 && !isCreateDay) {
             textColor = 'red'
-        }else if ( differenceInDays >= 3 && !isCreateDay) {
+        } else if (differenceInDays >= 3 && !isCreateDay) {
             textColor = '#FFD700'
-        }else if (differenceInDays >= 2 && isCreateDay) {
+        } else if (differenceInDays >= 2 && isCreateDay) {
             textColor = 'red'; // Màu đỏ nếu lớn hơn hoặc bằng 2 ngày
         } else if (differenceInDays >= 1 && isCreateDay) {
             textColor = '#FFD700'; // Màu vàng nếu lớn hơn hoặc bằng 1 ngày
@@ -70,7 +70,7 @@ const ManageQuotation = () => {
         }
 
         return (
-            <div style={{color: textColor}}>
+            <div style={{ color: textColor }}>
                 {isCreateDay ? date : `${differenceInDays} ngày`}
             </div>
         );
@@ -267,9 +267,9 @@ const ManageQuotation = () => {
         confirm({
             title: 'Bạn có muốn xóa báo giá này?',
             okText: 'Chấp nhận',
-            okButtonProps: {className: 'confirm-button'},
+            okButtonProps: { className: 'confirm-button' },
             cancelText: 'Hủy bỏ',
-            cancelButtonProps: {className: 'cancel-button'},
+            cancelButtonProps: { className: 'cancel-button' },
             // icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
             onOk() {
                 deleteQuotationHeader(headerId)
@@ -295,9 +295,9 @@ const ManageQuotation = () => {
         confirm({
             title: 'Bạn có muốn xóa báo giá này?',
             okText: 'Chấp nhận',
-            okButtonProps: {className: 'confirm-button'},
+            okButtonProps: { className: 'confirm-button' },
             cancelText: 'Hủy bỏ',
-            cancelButtonProps: {className: 'cancel-button'},
+            cancelButtonProps: { className: 'cancel-button' },
             // icon: <FontAwesomeIcon icon={faTrashCan} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />,
             onOk() {
                 deleteQuotationHeaderList(headerId)
@@ -320,7 +320,21 @@ const ManageQuotation = () => {
         });
     };
     const handleConfirm = async () => {
+        let isValid = true;
         setModalVisible(false);
+        dataSource.forEach((item, index) => {
+            if (parseFloat(item.realTotalPrice) <= 0 || isNaN(parseFloat(item.realTotalPrice))) {
+                isValid = false;
+            }
+            if (!item.note || item.note.trim().length === 0) {
+                isValid = false;
+            }
+        });
+        if (!isValid) {
+            message.error("Vui lòng nhập giá!")
+            return;
+        }
+
         setIsModalOpenAntd(false);
 
         const dataToSend = dataSource.map(item => ({
@@ -359,9 +373,9 @@ const ManageQuotation = () => {
         confirm({
             title: 'Bạn có muốn chuyển trạng thái đơn hàng này thành "Đang xử lý"?',
             okText: 'Chấp nhận',
-            okButtonProps: {className: 'confirm-button'},
+            okButtonProps: { className: 'confirm-button' },
             cancelText: 'Hủy bỏ',
-            cancelButtonProps: {className: 'cancel-button'},
+            cancelButtonProps: { className: 'cancel-button' },
             onOk() {
                 approveQuotationHeader(headerId)
                     .then((data) => {
@@ -392,7 +406,7 @@ const ManageQuotation = () => {
                 }
             });
             const list = response.data._embedded.quotationLists;
-            const quotaionWithStatusPromises = list.map( async (quotation) =>{
+            const quotaionWithStatusPromises = list.map(async (quotation) => {
                 const statusResponse = await axios.get(quotation._links.status.href, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -400,7 +414,7 @@ const ManageQuotation = () => {
                     }
                 });
                 const status = statusResponse.data;
-                return {...quotation, status}
+                return { ...quotation, status }
             })
             const quotaionWithStatus = await Promise.all(quotaionWithStatusPromises);
             // Handle the response data as needed
@@ -537,7 +551,7 @@ const ManageQuotation = () => {
                                                 <div
                                                     className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
                                                 <div
-                                                    className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate,true)}
+                                                    className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listCreateDate, true)}
                                                 </div>
 
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
@@ -546,10 +560,10 @@ const ManageQuotation = () => {
                                                         <Button
                                                             onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
                                                             icon={<Icon classIcon={faTrashCan} color={"black"}
-                                                                        size={"20px"}/>}/>
+                                                                        size={"20px"} />} />
                                                         <Button onClick={() => showConfirmChangeStatusTo2(item.listID)}
                                                                 icon={<Icon classIcon={faCheck} color={"black"}
-                                                                            size={"20px"}/>}/>
+                                                                            size={"20px"} />} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -589,9 +603,9 @@ const ManageQuotation = () => {
                                         <div className='flex justify-end gap-2'>
                                             <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
                                                     icon={<Icon classIcon={faTrashCan} color={"black"}
-                                                                size={"20px"}/>}/>
+                                                                size={"20px"} />} />
                                             <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)}
-                                            icon={<Icon classIcon={faEye} color={"black"} size={"20px"}/>}/>
+                                                    icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
                                             {/*<div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>*/}
                                             {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
                                             {/*</div>*/}

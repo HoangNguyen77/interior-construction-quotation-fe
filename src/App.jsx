@@ -24,6 +24,7 @@ import MainAdmin from "./pages/admin/MainAdmin.jsx";
 import "./index.css"
 import DetailFinished from "./pages/finished-project/DetailFinishedProject.jsx";
 import Page403 from "./pages/error/Page403.jsx";
+import QuotationTable from "./pages/quotation/QuotationTable.jsx";
 import ManageQuotationCustomer from "./pages/customer/ManageQuotation.jsx";
 
 
@@ -53,6 +54,7 @@ function App() {
                     <Route path='/staff/blog-form' element={<BlogForm/>}></Route>
                     <Route path='/403' element={<Page403/>}></Route>
                     <Route path='/customer-quotation' element={<Profile/>}></Route>
+                    <Route path='/customer-quotation/my-quotation/:listId' element={<QuotationTable/>}></Route>
                 </Routes>
             </BrowserRouter>
         </div>

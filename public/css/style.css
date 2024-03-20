@@ -1464,3 +1464,13 @@ a {
   background-color: #1890ff; /* Ant Design primary color */
   color: #fff;
 }
+
+.bg-primary-1{
+  background-color: #5c7893 !important;
+}
+@media print {
+
+  .export-btn-1 {
+    display: none;
+  }
+}

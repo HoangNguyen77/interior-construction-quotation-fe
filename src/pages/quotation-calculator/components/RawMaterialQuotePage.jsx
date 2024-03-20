@@ -29,33 +29,58 @@ const RawMaterialQuotePage = () => {
             TotalCost: 0,
             UnitPrice: 0, // Initialize UnitPrice
             Note: 'Ban khong gi',
+            error: {},
         }
     ]);
     const userId = parseInt(getIdUserByToken());
-    // const handleAddQuotationDetail = async () => {
-    //   const quotationDetails = dataSource.map(item => {
-    //     const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
-    //     return {
-    //       customerID: userId,
-    //       productID: productId,
-    //       estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
-    //       quantity: item.Quantity
-    //     };
-    //   });
-    //
-    //   console.log("Quotation Details:", quotationDetails); // Log the quotationDetails array
-    //
-    //   // Call the addQuotation function and pass the quotationDetails
-    //   const result = await addQuotation(quotationDetails);
-    //   if (result) {
-    //     message.success("Quotation details added successfully.");
-    //   } else {
-    //     // Show error message
-    //     message.error("Failed to add quotation details.");
-    //   }
-    // };
+
     const handleAddQuotationDetail = async () => {
         const quotationDetails = dataSource.map(item => {
+            let isValid = true;
+            const updatedDataSource = dataSource.map(item => {
+                const errors = {};
+                // Add validation checks here and update errors object accordingly
+                if (!item.RoomType) {
+                    errors.RoomType = "Vui lòng chọn loại phòng";
+                    isValid = false;
+                }
+                if (item.Product.length === 0) {
+                    errors.Product = "Vui lòng chọn sản phẩm";
+                    isValid = false;
+                }
+                if (!item.Length && item.Unit !== 'cái') {
+                    errors.Length = "Vui lòng nhập chiều dài";
+                    isValid = false;
+                }
+
+                // Validation for Width
+                // Assuming Width is required only if the selected product's unit requires dimensions
+                if (!item.Width && item.Unit !== 'cái') {
+                    errors.Width = "Vui lòng nhập chiều rộng";
+                    isValid = false;
+                }
+
+                // Validation for Height
+                // Assuming Height is not required for all products (adjust logic if this assumption is incorrect)
+                if (!item.Height && item.Unit !== 'cái') { // Replace 'RequiresHeightUnit' with your actual condition
+                    errors.Height = "Vui lòng nhập chiều cao";
+                    isValid = false;
+                }
+
+                // Validation for Quantity
+                if (!item.Quantity || item.Quantity < 1) {
+                    errors.Quantity = "Số lượng phải lớn hơn 0";
+                    isValid = false;
+                }
+
+                return { ...item, error: errors };
+            });
+
+            setDataSource(updatedDataSource);
+
+            if (!isValid) {
+                return; // Stop execution if there's any validation error
+            }
             const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
 
             // Check if a product is selected
@@ -76,12 +101,11 @@ const RawMaterialQuotePage = () => {
             }
         }).filter(Boolean); // Filter out null values
 
-        console.log("Quotation Details:", quotationDetails); // Log the quotationDetails array
 
         // Call the addQuotation function and pass the quotationDetails
         const result = await addQuotation(quotationDetails);
-        if (result) {
-            message.success("Thêm đơn báo giá thành công");
+        if (result=== "Create quotation successfully") {
+            message.success("Thêm đơn báo giá thành công")
         } else {
             // Show error message
             message.error("Thêm đơn báo giá thất bại");
@@ -142,6 +166,7 @@ const RawMaterialQuotePage = () => {
                     unitPrice: 0,
                 }
             ],
+            error: {},
         };
         setDataSource([...dataSource, newData]);
         setCount(count + 1);
@@ -286,18 +311,24 @@ const RawMaterialQuotePage = () => {
             dataIndex: 'RoomType',
             width: '20%',
             render: (_, record) => (
-                <Select
-                    showSearch
-                    placeholder="Chọn phòng"
-                    optionFilterProp="children"
-                    onChange={(value) => handleRoomTypeChange(value, record.key)}
-                    filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                    options={type.map(option => ({
-                        value: option.roomId,
-                        label: option.roomName
-                    }))} // Change value to option.typeId
-                    style={{width: "100%"}}
-                />
+                <>
+                    <Select
+                        showSearch
+                        placeholder="Chọn phòng"
+                        optionFilterProp="children"
+                        onChange={(value) => handleRoomTypeChange(value, record.key)}
+                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                        options={type.map(option => ({
+                            value: option.roomId,
+                            label: option.roomName
+                        }))} // Change value to option.typeId
+                        style={{ width: "100%" }}
+                    />
+                    {record.error.RoomType && (
+                        <div style={{ color: 'red' }}>{record.error.RoomType}</div>
+                    )}
+                </>
+
             ),
         },
         {
@@ -305,51 +336,93 @@ const RawMaterialQuotePage = () => {
             dataIndex: 'pricePerM2',
             width: '30%',
             render: (text, record) => (
-                <Select
-                    showSearch
-                    placeholder="Chọn sản phẩm"
-                    optionFilterProp="children"
-                    onChange={(value) => handleRawMaterialChange(value, record.key)}
-                    filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
-                    options={record.Product.map(option => ({value: option.value, label: option.label}))}
-                    style={{width: "100%"}}
-                />
+                <>
+                    <Select
+                        showSearch
+                        placeholder="Chọn sản phẩm"
+                        optionFilterProp="children"
+                        onChange={(value) => handleRawMaterialChange(value, record.key)}
+                        filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                        options={record.Product.map(option => ({ value: option.value, label: option.label }))}
+                        style={{ width: "100%" }}
+                    />
+                    {record.error?.Product && (
+                        <div style={{ color: 'red', marginTop: 4 }}>{record.error.Product}</div>
+                    )}
+                </>
             ),
         },
         {
-            title: 'Dài', dataIndex: 'Length', width: '7%',
-            render: (__, record) => (
-                <Input
-                    placeholder="1"
-                    type="number"
-                    value={record.Length}
-                    onChange={(e) => handleSave({...record, Length: e.target.value})}
-                />
-            ),
+            title: 'Dài',
+            dataIndex: 'Length',
+            width: '7%',
+            render: (_, record) => {
+                const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+                const unit = selectedProductInfo ? selectedProductInfo.unit : '';
+                return (
+                    <>
+                        {unit === 'cái' ? <span>{selectedProductInfo.length}</span> :
+                            <Input
+                                placeholder="Dài"
+                                type="number"
+                                value={record.Length}
+                                onChange={(e) => handleSave({ ...record, Length: e.target.value })}
+                            />
+                        }
+                        {record.error?.Length && (
+                            <div style={{ color: 'red', marginTop: 4 }}>{record.error.Length}</div>
+                        )}
+                    </>
+                );
+            },
         },
 
         {
             title: 'Rộng', dataIndex: 'Width', width: '7%',
-            render: (__, record) => (
-                <Input
-                    placeholder="1"
-                    type="number"
-                    value={record.Width}
-                    onChange={(e) => handleSave({...record, Width: e.target.value})}
-                />
-            )
-        },
+            render: (__, record) => {
+                const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+                const unit = selectedProductInfo ? selectedProductInfo.unit : '';
 
+                return (
+                    <>
+                        {unit === 'cái' ? <span>{selectedProductInfo.width}</span> :
+                            <Input
+                                placeholder="1"
+                                type="number"
+                                value={record.Width}
+                                onChange={(e) => handleSave({ ...record, Width: e.target.value })}
+                            />
+                        }
+                        {record.error?.Width && (
+                            <div style={{ color: 'red', marginTop: 4 }}>{record.error.Width}</div>
+                        )}
+                    </>
+                );
+            },
+        },
         {
             title: 'Cao', dataIndex: 'Height', width: '7%',
-            render: (__, record) => (
-                <Input
-                    placeholder="1"
-                    type="number"
-                    value={record.Height}
-                    onChange={(e) => handleSave({...record, Height: e.target.value})}
-                />
-            )
+            render: (__, record) => {
+                const selectedProductInfo = record.Product.find(product => product.value === record.RoomType);
+                const unit = selectedProductInfo ? selectedProductInfo.unit : '';
+
+                return (
+                    <>
+                        {unit === 'cái' ? <span>{selectedProductInfo.height}</span> :
+                            <Input
+                                placeholder="1"
+                                type="number"
+                                value={record.Height}
+                                onChange={(e) => handleSave({ ...record, Height: e.target.value })}
+                            />}
+                        {
+                            record.error?.Height && (
+                                <div style={{ color: 'red', marginTop: 4 }}>{record.error.Height}</div>
+                            )
+                        }
+                    </>
+                );
+            },
         },
         {
             title: 'Đơn Vị',
@@ -367,12 +440,17 @@ const RawMaterialQuotePage = () => {
             dataIndex: 'operation',
             width: '7%',
             render: (_, record) => (
-                <Input
-                    placeholder="1"
-                    type="number"
-                    value={record.Quantity}
-                    onChange={(e) => handleSave({...record, Quantity: parseInt(e.target.value) || 0})}
-                />
+                <>
+                    <Input
+                        placeholder="1"
+                        type="number"
+                        value={record.Quantity}
+                        onChange={(e) => handleSave({ ...record, Quantity: parseInt(e.target.value) || 0 })}
+                    />
+                    {record.error?.Quantity && (
+                        <div style={{ color: 'red', marginTop: 4 }}>{record.error.Quantity}</div> // Display error message below the input
+                    )}
+                </>
             ),
         },
         {
