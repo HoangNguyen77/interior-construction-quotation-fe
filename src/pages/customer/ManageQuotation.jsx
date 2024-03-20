@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faSearch,
-    faPlus,
     faTrashCan,
     faPencil,
-    faUser,
     faRepeat,
     faArrowLeft,
     faCheck,
@@ -19,7 +16,6 @@ import axios from 'axios';
 import {
     getIdUserByToken
 } from "../../utils/JwtService";
-import Header from "../../layouts/Header.jsx";
 import {getValidCurrency} from "../../utils/Validation.js";
 const { confirm } = Modal;
 
@@ -486,7 +482,7 @@ const ManageQuotationCustomer = () => {
                                                     icon={<Icon classIcon={faPencil} color={"black"}
                                                                 size={"20px"}/>}/>
                                                 {/*<div*/}
-                                                {/*    onClick={() => handleOpenQuote(item.listId)}> /!* Pass the selected quotation item *!/*/}
+                                                {/*    onClick={() => handleOpenQuote(  item.listId)}> /!* Pass the selected quotation item *!/*/}
                                                 {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
                                                 {/*</div>*/}
                                                 <Button

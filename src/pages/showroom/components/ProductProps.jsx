@@ -23,6 +23,7 @@ const ProductProps = (props) => {
     )
     return(
 
+        // eslint-disable-next-line react/prop-types
             <Link to={`/product/${props.product.productId}`}>
                         <div className="hotel-room text-center">
                             <a href="#" className="d-block mb-0 thumbnail" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>

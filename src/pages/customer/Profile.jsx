@@ -14,6 +14,7 @@ import {checkInput, checkPassword, checkPasswordAgain, checkPhonenumber} from ".
 import {jwtDecode} from "jwt-decode";
 import {toast} from "react-toastify";
 import ManageQuotationCustomer from "./ManageQuotation.jsx";
+import FinishedQuotationCustomer from "./FinishQuotation.jsx";
 
 function Profile() {
 
@@ -368,6 +369,9 @@ function Profile() {
                 <ManageQuotationCustomer/>
             </div>
 
+            <div style={{marginBottom: '70px'}}>
+                <FinishedQuotationCustomer/>
+            </div>
 
             <Footer/>
 
