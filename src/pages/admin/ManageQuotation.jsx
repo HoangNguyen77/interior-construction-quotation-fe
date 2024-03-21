@@ -659,7 +659,7 @@ const ManageQuotation = () => {
             </div>
             <Modal
                 visible={isModalOpenAntd}
-                style={{ minWidth: '1000px', minHeight: '600px' }}
+                style={{ minWidth: '1800px', minHeight: '600px' }}
                 onCancel={() => setIsModalOpenAntd(false)}
                 footer={[
                     <Button key="back" className="cancel-button" onClick={handleCancel}>

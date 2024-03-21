@@ -10,6 +10,40 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
   const [headerId, setHeaderId] = useState();
   const [modalVisible, setModalVisible] = useState(false);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (!selectedQuotationItem) {
+  //       return;
+  //     }
+  //
+  //     try {
+  //       const response = await axios.get(`http://localhost:8080/quotation-list/${selectedQuotationItem}/quotationDetailList`, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${localStorage.getItem("token")}`,
+  //         }
+  //       });
+  //       const headerResponse = await axios.get(`http://localhost:8080/quotation-list/${selectedQuotationItem}/quotationHeader`, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${localStorage.getItem("token")}`,
+  //         }
+  //       });
+  //       setHeaderId(headerResponse.data.headerId);
+  //       if (response.status === 200) {
+  //         setDataSource(response.data._embedded.quotationDetails);
+  //         calculateTotalPrice(response.data._embedded.quotationDetails);
+  //       } else {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //     } catch (error) {
+  //       console.error('There was a problem with the request:', error);
+  //     }
+  //   };
+  //
+  //   fetchData();
+  // }, [selectedQuotationItem]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!selectedQuotationItem) {
@@ -31,8 +65,37 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
         });
         setHeaderId(headerResponse.data.headerId);
         if (response.status === 200) {
-          setDataSource(response.data._embedded.quotationDetails);
-          calculateTotalPrice(response.data._embedded.quotationDetails);
+          const quotationDetails = response.data._embedded.quotationDetails;
+          // Fetch and set image data for each quotation detail
+          const updatedDataSource = await Promise.all(quotationDetails.map(async (detail) => {
+            const productDetailLink = detail._links.product.href;
+            const productResponse = await axios.get(productDetailLink, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+              }
+            });
+
+            if (productResponse.status === 200) {
+              const productImagesLink = productResponse.data._links.productImageList.href;
+              const productImagesResponse = await axios.get(productImagesLink, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                }
+              });
+
+              if (productImagesResponse.status === 200 && productImagesResponse.data._embedded.productImages.length > 0) {
+                const firstImage = productImagesResponse.data._embedded.productImages[0].imageData;
+                // Set image data for the current quotation detail
+                return { ...detail, imageData: firstImage };
+              }
+            }
+            return detail; // Return the detail as is if there is no image data
+          }));
+
+          setDataSource(updatedDataSource);
+          calculateTotalPrice(updatedDataSource);
         } else {
           throw new Error('Network response was not ok');
         }
@@ -90,38 +153,36 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
     {
       title: 'Loại phòng',
       dataIndex: 'typeRoom',
-      // width: '10%',
     },
     {
       title: 'Sản phẩm',
       dataIndex: 'productName',
-      // width: '10%'
+    },
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'imageData',
+      render: (imageData) => <img src={imageData} alt="Product" style={{ maxWidth: '100px', maxHeight: '100px' }} />,
     },
     {
       title: 'Dài',
       dataIndex: 'length',
-      // width: '10%',
     },
     {
       title: 'Rộng',
       dataIndex: 'width',
-      // width: '10%',
     },
     {
       title: 'Cao',
       dataIndex: 'height',
-      // width: '10%',
     },
     {
       title: 'Số lượng',
       dataIndex: 'quantity',
-      // width: '10%',
     },
     {
       title: 'Tổng Tiền',
       dataIndex: 'estimateTotalPrice',
       render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
-      // width: '20%',
     },
     {
       title: 'Giá thực tế',

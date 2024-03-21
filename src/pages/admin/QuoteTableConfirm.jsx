@@ -8,6 +8,35 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
 
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (!selectedQuotationItem) {
+  //       return;
+  //     }
+  //
+  //     try {
+  //       const response = await axios.get(`http://localhost:8080/quotation-list/${selectedQuotationItem}/quotationDetailList`, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': `Bearer ${localStorage.getItem("token")}`,
+  //         }
+  //       });
+  //
+  //       if (response.status === 200) {
+  //         setDataSource(response.data._embedded.quotationDetails);
+  //         calculateTotalPrice(response.data._embedded.quotationDetails); // Calculate initial total price
+  //
+  //       } else {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //     } catch (error) {
+  //       console.error('There was a problem with the request:', error);
+  //     }
+  //   };
+  //
+  //   fetchData();
+  // }, [selectedQuotationItem]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!selectedQuotationItem) {
@@ -23,8 +52,42 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
         });
 
         if (response.status === 200) {
-          setDataSource(response.data._embedded.quotationDetails);
-          calculateTotalPrice(response.data._embedded.quotationDetails); // Calculate initial total price
+          const quotationDetails = response.data._embedded.quotationDetails;
+
+          // Fetch and set image data for each quotation detail
+          const updatedDataSource = await Promise.all(quotationDetails.map(async (detail) => {
+            const productDetailLink = detail._links.product.href;
+            const productResponse = await axios.get(productDetailLink, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+              }
+            });
+
+            if (productResponse.status === 200) {
+              const productImagesLink = productResponse.data._links.productImageList.href;
+              const productImagesResponse = await axios.get(productImagesLink, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                }
+              });
+
+              if (productImagesResponse.status === 200) {
+                const firstImage = productImagesResponse.data._embedded.productImages[0].imageData;
+                // Set image data for the current quotation detail
+                return { ...detail, imageData: firstImage };
+              } else {
+                throw new Error('Failed to fetch product images');
+              }
+            } else {
+              throw new Error('Failed to fetch product details');
+            }
+          }));
+
+          // Set updated data source with image data
+          setDataSource(updatedDataSource);
+          calculateTotalPrice(updatedDataSource); // Calculate initial total price
         } else {
           throw new Error('Network response was not ok');
         }
@@ -87,31 +150,37 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
       title: 'Sản phẩm',
       dataIndex: 'productName',
     },
+    // Add new column for image
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'imageData',
+      render: (imageData) => <img src={imageData} alt="Product" style={{ maxWidth: '100px', maxHeight: '100px' }} />,
+    },
     {
       title: 'Dài',
       dataIndex: 'length',
-      width: 30,
+      // width: 30,
     },
     {
       title: 'Rộng',
       dataIndex: 'width',
-      width: 30,
+      // width: 30,
     },
     {
       title: 'Cao',
       dataIndex: 'height',
-      width: 30,
+      // width: 30,
     },
     {
       title: 'Số lượng',
       dataIndex: 'quantity',
-      width: 91,
+      // width: 91,
     },
     {
       title: 'Tổng Tiền',
       dataIndex: 'estimateTotalPrice',
       render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
-      width: 130,
+      // width: 130,
     },
     {
       title: 'Giá thực tế',
@@ -139,14 +208,13 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
             />
             {record.errors && record.errors.note && <div style={{ color: 'red' }}>{record.errors.note}</div>}
           </>
-
       ),
     },
   ];
 
   return (
-      <div className='table-container' >
-        <div className='quotetable-title'>
+      <div className="table-container">
+        <div className="quotetable-title">
           <Title level={2}>Bảng Tạm Tính Giá Phần Vật Liệu</Title>
         </div>
         <Table
@@ -158,7 +226,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
             footer={() => (
                 <div>
                   <span style={{ fontWeight: 'bold' }}>Tổng Tiền: </span>
-                  <span>{totalPrice}</span>
+                  <span>{getValidCurrency(totalPrice)}</span>
                 </div>
             )}
         />

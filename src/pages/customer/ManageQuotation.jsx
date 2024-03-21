@@ -502,7 +502,7 @@ const ManageQuotationCustomer = () => {
                     )}
 
                 </div>
-                <Modal visible={isModalOpenAntd} style={{ minWidth: '1400px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
+                <Modal visible={isModalOpenAntd} style={{ minWidth: '1800px', minHeight: '600px' }}  onOk={handleOk} footer={null} onCancel={handleCancel} >
                     {selectedQuotationItem && <QuoteTableConfirm selectedQuotationItem={selectedQuotationItem} />}
                 </Modal>
             </div>
