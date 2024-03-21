@@ -1469,8 +1469,15 @@ a {
   background-color: #5c7893 !important;
 }
 @media print {
-
+  .bg-primary-1{
+    background-color: #5c7893;
+  }
   .export-btn-1 {
     display: none;
   }
 }
+.logo {
+  font-weight: 200;
+  font-family: "Playfair Display";
+  font-size: 32px;
+color: #0b0b0b}

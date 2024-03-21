@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import '/public/css/style.css'
 import {useParams} from "react-router-dom";
+import { getValidCurrency } from "../../utils/Validation.js";
 function QuotationTable() {
     const [quotationDetails, setQuotationDetails] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -72,7 +73,7 @@ function QuotationTable() {
     return (
         <div className="m-5">
             <header className="py-3">
-                <p className="mb-0 h2">VivaDecor</p>
+                <p className="mb-0 logo">VivaDecor</p>
                 <div className="row mb-2">
                     <div className="col-8">
                         <p className="mb-0 h6">Email: info@vivadecor.vn</p>
@@ -114,24 +115,24 @@ function QuotationTable() {
                     <tbody>
                     {quotationDetails.map((item, index) => (
                         <tr key={index}>
-                            <td className="align-middle text-center">{index + 1}</td>
+                            <td className="align-middle text-center text-black">{index + 1}</td>
                             <td className="align-middle text-center"><img src={item.productImage} alt={item.productName}
                                                                           style={{maxWidth: '100px'}}/></td>
-                            <td className="align-middle">{item.productName}</td>
-                            <td className="align-middle text-center">{item.height}</td>
-                            <td className="align-middle text-center">{item.length}</td>
-                            <td className="align-middle text-center">{item.width}</td>
-                            <td className="align-middle text-center">{item.quantity}</td>
-                            <td className="align-middle text-center">{item.unit}</td>
-                            <td className="align-middle text-center">{item.unitPrice}</td>
-                            <td className="align-middle text-center">{item.realTotalPrice}</td>
+                            <td className="align-middle text-black">{item.productName}</td>
+                            <td className="align-middle text-center text-black">{item.height}</td>
+                            <td className="align-middle text-center text-black">{item.length}</td>
+                            <td className="align-middle text-center text-black">{item.width}</td>
+                            <td className="align-middle text-center text-black">{item.quantity}</td>
+                            <td className="align-middle text-center text-black">{item.unit}</td>
+                            <td className="align-middle text-center text-black">{getValidCurrency(item.unitPrice)}</td>
+                            <td className="align-middle text-center text-black">{getValidCurrency(item.realTotalPrice)}</td>
                         </tr>
                     ))}
                     </tbody>
                     <tfoot>
                     <tr>
                         <td colSpan="9" className="text-md-center text-dark">Tổng cộng:</td>
-                        <td className="align-middle text-center">{totalPrice}</td>
+                        <td className="align-middle text-center text-black">{getValidCurrency(totalPrice)}</td>
                     </tr>
                     </tfoot>
                 </table>

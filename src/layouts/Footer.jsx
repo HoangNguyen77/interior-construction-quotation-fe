@@ -109,8 +109,8 @@ function Footer(){
                             <div className="col-md-6">
                                 <h3 className="footer-heading mb-4 text-white">HỖ TRỢ KHÁCH HÀNG</h3>
                                 <ul className="list-unstyled">
-                                    <li><a href="#">Quy trình và Bảo hành</a></li>
-                                    <li><a href="#">Chính sách trả góp</a></li>
+                                    <li><a href="/about">Quy trình và Bảo hành</a></li>
+                                    <li><a href="/about">Chính sách trả góp</a></li>
                                 </ul>
                             </div>
                         </div>
