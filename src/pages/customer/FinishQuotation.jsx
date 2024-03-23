@@ -67,7 +67,7 @@ const FinishedQuotationCustomer = () => {
                             <div className='col-span-2 text-[#348EED]'>Trạng Thái</div>
                             <div className='col-span-1 text-[#348EED]'></div>
                         </div>
-
+                        <div className='overflow-y-auto h-[44vh] pr-3'>
                         {quotationList.map((item, index) => (
                             <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>{item.listId}</div>
@@ -90,6 +90,7 @@ const FinishedQuotationCustomer = () => {
                                 </div>
                             </div>
                         ))}
+                        </div>
                     </div>
                 </div>
             </div>

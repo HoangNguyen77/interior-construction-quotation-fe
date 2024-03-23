@@ -236,7 +236,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
             onCancel={() => setModalVisible(false)}
             footer={null}
         >
-          <p>Xác nhận đơn báo giá?</p>
+          <p>Gửi yêu cầu sửa đơn báo giá?</p>
           <div style={{textAlign: 'right'}}>
             <button onClick={() => setModalVisible(false)} className="border-green-500 text-black-">Hủy</button>
             <button onClick={handleConfirm} className="border-green-500 text-green-500">Đồng ý</button>
@@ -245,7 +245,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
 
 
         <button onClick={handleOk} className="btn btn-primary btn-block mb-4 mt-4">
-          Xác nhận
+          Gửi yêu cầu chỉnh sửa
         </button>
       </div>
   );

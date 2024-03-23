@@ -43,7 +43,7 @@ const ManageQuotation = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalCfCancleVisible, setModalCfCancleVisible] = useState(false);
-
+    const[selectedHeaderId, setSelectedHeaderId] = useState(0);
 
     const getWarningByDate = (date, isCreateDay) => {
         const currentDate = new Date();
@@ -152,6 +152,74 @@ const ManageQuotation = () => {
 
         fetchData();
     }, []);
+    // const fetchData2 = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:8080/quotation-header`, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //             }
+    //         });
+    //         const quotationHeaders = response.data._embedded.quotationHeaders;
+    //
+    //         const quotationDataPromises = quotationHeaders.map(async (quotationHeader) => {
+    //             try {
+    //                 const customerResponse = await axios.get(quotationHeader._links.customer.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const customerInfo = customerResponse.data;
+    //
+    //                 const listResponse = await axios.get(quotationHeader._links.list.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const listData = listResponse.data._embedded.quotationLists;
+    //                 // console.log(listData)
+    //
+    //                 // Fetch the status from the status endpoint
+    //                 const statusResponse = await axios.get(listData[0]._links.status.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const listStatus = statusResponse.data.statusId;
+    //
+    //                 // Check if status is 1
+    //                 if (listStatus !== 1 && listStatus !== 4) {
+    //                     const listID = listData[0].listId;
+    //                     const listReceiptDate = listData[0].createdDate;
+    //
+    //                     return {
+    //                         quotationHeader,
+    //                         customerInfo,
+    //                         listReceiptDate,
+    //                         listID
+    //                     };
+    //                 } else {
+    //                     return null; // Skip this quotationHeader if status is not 1
+    //                 }
+    //             } catch (error) {
+    //                 console.error('Error fetching customer info or list status:', error);
+    //                 return null;
+    //             }
+    //         });
+    //
+    //         const quotationData = await Promise.all(quotationDataPromises);
+    //         // Filter out null values (headers with list status != 1)
+    //         const filteredQuotationData = quotationData.filter(data => data !== null);
+    //         // console.log(filteredQuotationData);
+    //         setTotalQuotation2(filteredQuotationData.length);
+    //         setHeaderS2(filteredQuotationData)
+    //     } catch (error) {
+    //         console.error('There was a problem fetching quotation headers:', error);
+    //     }
+    // };
     const fetchData2 = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/quotation-header`, {
@@ -179,30 +247,37 @@ const ManageQuotation = () => {
                         }
                     });
                     const listData = listResponse.data._embedded.quotationLists;
-                    // console.log(listData)
 
-                    // Fetch the status from the status endpoint
-                    const statusResponse = await axios.get(listData[0]._links.status.href, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    // Array to store filtered list items
+                    const filteredListItems = [];
+
+                    // Iterate through each list item
+                    for (const listItem of listData) {
+                        const statusResponse = await axios.get(listItem._links.status.href, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                            }
+                        });
+                        const listStatus = statusResponse.data.statusId;
+
+                        // Check if status is 1 or 4
+                        if (listStatus !== 1 && listStatus !== 4 && listStatus !== 5) {
+                            filteredListItems.push({
+                                listID: listItem.listId,
+                                listReceiptDate: listItem.createdDate
+                            });
                         }
-                    });
-                    const listStatus = statusResponse.data.statusId;
+                    }
 
-                    // Check if status is 1
-                    if (listStatus !== 1 && listStatus !== 4) {
-                        const listID = listData[0].listId;
-                        const listReceiptDate = listData[0].createdDate;
-
+                    if (filteredListItems.length > 0) {
                         return {
                             quotationHeader,
                             customerInfo,
-                            listReceiptDate,
-                            listID
+                            filteredListItems
                         };
                     } else {
-                        return null; // Skip this quotationHeader if status is not 1
+                        return null; // Skip this quotationHeader if all list items have status 1 or 4
                     }
                 } catch (error) {
                     console.error('Error fetching customer info or list status:', error);
@@ -211,7 +286,7 @@ const ManageQuotation = () => {
             });
 
             const quotationData = await Promise.all(quotationDataPromises);
-            // Filter out null values (headers with list status != 1)
+            // Filter out null values (headers with all list items having status 1 or 4)
             const filteredQuotationData = quotationData.filter(data => data !== null);
             // console.log(filteredQuotationData);
             setTotalQuotation2(filteredQuotationData.length);
@@ -220,6 +295,7 @@ const ManageQuotation = () => {
             console.error('There was a problem fetching quotation headers:', error);
         }
     };
+
     useEffect(() => {
 
 
@@ -326,10 +402,12 @@ const ManageQuotation = () => {
             if (parseFloat(item.realTotalPrice) <= 0 || isNaN(parseFloat(item.realTotalPrice))) {
                 isValid = false;
             }
-            if (!item.note || item.note.trim().length === 0) {
-                isValid = false;
-            }
+            // if (!item.note || item.note.trim().length === 0) {
+            //     isValid = false;
+            // }
+
         });
+
         if (!isValid) {
             message.error("Vui lòng nhập giá!")
             return;
@@ -353,10 +431,12 @@ const ManageQuotation = () => {
             handleCancelReloadDetails();
             message.success("update success!")
             console.log('Data sent successfully:', response.data);
+
         } catch (error) {
             console.error('Error sending data:', error);
         }
         setModalVisible(false);
+
     };
     const handleOpenConfirm = () => {
         setModalVisible(true);
@@ -365,6 +445,7 @@ const ManageQuotation = () => {
 
         setModalCfCancleVisible(false);
         setIsModalOpenAntd(false)
+
     };
     const calcelCancel = () => {
         setModalCfCancleVisible(false);
@@ -397,6 +478,7 @@ const ManageQuotation = () => {
         });
     };
     const handleQuotationList = async (headerId) => {
+        setSelectedHeaderId(headerId);
         setModeShow2(!isModeShow2);
         try {
             const response = await axios.get(`http://localhost:8080/quotation-list/search/findByQuotationHeader_HeaderId?headerId=${headerId}`, {
@@ -535,6 +617,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-3 text-[#348EED]'>Ngày báo giá</div>
                                 <div className='col-span-1 text-[#348EED]'></div>
                             </div>
+                            <div className='overflow-y-auto h-[44vh] pr-3'>
                             {
                                 initialArr.map((item, index) => {
                                         // {console.log(initialArr)}
@@ -570,7 +653,7 @@ const ManageQuotation = () => {
                                         )
                                     }
                                 )}
-
+                            </div>
                         </div>
                     </>
                 ) : isModeShow2 === false ? (
@@ -584,6 +667,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-3 text-[#60B664]'>Ngày nhận báo giá</div>
                                 <div className='col-span-1 text-[#60B664]'></div>
                             </div>
+                            <div className='overflow-y-auto h-[44vh] pr-3'>
                             {headerS2.map((item, index) => (
 
                                 <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
@@ -613,6 +697,7 @@ const ManageQuotation = () => {
                                     </div>
                                 </div>
                             ))}
+                            </div>
                         </div>
                     </>
                 ) : (
@@ -626,7 +711,7 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-[#348EED]'>Trạng Thái</div>
                                 {/*<div className='col-span-3 text-[#348EED]'>Hành động</div>*/}
                             </div>
-
+                            <div className='overflow-y-auto h-[44vh] pr-3'>
                             {quotationList.map((item, index) => (
 
                                 <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
@@ -651,7 +736,7 @@ const ManageQuotation = () => {
                                     </div>
                                 </div>
                             ))}
-
+                            </div>
                         </div>
                     </>
                 )}

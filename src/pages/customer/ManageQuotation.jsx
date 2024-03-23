@@ -147,29 +147,37 @@ const ManageQuotationCustomer = () => {
                         }
                     });
                     const listData = listResponse.data._embedded.quotationLists;
-                    // console.log(listData)
 
-                    // Fetch the status from the status endpoint
-                    const statusResponse = await axios.get(listData[0]._links.status.href, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    // Array to store filtered list items
+                    const filteredListItems = [];
+
+                    // Iterate through each list item
+                    for (const listItem of listData) {
+                        const statusResponse = await axios.get(listItem._links.status.href, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                            }
+                        });
+                        const listStatus = statusResponse.data.statusId;
+
+                        // Check if status is 1 or 4
+                        if (listStatus !== 1 && listStatus !== 4 && listStatus !==5) {
+                            filteredListItems.push({
+                                listID: listItem.listId,
+                                createDate: listItem.createdDate
+                            });
                         }
-                    });
-                    const listStatus = statusResponse.data.statusId;
+                    }
 
-                    // Check if status is 1
-                    if (listStatus !== 1 && listStatus !== 4) {
-                        const listID = listData[0].listId;
-                        const createDate = listData[0].createdDate;
+                    if (filteredListItems.length > 0) {
                         return {
                             quotationHeader,
                             customerInfo,
-                            listID,
-                            createDate
+                            filteredListItems
                         };
                     } else {
-                        return null; // Skip this quotationHeader if status is not 1
+                        return null; // Skip this quotationHeader if all list items have status 1 or 4
                     }
                 } catch (error) {
                     console.error('Error fetching customer info or list status:', error);
@@ -178,7 +186,7 @@ const ManageQuotationCustomer = () => {
             });
 
             const quotationData = await Promise.all(quotationDataPromises);
-            // Filter out null values (headers with list status != 1)
+            // Filter out null values (headers with all list items having status 1 or 4)
             const filteredQuotationData = quotationData.filter(data => data !== null);
             // console.log(filteredQuotationData);
             setHeaderS2(filteredQuotationData)
@@ -186,6 +194,72 @@ const ManageQuotationCustomer = () => {
             console.error('There was a problem fetching quotation headers:', error);
         }
     };
+    // const fetchData2 = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:8080/quotation-header`, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //             }
+    //         });
+    //         const quotationHeaders = response.data._embedded.quotationHeaders;
+    //
+    //         const quotationDataPromises = quotationHeaders.map(async (quotationHeader) => {
+    //             try {
+    //                 const customerResponse = await axios.get(quotationHeader._links.customer.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const customerInfo = customerResponse.data;
+    //
+    //                 const listResponse = await axios.get(quotationHeader._links.list.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const listData = listResponse.data._embedded.quotationLists;
+    //                 // console.log(listData)
+    //
+    //                 // Fetch the status from the status endpoint
+    //                 const statusResponse = await axios.get(listData[0]._links.status.href, {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
+    //                     }
+    //                 });
+    //                 const listStatus = statusResponse.data.statusId;
+    //
+    //                 // Check if status is 1
+    //                 if (listStatus !== 1 && listStatus !== 4) {
+    //                     const listID = listData[0].listId;
+    //                     const createDate = listData[0].createdDate;
+    //                     return {
+    //                         quotationHeader,
+    //                         customerInfo,
+    //                         listID,
+    //                         createDate
+    //                     };
+    //                 } else {
+    //                     return null; // Skip this quotationHeader if status is not 1
+    //                 }
+    //             } catch (error) {
+    //                 console.error('Error fetching customer info or list status:', error);
+    //                 return null;
+    //             }
+    //         });
+    //
+    //         const quotationData = await Promise.all(quotationDataPromises);
+    //         // Filter out null values (headers with list status != 1)
+    //         const filteredQuotationData = quotationData.filter(data => data !== null);
+    //         // console.log(filteredQuotationData);
+    //         setHeaderS2(filteredQuotationData)
+    //     } catch (error) {
+    //         console.error('There was a problem fetching quotation headers:', error);
+    //     }
+    // };
     useEffect(() => {
 
 
@@ -339,7 +413,7 @@ const ManageQuotationCustomer = () => {
             <div className='h-auto pl-3'>
                 <div className='table-all-posts h-auto mt-[50px]'>
                     <div className={`w-4/5 h-[60px] shadow1 relative top-7 ${isModeShow ? 'bg-[#60B664]' : 'bg-[#348EED]'} text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white`}>
-                        {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ SỐ 1`)}
+                        {isModeShow === false ? (`CÁC ĐƠN ĐANG CHỜ CHẤP NHẬN`) : isModeShow2 === false ? (`CÁC ĐƠN ĐANG TRONG QUÁ TRÌNH XỬ LÝ`) : (`ĐƠN BÁO GIÁ`)}
                         {
                             !isModeShow2 && (
                                 <div className='absolute right-[10px] w-[40px] h-[40px] border-2 border-white rounded-[5px] flex flex-col justify-center cursor-pointer' onClick={handleModeShowToggle}>
@@ -370,6 +444,7 @@ const ManageQuotationCustomer = () => {
                                     <div className='col-span-2 text-[#348EED]'>Ngày báo giá</div>
                                     <div className='col-span-1 text-[#348EED]'></div>
                                 </div>
+                                <div className='overflow-y-auto h-[44vh] pr-3'>
                                 {
                                     initialArr.map((item, index) => {
                                             // {console.log(initialArr)}
@@ -401,6 +476,7 @@ const ManageQuotationCustomer = () => {
                                             )
                                         }
                                     )}
+                                </div>
 
                             </div>
                         </>
@@ -415,6 +491,7 @@ const ManageQuotationCustomer = () => {
                                     <div className='col-span-2 text-[#60B664]'>Ngày báo giá</div>
                                     <div className='col-span-1 text-[#60B664]'></div>
                                 </div>
+                                <div className='overflow-y-auto h-[44vh] pr-3'>
                                 {headerS2.map((item, index) => (
 
                                     <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'
@@ -446,6 +523,7 @@ const ManageQuotationCustomer = () => {
                                         </div>
                                     </div>
                                 ))}
+                                </div>
                             </div>
                         </>
                     ) : (
@@ -461,7 +539,7 @@ const ManageQuotationCustomer = () => {
                                     <div className='col-span-2 text-[#348EED]'>Trạng Thái</div>
                                     <div className='col-span-1 text-[#348EED]'></div>
                                 </div>
-
+                                <div className='overflow-y-auto h-[44vh] pr-3'>
                                 {quotationList.map((item, index) => (
 
                                     <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
@@ -496,7 +574,7 @@ const ManageQuotationCustomer = () => {
                                         </div>
                                     </div>
                                 ))}
-
+                                </div>
                             </div>
                         </>
                     )}
