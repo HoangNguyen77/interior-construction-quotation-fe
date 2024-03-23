@@ -377,6 +377,8 @@ const RawMaterialQuotePage = () => {
             },
         },
 
+
+
         {
             title: 'Rộng', dataIndex: 'Width', width: '7%',
             render: (__, record) => {
