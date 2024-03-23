@@ -385,7 +385,7 @@ const RawMaterialQuotePage = () => {
 
                 return (
                     <>
-                        {unit === 'cái' ? <span>{selectedProductInfo.width}</span> :
+                        {unit === 'cái' || unit === "md" ? <span>{selectedProductInfo.width}</span> :
                             <Input
                                 placeholder="1"
                                 type="number"
@@ -408,7 +408,7 @@ const RawMaterialQuotePage = () => {
 
                 return (
                     <>
-                        {unit === 'cái' ? <span>{selectedProductInfo.height}</span> :
+                        {unit === 'cái' || unit === "md" ? <span>{selectedProductInfo.height}</span> :
                             <Input
                                 placeholder="1"
                                 type="number"
