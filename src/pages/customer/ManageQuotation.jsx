@@ -117,7 +117,6 @@ const ManageQuotationCustomer = () => {
 
     useEffect(() => {
 
-
         fetchData();
     }, []);
     const fetchData2 = async () => {

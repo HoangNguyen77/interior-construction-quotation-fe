@@ -35,21 +35,18 @@ function Header() {
                                                 <li className={location.pathname.startsWith("/finished-project") ? "active" : ""}>
                                                     <Link to="/finished-project">Dự án đã thi công</Link>
                                                 </li>
-                                                {/*<li className={location.pathname.startsWith("/quotation-category") ? "active has-children" : "has-children"}>*/}
-                                                {/*    <Link to="/quotation-category">Các Loại thi công nội thất</Link>*/}
-                                                {/*    <ul className="dropdown arrow-top">*/}
-                                                {/*        <li><a href="">Thi công nhà đất</a></li>*/}
-                                                {/*        <li><a href="">Thi công chung cư</a></li>*/}
-                                                {/*        <li><a href="">Thi công biệt thự</a></li>*/}
-                                                {/*        <li><a href="">Thi công văn phòng</a></li>*/}
-                                                {/*    </ul>*/}
-                                                {/*</li>*/}
                                                 <li className={location.pathname.startsWith("/blog") ? "active" : ""}>
                                                     <Link to="/blog">Bài Viết</Link></li>
-                                                <li className={location.pathname.startsWith("/quotation-calculator") ? "active" : ""}>
-                                                    <Link to="/quotation-calculator">Báo giá</Link></li>
+
                                                 <li className={location.pathname.startsWith("/about") ? "active" : ""}>
                                                     <Link to="/about">Về chúng tôi</Link></li>
+
+                                                <li className={location.pathname.startsWith("/quotation-calculator") || (getRoleByToken() === "CUSTOMER" && location.pathname === "/quotation-calculator") ? "active" : ""}>
+                                                    <Link
+                                                        to={getRoleByToken() === "ADMIN" ? "/admin" : "/quotation-calculator"}>{getRoleByToken() === "ADMIN" ? "Dashboard" : "Báo giá"}</Link>
+                                                </li>
+
+
                                             </ul>
                                         </div>
                                     </nav>
@@ -64,26 +61,36 @@ function Header() {
                                                     <img src="/images/user.png" alt=""/>
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    <Link className="dropdown-item" to="/info">Thông tin của bạn</Link>
                                                     {
-                                                        (getRoleByToken() === "ADMIN") && (
-                                                            <Link className="dropdown-item" to="/admin">Dashboard</Link>)
+                                                        (getRoleByToken() === "ADMIN") ? (
+                                                            <React.Fragment>
+                                                                <Link className="dropdown-item"
+                                                                      to="/admin">Dashboard</Link>
+                                                                <div className="dropdown-divider"></div>
+                                                            </React.Fragment>
+                                                        ) : (
+                                                            <React.Fragment>
+                                                                <Link className="dropdown-item" to="/info">Thông tin của
+                                                                    bạn</Link>
+                                                                <Link className="dropdown-item"
+                                                                      to="/customer-quotation">Báo giá của bạn</Link>
+                                                                <div className="dropdown-divider"></div>
+                                                            </React.Fragment>
+                                                        )
                                                     }
-                                                    {
-                                                        (getRoleByToken() === "CUSTOMER") && (<Link className="dropdown-item" to="/customer-quotation">Báo giá của bạn</Link>)
-                                                    }
-                                                    <div className="dropdown-divider"></div>
-                                                    <a className="dropdown-item" style={{ cursor: "pointer" }}
+                                                    <a className="dropdown-item" style={{cursor: "pointer"}}
                                                        onClick={() => {
                                                            logout(navigate);
                                                        }}>Đăng xuất</a>
                                                 </div>
+
                                             </div>
                                         )
                                         :
                                         (
                                             <div className="col-2">
-                                                <Link to="/login" className="btn btn-secondary" style={{color: " npm"}}>ĐĂNG NHẬP</Link>
+                                                <Link to="/login" className="btn btn-secondary" style={{color: " npm"}}>ĐĂNG
+                                                    NHẬP</Link>
                                             </div>
                                         )
                                 }

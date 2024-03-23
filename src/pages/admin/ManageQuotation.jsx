@@ -152,74 +152,9 @@ const ManageQuotation = () => {
 
         fetchData();
     }, []);
-    // const fetchData2 = async () => {
-    //     try {
-    //         const response = await axios.get(`http://localhost:8080/quotation-header`, {
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`,
-    //             }
-    //         });
-    //         const quotationHeaders = response.data._embedded.quotationHeaders;
-    //
-    //         const quotationDataPromises = quotationHeaders.map(async (quotationHeader) => {
-    //             try {
-    //                 const customerResponse = await axios.get(quotationHeader._links.customer.href, {
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
-    //                     }
-    //                 });
-    //                 const customerInfo = customerResponse.data;
-    //
-    //                 const listResponse = await axios.get(quotationHeader._links.list.href, {
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
-    //                     }
-    //                 });
-    //                 const listData = listResponse.data._embedded.quotationLists;
-    //                 // console.log(listData)
-    //
-    //                 // Fetch the status from the status endpoint
-    //                 const statusResponse = await axios.get(listData[0]._links.status.href, {
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
-    //                     }
-    //                 });
-    //                 const listStatus = statusResponse.data.statusId;
-    //
-    //                 // Check if status is 1
-    //                 if (listStatus !== 1 && listStatus !== 4) {
-    //                     const listID = listData[0].listId;
-    //                     const listReceiptDate = listData[0].createdDate;
-    //
-    //                     return {
-    //                         quotationHeader,
-    //                         customerInfo,
-    //                         listReceiptDate,
-    //                         listID
-    //                     };
-    //                 } else {
-    //                     return null; // Skip this quotationHeader if status is not 1
-    //                 }
-    //             } catch (error) {
-    //                 console.error('Error fetching customer info or list status:', error);
-    //                 return null;
-    //             }
-    //         });
-    //
-    //         const quotationData = await Promise.all(quotationDataPromises);
-    //         // Filter out null values (headers with list status != 1)
-    //         const filteredQuotationData = quotationData.filter(data => data !== null);
-    //         // console.log(filteredQuotationData);
-    //         setTotalQuotation2(filteredQuotationData.length);
-    //         setHeaderS2(filteredQuotationData)
-    //     } catch (error) {
-    //         console.error('There was a problem fetching quotation headers:', error);
-    //     }
-    // };
+
+
+
     const fetchData2 = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/quotation-header`, {
