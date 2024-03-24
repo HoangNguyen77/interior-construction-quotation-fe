@@ -140,6 +140,7 @@ const AdminChart = () => {
                                 <div className="text-3xl text-black">{totalBlog}</div>
                             </div>
                             <div
+
                                 className="w-20 h-20 bg-[#60B664] text-[24px] font-bold text-white text-center flex flex-col justify-center rounded-[10px] shadow1 position-absolute top-0 start-100 translate-middle"
                                 style={{transform: 'translateY(-50%)'}}>
                                 <FontAwesomeIcon icon={faNewspaper} size="2x"/>
