@@ -185,7 +185,6 @@ const ManageQuotation = () => {
 
                     // Array to store filtered list items
                     const filteredListItems = [];
-
                     // Iterate through each list item
                     for (const listItem of listData) {
                         const statusResponse = await axios.get(listItem._links.status.href, {
@@ -198,9 +197,11 @@ const ManageQuotation = () => {
 
                         // Check if status is 1 or 4
                         if (listStatus !== 1 && listStatus !== 4 && listStatus !== 5) {
+                            // Save listReceiptDate
+                            const listReceiptDate = listItem.createdDate;
                             filteredListItems.push({
                                 listID: listItem.listId,
-                                listReceiptDate: listItem.createdDate
+                                listReceiptDate: listReceiptDate // Save listReceiptDate
                             });
                         }
                     }
@@ -219,6 +220,7 @@ const ManageQuotation = () => {
                     return null;
                 }
             });
+
 
             const quotationData = await Promise.all(quotationDataPromises);
             // Filter out null values (headers with all list items having status 1 or 4)
@@ -603,35 +605,31 @@ const ManageQuotation = () => {
                                 <div className='col-span-1 text-[#60B664]'></div>
                             </div>
                             <div className='overflow-y-auto h-[44vh] pr-3'>
-                            {headerS2.map((item, index) => (
-
-                                <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
-                                    {/* {console.log("ok", )} */}
-                                    <div
-                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
-                                    <div className='col-span-2 text-black flex flex-col justify-center'>
-                                        <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span></div>
-                                    <div
-                                        className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                    <div
-                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
-                                    <div
-                                        className='col-span-3 text-black flex flex-col justify-center'>{getWarningByDate(item.listReceiptDate, false)}
-                                    </div>
-                                    <div className='col-span-1 text-black flex flex-col justify-center'>
-                                        <div className='flex justify-end gap-2'>
-                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
-                                                    icon={<Icon classIcon={faTrashCan} color={"black"}
-                                                                size={"20px"} />} />
-                                            <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)}
-                                                    icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
-                                            {/*<div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>*/}
-                                            {/*    <Icon classIcon={faPencil} color={"black"} size={"20px"}/>*/}
-                                            {/*</div>*/}
+                                {headerS2.map((item, index) => (
+                                    <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>
+                                            <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
+                                        </div>
+                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                        {/* Render listReceiptDate using getWarningByDate function */}
+                                        <div className='col-span-3 text-black flex flex-col justify-center'>
+                                            {item.filteredListItems.map((filteredItem, filteredIndex) => (
+                                                <div key={filteredIndex}>
+                                                    {getWarningByDate(filteredItem.listReceiptDate, false)}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className='col-span-1 text-black flex flex-col justify-center'>
+                                            <div className='flex justify-end gap-2'>
+                                                <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
+                                                <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)} icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+
                             </div>
                         </div>
                     </>
