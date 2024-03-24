@@ -7,12 +7,13 @@ import Profile from "./Profile.jsx";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import {useLocation} from "react-router-dom";
+import CancelQuotationCustomer from "./CancelQuotation.jsx";
 
 const MainCustomer = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const sectionRef = useRef(null);
     useEffect(() => {
-            sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        sectionRef.current.scrollIntoView({behavior: 'smooth'});
     }, []);
     const handleTabClick = (index) => {
         setSelectedTab(index);
@@ -41,41 +42,43 @@ const MainCustomer = () => {
                     </div>
                 </div>
             </div>
-            <div  className='mb-5' ref={sectionRef}></div>
-        <div className=' grid grid-cols-7 p-3'>
-            <div
-                className='bg-menu col-span-1 h-[75vh] w-full bg-[#202022] rounded-[0.75rem] text-white p-3 flex flex-col justify-between'>
-                <div>
-                    <div className='tab-menu mt-3'>
-                        {tabMenu.map((tab, index) => (
-                            <div
-                                key={index}
-                                className={`${index === selectedTab ? 'bg-[#348EED] pl-4' : ''}`}
-                                onClick={() => {
-                                    handleTabClick(index);
-                                    toast.dismiss();
-                                }
-                                }
-                            >
-                                {tab}
-                            </div>
-                        ))}
+            <div className='mb-5' ref={sectionRef}></div>
+            <div className=' grid grid-cols-7 p-3'>
+                <div
+                    className='bg-menu col-span-1 h-[75vh] w-full bg-[#202022] rounded-[0.75rem] text-white p-3 flex flex-col justify-between'>
+                    <div>
+                        <div className='tab-menu mt-3'>
+                            {tabMenu.map((tab, index) => (
+                                <div
+                                    key={index}
+                                    className={`${index === selectedTab ? 'bg-[#348EED] pl-4' : ''}`}
+                                    onClick={() => {
+                                        handleTabClick(index);
+                                        toast.dismiss();
+                                    }
+                                    }
+                                >
+                                    {tab}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className='col-span-6 ' >
-                {selectedTab === 0 ? (
-                    <Profile/>
-                ) : selectedTab === 1 ? (
-                    <ManageQuotation/>
-                ) : ( selectedTab === 2 ? (
-                    <FinishedQuotationCustomer/>
-                        ) :
-                    ""
-                )}
+                <div className='col-span-6 '>
+                    {selectedTab === 0 ? (
+                        <Profile/>
+                    ) : selectedTab === 1 ? (
+                        <ManageQuotation/>
+                    ) : selectedTab === 2 ? (
+                        <FinishedQuotationCustomer/>
+                    ) : selectedTab === 3 ? (
+                        <CancelQuotationCustomer/>
+                    ) : (
+                        ""
+                    )}
 
+                </div>
             </div>
-        </div>
             <Footer/>
         </div>
     );

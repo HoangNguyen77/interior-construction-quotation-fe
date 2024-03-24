@@ -40,11 +40,6 @@ const FinishedQuotationCustomer = () => {
         fetchFinishedQuotations();
     }, []);
 
-    // const handleOpenQuote = (listId) => {
-    //     <Link to{`my-quotation/${listId}`}>
-    //
-    //     </Link>
-    // };
 
     return (
         <div>

@@ -606,25 +606,34 @@ const ManageQuotation = () => {
                             </div>
                             <div className='overflow-y-auto h-[44vh] pr-3'>
                                 {headerS2.map((item, index) => (
-                                    <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2' key={index}>
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                    <div className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'
+                                         key={index}>
+                                        <div
+                                            className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
                                         <div className='col-span-2 text-black flex flex-col justify-center'>
                                             <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
                                         </div>
-                                        <div className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
-                                        <div className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
+                                        <div
+                                            className='col-span-2 text-black flex flex-col justify-center'>{item.customerInfo.email}</div>
+                                        <div
+                                            className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.phonenumber}</div>
                                         {/* Render listReceiptDate using getWarningByDate function */}
                                         <div className='col-span-3 text-black flex flex-col justify-center'>
-                                            {item.filteredListItems.map((filteredItem, filteredIndex) => (
-                                                <div key={filteredIndex}>
-                                                    {getWarningByDate(filteredItem.listReceiptDate, false)}
+                                            {item.filteredListItems.length > 0 && (
+                                                <div>
+                                                    {getWarningByDate(item.filteredListItems[item.filteredListItems.length - 1].listReceiptDate, false)}
                                                 </div>
-                                            ))}
+                                            )}
                                         </div>
+
                                         <div className='col-span-1 text-black flex flex-col justify-center'>
                                             <div className='flex justify-end gap-2'>
-                                                <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
-                                                <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)} icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
+                                                <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
+                                                        icon={<Icon classIcon={faTrashCan} color={"black"}
+                                                                    size={"20px"}/>}/>
+                                                <Button
+                                                    onClick={() => handleQuotationList(item.quotationHeader.headerId)}
+                                                    icon={<Icon classIcon={faEye} color={"black"} size={"20px"}/>}/>
                                             </div>
                                         </div>
                                     </div>
