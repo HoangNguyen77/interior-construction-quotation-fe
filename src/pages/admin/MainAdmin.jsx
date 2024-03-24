@@ -5,7 +5,7 @@ import TypeRoom from './ManageShowroom/Typeroom&Product';
 import Description from './ManageShowroom/Description';
 import ManageFinished from './ManageFinished';
 import ManageQuotation from "./ManageQuotation.jsx";
-// import RequireAdmin from "./RequireAdmin.jsx";
+import RequireAdmin from "./RequireAdmin.jsx";
 import {toast} from "react-toastify";
 import {
     getIdUserByToken, isToken, isTokenExpired,
@@ -14,7 +14,7 @@ import {Link, useNavigate} from "react-router-dom";
 import CancelQuotationAdmin from "./CancelQuotation.jsx";
 import AdminChart from "./AdminChart.jsx";
 
-const MainAdmin = () => {
+const MainAdmin_Check = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const navigation = useNavigate();
 
@@ -123,4 +123,5 @@ const MainAdmin = () => {
         </div>
     );
 };
+const MainAdmin = RequireAdmin(MainAdmin_Check);
 export default MainAdmin;
