@@ -10,11 +10,13 @@ import {toast} from "react-toastify";
 import {
   getIdUserByToken, isToken, isTokenExpired,
 } from "../../utils/JwtService.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AdminChart from "./AdminChart.jsx";
+import RequireAdmin from "./RequireAdmin.jsx";
 
 const MainAdmin = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const navigation = useNavigate();
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
@@ -27,6 +29,8 @@ const MainAdmin = () => {
   })
 
   useEffect(() => {
+    if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/403");
+
     const url = `http://localhost:8080/users/${userId}`;
 
     async function fetchData() {
@@ -77,7 +81,6 @@ const MainAdmin = () => {
                       }
                       }
                   >
-
                     {tab}
                   </div>
               ))}
@@ -112,9 +115,9 @@ const MainAdmin = () => {
           ) : (
               ""
           )}
-
         </div>
       </div>
   );
 };
+// const MainAdmin = RequireAdmin(MainAdmin_Check)
 export default MainAdmin;

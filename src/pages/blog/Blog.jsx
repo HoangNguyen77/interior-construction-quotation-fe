@@ -9,16 +9,17 @@ function Blog(){
     const sectionRef = useRef(null);
 
     useEffect(() => {
-        sectionRef.current.scrollIntoView({behavior: 'smooth'});
+        sectionRef.current.scrollIntoView({behavior: 'auto'});
 
     }, []);
 
     return(
         <div>
             <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_6.jpg)" }}
+            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(/images/hero_6.jpg)"}}
                  data-aos="fade"
                  data-stellar-background-ratio="0.5">
+
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-md-7 text-center" data-aos="fade">
@@ -29,7 +30,8 @@ function Blog(){
                 </div>
             </div>
             <div ref={sectionRef}></div>
-            <BlogList/>
+            <BlogList />
+
             <Footer/>
         </div>
     )
