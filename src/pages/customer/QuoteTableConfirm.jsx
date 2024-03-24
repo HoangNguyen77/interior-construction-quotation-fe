@@ -107,6 +107,9 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
     fetchData();
   }, [selectedQuotationItem]);
 
+  const handleAgree = () => {
+    props.onAgree();
+  };
   const calculateTotalPrice = (data) => {
     const totalPrice = data.reduce((acc, cur) => acc + parseFloat(cur.realTotalPrice), 0);
     setTotalPrice(totalPrice);
@@ -244,8 +247,9 @@ const QuoteTableConfirm = ({ selectedQuotationItem }) => {
         </Modal>
 
 
+
         <button onClick={handleOk} className="btn btn-primary btn-block mb-4 mt-4">
-          Gửi yêu cầu chỉnh sửa
+          Gửi yêu cầu chỉnh sửa báo giá
         </button>
       </div>
   );

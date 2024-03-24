@@ -349,9 +349,9 @@ function About() {
                                                                                              className="img-fluid"/></a>
                         </div>
                         <div className="col-md-6 col-lg-3">
-                            <a href="/images/img_3.jpg" className="image-popup img-opacity"><img src="/images/img_3.jpg"
-                                                                                                 alt="Image"
-                                                                                                 className="img-fluid"/></a>
+                            <a href="/images/7.jpg" className="image-popup img-opacity"><img src="/images/7.jpg"
+                                                                                             alt="Image"
+                                                                                             className="img-fluid"/></a>
                         </div>
 
                     </div>

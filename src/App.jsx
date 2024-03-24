@@ -25,8 +25,8 @@ import "./index.css"
 import DetailFinished from "./pages/finished-project/DetailFinishedProject.jsx";
 import Page403 from "./pages/error/Page403.jsx";
 import QuotationTable from "./pages/quotation/QuotationTable.jsx";
-import ManageQuotationCustomer from "./pages/customer/ManageQuotation.jsx";
-
+// import ManageQuotationCustomer from "./pages/customer/ManageQuotation.jsx";
+import MainCustomer from "./pages/customer/MainCustomer.jsx";
 
 function App() {
     return (
@@ -53,9 +53,11 @@ function App() {
                     <Route path='/forget-password' element={<ForgetPassword/>}></Route>
                     <Route path='/staff/blog-form' element={<BlogForm/>}></Route>
                     <Route path='/403' element={<Page403/>}></Route>
-                    <Route path='/customer-quotation' element={<Profile/>}></Route>
-                    <Route path='/customer-quotation/my-quotation/:listId' element={<QuotationTable/>}></Route>
-                    <Route path='/info/my-quotation/:listId' element={<QuotationTable/>}></Route>
+                    {/*<Route path='/customer-quotation' element={<Profile/>}></Route>*/}
+                    <Route path='/customer-dashboard' element={<MainCustomer/>}></Route>
+                    <Route path='/customer-dashboard/my-quotation/:listId' element={<QuotationTable/>}></Route>
+                    {/*<Route path='/info/my-quotation/:listId' element={<QuotationTable/>}></Route>*/}
+
                 </Routes>
             </BrowserRouter>
         </div>

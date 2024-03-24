@@ -15,12 +15,13 @@ import {jwtDecode} from "jwt-decode";
 import {toast} from "react-toastify";
 import ManageQuotationCustomer from "./ManageQuotation.jsx";
 import FinishedQuotationCustomer from "./FinishQuotation.jsx";
+import MainCustomer from "./MainCustomer.jsx";
 
 function Profile() {
 
-    const sectionRef = useRef(null);
+
     const sectionRef2 = useRef(null);
-    const sectionRefQuotation = useRef((null));
+    // const sectionRefQuotation = useRef((null));
     const location = useLocation();
 
 
@@ -58,11 +59,11 @@ function Profile() {
 
 
     useEffect(() => {
-        if (location.pathname === '/customer-quotation') {
-            sectionRefQuotation.current.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
+        // if (location.pathname === '/customer-quotation') {
+        //     sectionRefQuotation.current.scrollIntoView({ behavior: 'smooth' });
+        // } else {
+        //     sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+        // }
         const url = `http://localhost:8080/users/${userId}`;
 
         async function fetchData() {
@@ -210,22 +211,22 @@ function Profile() {
     }
     return (
         <div>
-            <Header/>
-            <div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_5.jpg)"}}
-                 data-aos="fade"
-                 data-stellar-background-ratio="0.5">
-                <div className="container">
-                    <div className="row align-items-center justify-content-center">
-                        <div className="col-md-7 text-center" data-aos="fade">
-                            <span className="caption mb-3">VivaDecor</span>
-                            <h1 className="mb-4">Thông tin của bạn</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/*<Header/>*/}
+            {/*<div className="site-blocks-cover overlay" style={{backgroundImage: "url(images/hero_5.jpg)"}}*/}
+            {/*     data-aos="fade"*/}
+            {/*     data-stellar-background-ratio="0.5">*/}
+            {/*    <div className="container">*/}
+            {/*        <div className="row align-items-center justify-content-center">*/}
+            {/*            <div className="col-md-7 text-center" data-aos="fade">*/}
+            {/*                <span className="caption mb-3">VivaDecor</span>*/}
+            {/*                <h1 className="mb-4">Thông tin của bạn</h1>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
 
-            <div className="site-section" ref={sectionRef}>
+            <div className="site-section">
                 <div className="container">
                     <div className="h2">Thông tin của bạn</div>
                     <hr/>
@@ -365,15 +366,16 @@ function Profile() {
                 </div>
             </div>
 
-            <div style={{marginBottom: '70px'}} ref={sectionRefQuotation}>
-                <ManageQuotationCustomer/>
-            </div>
+            {/*<div style={{marginBottom: '70px'}} ref={sectionRefQuotation}>*/}
+            {/*    <ManageQuotationCustomer/>*/}
+            {/*</div>*/}
 
-            <div style={{marginBottom: '70px'}}>
-                <FinishedQuotationCustomer/>
-            </div>
+            {/*<div style={{marginBottom: '70px'}}>*/}
+            {/*    <FinishedQuotationCustomer/>*/}
+            {/*</div>*/}
 
-            <Footer/>
+            {/*<MainCustomer/>*/}
+            {/*<Footer/>*/}
 
         </div>
 
