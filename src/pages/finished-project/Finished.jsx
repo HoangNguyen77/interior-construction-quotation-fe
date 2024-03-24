@@ -29,7 +29,7 @@ const Finished = () => {
     };
 
     useEffect(() => {
-        sectionRef.current.scrollIntoView({behavior: 'smooth'});
+        sectionRef.current.scrollIntoView({behavior: 'auto'});
         getFinishedProjectsByTitle((currentPageProject - 1), searchProject, 6).then(
             result => {
                 setProjectList(result.projectList);

@@ -27,6 +27,7 @@ import Page403 from "./pages/error/Page403.jsx";
 import QuotationTable from "./pages/quotation/QuotationTable.jsx";
 // import ManageQuotationCustomer from "./pages/customer/ManageQuotation.jsx";
 import MainCustomer from "./pages/customer/MainCustomer.jsx";
+import Page404 from "./pages/error/Page404.jsx";
 
 function App() {
     return (
@@ -57,7 +58,7 @@ function App() {
                     <Route path='/customer-dashboard' element={<MainCustomer/>}></Route>
                     <Route path='/customer-dashboard/my-quotation/:listId' element={<QuotationTable/>}></Route>
                     {/*<Route path='/info/my-quotation/:listId' element={<QuotationTable/>}></Route>*/}
-
+                    <Route path='*' element={<Page404 />} />
                 </Routes>
             </BrowserRouter>
         </div>

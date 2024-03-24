@@ -10,11 +10,13 @@ import {toast} from "react-toastify";
 import {
     getIdUserByToken, isToken, isTokenExpired,
 } from "../../utils/JwtService.js";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import CancelQuotationAdmin from "./CancelQuotation.jsx";
+import AdminChart from "./AdminChart.jsx";
 
 const MainAdmin = () => {
-    const [selectedTab, setSelectedTab] = useState(-1);
+    const [selectedTab, setSelectedTab] = useState(0);
+    const navigation = useNavigate();
 
     const handleTabClick = (index) => {
         setSelectedTab(index);
@@ -27,6 +29,8 @@ const MainAdmin = () => {
     })
 
     useEffect(() => {
+        if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/403");
+
         const url = `http://localhost:8080/users/${userId}`;
 
         async function fetchData() {
@@ -44,6 +48,7 @@ const MainAdmin = () => {
     }, []);
 
     const tabMenu = [
+        'Thống kê',
         'Loại phòng và sản phẩm',
         'Mô tả sản phẩm',
         'Quản lý người dùng',
@@ -95,23 +100,24 @@ const MainAdmin = () => {
             </div>
             <div className='col-span-6 '>
                 {selectedTab === 0 ? (
-                    <TypeRoom/>
+                    <AdminChart/>
                 ) : selectedTab === 1 ? (
-                    <Description/>
+                    <TypeRoom/>
                 ) : selectedTab === 2 ? (
-                    <ManageUser/>
+                    <Description/>
                 ) : selectedTab === 3 ? (
-                    <ManageFinished/>
+                    <ManageUser/>
                 ) : selectedTab === 4 ? (
-                    <ManageBlog/>
+                    <ManageFinished/>
                 ) : selectedTab === 5 ? (
-                    <ManageQuotation/>
+                    <ManageBlog/>
                 ) : selectedTab === 6 ? (
+                    <ManageQuotation/>
+                ) : selectedTab === 7 ? (
                     <CancelQuotationAdmin/>
                 ) : (
                     ""
                 )}
-
             </div>
         </div>
     );

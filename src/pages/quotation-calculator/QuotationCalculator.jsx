@@ -15,7 +15,7 @@ function QuotationCalculator(){
     useEffect(() => {
         if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/login");
         // Cuộn xuống phần section khi trang được tải
-        sectionRef.current.scrollIntoView({behavior: 'smooth'});
+        sectionRef.current.scrollIntoView({behavior: 'auto'});
     }, []);
 
 
