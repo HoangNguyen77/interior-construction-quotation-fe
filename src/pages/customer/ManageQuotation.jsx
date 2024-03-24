@@ -272,9 +272,9 @@ const ManageQuotationCustomer = () => {
         setModeShow2(!isModeShow2);
     };
 
-    const deleteQuotationHeader = async (id) => {
+    const deleteQuotationHeader1 = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:8080/quotation/delete-quotation-header?id=${id}`);
+            const response = await axios.delete(`http://localhost:8080/quotation/delete-quotation-header?quotation-header-id=${id}`);
             console.log(response.data);
             return response.data;
         } catch (error) {
@@ -284,16 +284,50 @@ const ManageQuotationCustomer = () => {
     };
 
 
-    const showConfirmDelete = (headerId) => {
+    const showConfirmDelete1 = (headerId) => {
         confirm({
             title: 'Xoá yêu cầu báo giá?',
                 okText: 'Xoá',
             cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
             okButtonProps: { className: 'text-red-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
             onOk() {
-                deleteQuotationHeader(headerId)
+                deleteQuotationHeader1(headerId)
                     .then((data) => {
                         message.success("Đã xoá đơn báo giá");
+                        fetchData();
+                        fetchData2();
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting quotation header:', error);
+                    });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
+    const deleteQuotationHeader2 = async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/quotation/cancel-quotation?quotation-header-id=${id}`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting quotation header:', error);
+            throw error;
+        }
+    };
+
+
+    const showConfirmDelete2 = (headerId) => {
+        confirm({
+            title: 'Hủy đơn báo giá này?',
+            okText: 'Xoá',
+            cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
+            okButtonProps: { className: 'text-red-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
+            onOk() {
+                deleteQuotationHeader2(headerId)
+                    .then((data) => {
+                        message.success("Đã hủy đơn báo giá");
                         fetchData();
                         fetchData2();
                     })
@@ -451,7 +485,7 @@ const ManageQuotationCustomer = () => {
                                                 <div key={index}
                                                      className='grid grid-cols-10 border-t-2 border-[#D9D9D9] py-3 gap-2'>
                                                     <div
-                                                        className='col-span-1 text-black flex flex-col justify-center'>{item.customerInfo.userId}</div>
+                                                        className='col-span-1 text-black flex flex-col justify-center'>{item.quotationHeader.headerId}</div>
                                                     <div className='col-span-2 text-black flex flex-col justify-center'>
                                                         <span>{item.customerInfo.firstName} {item.customerInfo.lastName}</span>
                                                     </div>
@@ -465,7 +499,7 @@ const ManageQuotationCustomer = () => {
                                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                                         <div className='flex justify-end gap-2'>
                                                             <Button
-                                                                onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
+                                                                onClick={() => showConfirmDelete1(item.quotationHeader.headerId)}
                                                                 icon={<Icon classIcon={faTrashCan} color={"black"}
                                                                             size={"20px"}/>}/>
                                                             {/* <Button onClick={() => showConfirmChangeStatusTo2(item.quotationHeader.headerId)} icon={<Icon classIcon={faCheck} color={"black"} size={"20px"} />} /> */}
@@ -510,7 +544,7 @@ const ManageQuotationCustomer = () => {
 
                                         <div className='col-span-1 text-black flex flex-col justify-center'>
                                             <div className='flex justify-end gap-2'>
-                                                {/* <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} /> */}
+                                                 <Button onClick={() => showConfirmDelete2(item.quotationHeader.headerId)} icon={<Icon classIcon={faTrashCan} color={"black"} size={"20px"} />} />
                                                 <Button
                                                     onClick={() => handleQuotationList(item.quotationHeader.headerId)}
                                                     icon={<Icon classIcon={faEye} color={"black"}

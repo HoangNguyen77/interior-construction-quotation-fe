@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getValidCurrency } from "../../utils/Validation.js";
 
-const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, totalPrice, setTotalPrice }) => {
+const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, totalPrice, setTotalPrice, check }) => {
 
 
 
@@ -211,6 +211,62 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
       ),
     },
   ];
+  const columns1 = [
+    {
+      title: 'Loại phòng',
+      dataIndex: 'typeRoom',
+    },
+    {
+      title: 'Sản phẩm',
+      dataIndex: 'productName',
+    },
+    // Add new column for image
+    {
+      title: 'Hình ảnh',
+      dataIndex: 'imageData',
+      render: (imageData) => <img src={imageData} alt="Product" style={{ maxWidth: '100px', maxHeight: '100px' }} />,
+    },
+    {
+      title: 'Dài',
+      dataIndex: 'length',
+      // width: 30,
+    },
+    {
+      title: 'Rộng',
+      dataIndex: 'width',
+      // width: 30,
+    },
+    {
+      title: 'Cao',
+      dataIndex: 'height',
+      // width: 30,
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'quantity',
+      // width: 91,
+    },
+    {
+      title: 'Tổng Tiền',
+      dataIndex: 'estimateTotalPrice',
+      render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
+      // width: 130,
+    },
+    {
+      title: 'Ghi chú',
+      dataIndex: 'note',
+      width: 300,
+      render: (_, record) => (
+          <>
+            <Input
+                value={record.note}
+                onChange={(e) => handleNoteChange(e.target.value, record.detailId)} // Call handleNoteChange on change
+            />
+            {record.errors && record.errors.note && <div style={{ color: 'red' }}>{record.errors.note}</div>}
+          </>
+      ),
+    },
+  ];
 
   return (
       <div className="table-container">
@@ -220,7 +276,7 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
         <Table
             bordered
             dataSource={dataSource}
-            columns={columns}
+            columns={check ? columns1 : columns}
             pagination={false}
             rowKey="detailId"
             footer={() => (

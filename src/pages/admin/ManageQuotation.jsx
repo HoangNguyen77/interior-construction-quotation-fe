@@ -44,6 +44,7 @@ const ManageQuotation = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalCfCancleVisible, setModalCfCancleVisible] = useState(false);
     const[selectedHeaderId, setSelectedHeaderId] = useState(0);
+    const [check, setCheck] = useState(false);
 
     const getWarningByDate = (date, isCreateDay) => {
         const currentDate = new Date();
@@ -452,6 +453,11 @@ const ManageQuotation = () => {
         setIsModalOpenAntd(true);
     };
 
+    const handleOpenQuote1 = (quotationItem) => {
+        setSelectedQuotationItem(quotationItem); // Set selected quotation item
+        setIsModalOpenAntd(true);
+        setCheck(true);
+    };
     const handleCancel = async () => {
         setModalCfCancleVisible(true);
 
@@ -575,10 +581,12 @@ const ManageQuotation = () => {
                                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                                     {/*{console.log("lisy " + JSON.stringify(item.listID))}*/}
                                                     <div className='flex justify-end gap-2'>
-                                                        <Button
-                                                            onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
-                                                            icon={<Icon classIcon={faTrashCan} color={"black"}
-                                                                        size={"20px"} />} />
+                                                        {/*<Button*/}
+                                                        {/*    onClick={() => showConfirmDelete(item.quotationHeader.headerId)}*/}
+                                                        {/*    icon={<Icon classIcon={faTrashCan} color={"black"}*/}
+                                                        {/*                size={"20px"} />} />*/}
+                                                        <Button onClick={() => handleOpenQuote1(item.listID)}
+                                                                icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
                                                         <Button onClick={() => showConfirmChangeStatusTo2(item.listID)}
                                                                 icon={<Icon classIcon={faCheck} color={"black"}
                                                                             size={"20px"} />} />
@@ -620,9 +628,9 @@ const ManageQuotation = () => {
                                     </div>
                                     <div className='col-span-1 text-black flex flex-col justify-center'>
                                         <div className='flex justify-end gap-2'>
-                                            <Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}
-                                                    icon={<Icon classIcon={faTrashCan} color={"black"}
-                                                                size={"20px"} />} />
+                                            {/*<Button onClick={() => showConfirmDelete(item.quotationHeader.headerId)}*/}
+                                            {/*        icon={<Icon classIcon={faTrashCan} color={"black"}*/}
+                                            {/*                    size={"20px"} />} />*/}
                                             <Button onClick={() => handleQuotationList(item.quotationHeader.headerId)}
                                                     icon={<Icon classIcon={faEye} color={"black"} size={"20px"} />} />
                                             {/*<div onClick={() => handleQuotationList(item.quotationHeader.headerId)}>*/}
@@ -680,8 +688,11 @@ const ManageQuotation = () => {
             <Modal
                 visible={isModalOpenAntd}
                 style={{ minWidth: '1800px', minHeight: '600px' }}
-                onCancel={() => setIsModalOpenAntd(false)}
-                footer={[
+                onCancel={() => {
+                    setIsModalOpenAntd(false);
+                    setCheck(false);
+                }}
+                footer={!check && [
                     <Button key="back" className="cancel-button" onClick={handleCancel}>
                         Hủy
                     </Button>,
@@ -697,6 +708,7 @@ const ManageQuotation = () => {
                         setDataSource={setDataSource}
                         totalPrice={totalPrice}
                         setTotalPrice={setTotalPrice}
+                        check = {check}
                     />
                 )}
             </Modal>
