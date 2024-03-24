@@ -53,7 +53,7 @@ const MainAdmin = () => {
 
 
   return (
-      <div className='bg-main-admin grid grid-cols-7 p-3'>
+      <div className=' grid grid-cols-7 p-3'>
         <div
             className='bg-menu col-span-1 h-[96vh] w-full bg-[#202022] rounded-[0.75rem] text-white p-3 flex flex-col justify-between'>
           <div>
