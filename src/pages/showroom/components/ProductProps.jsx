@@ -4,7 +4,12 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getFirstImageOfProduct} from "../../../api/product/ProductImageAPI.jsx";
 import {FaSearch} from "react-icons/fa";
-
+const getShortDescription = (description) => {
+    const words = description.split(' ');
+    const shortWords = words.slice(0, 30);
+    const shortDescription = shortWords.join(' ');
+    return shortDescription;
+};
 const ProductProps = (props) => {
     const productId = props.product.productId
     const [image, setImage] = useState("");
@@ -30,7 +35,7 @@ const ProductProps = (props) => {
                                 <img src={image} alt="Product" className="img-fluid" style={{objectFit: 'contain'}}/>
                             </a>
                             <div className='hotel-room-body'>
-                                <h3 className="heading mb-0"><a href="#">{props.product.name}</a></h3>
+                                <h3 className="heading mb-0"><a href="#">{getShortDescription(props.product.name)}</a></h3>
                             </div>
                         </div>
             </Link>
