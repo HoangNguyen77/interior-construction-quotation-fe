@@ -11,9 +11,10 @@ import {
   getIdUserByToken, isToken, isTokenExpired,
 } from "../../utils/JwtService.js";
 import {Link} from "react-router-dom";
+import AdminChart from "./AdminChart.jsx";
 
 const MainAdmin = () => {
-  const [selectedTab, setSelectedTab] = useState(-1);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
@@ -43,6 +44,7 @@ const MainAdmin = () => {
   }, []);
 
   const tabMenu = [
+      'Thống kê',
     'Loại phòng và sản phẩm',
     'Mô tả sản phẩm',
     'Quản lý người dùng',
@@ -93,16 +95,18 @@ const MainAdmin = () => {
         </div>
         <div className='col-span-6 '>
           {selectedTab === 0 ? (
+              <AdminChart/>
+          ): selectedTab === 1 ? (
               <TypeRoom/>
-          ) : selectedTab === 1 ? (
-              <Description/>
           ) : selectedTab === 2 ? (
-              <ManageUser/>
+              <Description/>
           ) : selectedTab === 3 ? (
-              <ManageFinished />
+              <ManageUser/>
           ) : selectedTab === 4 ? (
+              <ManageFinished />
+          ) : selectedTab === 5 ? (
               <ManageBlog />
-          ) : selectedTab === 5 ?(
+          ) : selectedTab === 6 ?(
               <ManageQuotation/>
           ) : (
               ""
