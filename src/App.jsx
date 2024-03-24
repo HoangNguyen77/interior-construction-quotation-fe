@@ -57,6 +57,7 @@ function App() {
                     {/*<Route path='/customer-quotation' element={<Profile/>}></Route>*/}
                     <Route path='/customer-dashboard' element={<MainCustomer/>}></Route>
                     <Route path='/customer-dashboard/my-quotation/:listId' element={<QuotationTable/>}></Route>
+                    <Route path='/admin/my-quotation/:listId' element={<QuotationTable/>}></Route>
                     {/*<Route path='/info/my-quotation/:listId' element={<QuotationTable/>}></Route>*/}
                     <Route path='*' element={<Page404 />} />
                 </Routes>

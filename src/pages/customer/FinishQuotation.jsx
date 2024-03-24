@@ -107,7 +107,7 @@ const FinishedQuotationCustomer = () => {
                                     className='col-span-2 text-black flex flex-col justify-center'>{getValidCurrency(item.estimateTotalPrice)}</div>
                                 <div
                                     className='col-span-2 text-black flex flex-col justify-center'>{getValidCurrency(item.realTotalPrice)}</div>
-                                <div className='col-span-2 text-black flex flex-col justify-center'>Đã ký báo giá</div>
+                                <div className='col-span-2 text-black flex flex-col justify-center'>Đã xác nhận báo giá</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
                                         <Button type="primary"
