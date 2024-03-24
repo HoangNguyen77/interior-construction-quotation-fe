@@ -53,7 +53,7 @@ const ManageQuotation = () => {
         const differenceInTime = currentDate.getTime() - targetDate.getTime();
 
         // Tính số ngày chênh lệch
-        let differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+        let differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24))+1;
 
         let textColor = "";
 
@@ -712,6 +712,8 @@ const ManageQuotation = () => {
                 visible={modalVisible}
                 onOk={handleConfirm}
                 onCancel={() => setModalVisible(false)}
+                okButtonProps={{ style: { color: 'black' } }} // Đặt màu chữ của nút OK thành đen
+
             >
             </Modal>
             <Modal
@@ -719,6 +721,7 @@ const ManageQuotation = () => {
                 visible={modalCfCancleVisible}
                 onOk={handleOpenCancelConfirm}
                 onCancel={calcelCancel}
+                okButtonProps={{ style: { color: 'black' } }} // Đặt màu chữ của nút OK thành đen
             >
             </Modal>
         </div>
