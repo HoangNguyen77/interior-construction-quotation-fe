@@ -84,7 +84,7 @@ const FinishedQuotationCustomer = () => {
                     <div
                         className="w-4/5 h-[60px] shadow1 relative top-7 text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white"
                         style={{backgroundColor: '#00BFFF'}}>
-                        CÁC ĐƠN BÁO GIÁ ĐÃ HOÀN THÀNH
+                        CÁC ĐƠN BÁO GIÁ ĐÃ ĐÃ XÁC NHẬN
                     </div>
 
 
