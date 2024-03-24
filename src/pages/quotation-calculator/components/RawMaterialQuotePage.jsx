@@ -34,83 +34,162 @@ const RawMaterialQuotePage = () => {
     ]);
     const userId = parseInt(getIdUserByToken());
 
+    // const handleAddQuotationDetail = async () => {
+    //     const quotationDetails = dataSource.map(item => {
+    //         let isValid = true;
+    //         const updatedDataSource = dataSource.map(item => {
+    //             const errors = {};
+    //             // Add validation checks here and update errors object accordingly
+    //             if (!item.RoomType) {
+    //                 errors.RoomType = "Vui lòng chọn loại phòng";
+    //                 isValid = false;
+    //             }
+    //             const isProductSelected = item.Product && item.Product.some(product => product.value);
+    //             if (!isProductSelected) {
+    //                 errors.Product = "Vui lòng chọn sản phẩm";
+    //                 isValid = false;
+    //             }
+
+    //
+    //             // Validation for Width
+    //             // Assuming Width is required only if the selected product's unit requires dimensions
+
+    //
+    //             // Validation for Height
+    //             // Assuming Height is not required for all products (adjust logic if this assumption is incorrect)
+
+    //
+    //             // Validation for Quantity
+
+    //
+    //             return { ...item, error: errors };
+    //         });
+    //
+    //         setDataSource(updatedDataSource);
+    //
+    //         if (!isValid) {
+    //             return; // Stop execution if there's any validation error
+    //         }
+    //         const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
+    //
+    //         // Check if a product is selected
+    //         if (item.Product.length > 0 && item.RoomType) {
+    //             const selectedProduct = item.Product.find(product => product.value === item.RoomType);
+    //             const productId = selectedProduct ? selectedProduct.value : '';
+    //
+    //             return {
+    //                 customerID: userId,
+    //                 productID: productId,
+    //                 estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
+    //                 quantity: item.Quantity
+    //             };
+    //         } else {
+    //             // Handle case where no product is selected
+    //             console.error("No product selected for item:", item);
+    //             return null; // Return null if no product is selected
+    //         }
+    //     }).filter(Boolean); // Filter out null values
+    //     if (quotationDetails.length === 0) {
+    //         message.error("Không có dữ liệu để thêm");
+    //         return; // Exit the function if there is no data
+    //     }
+    //
+    //
+    //     // Call the addQuotation function and pass the quotationDetails
+    //     const result = await addQuotation(quotationDetails);
+    //     if (result=== "Create quotation successfully") {
+    //         message.success("Thêm đơn báo giá thành công")
+    //     } else {
+    //         // Show error message
+    //         message.error("Thêm đơn báo giá thất bại");
+    //     }
+    // };
     const handleAddQuotationDetail = async () => {
-        const quotationDetails = dataSource.map(item => {
-            let isValid = true;
-            const updatedDataSource = dataSource.map(item => {
-                const errors = {};
-                // Add validation checks here and update errors object accordingly
-                if (!item.RoomType) {
-                    errors.RoomType = "Vui lòng chọn loại phòng";
-                    isValid = false;
-                }
-                if (item.Product.length === 0) {
-                    errors.Product = "Vui lòng chọn sản phẩm";
-                    isValid = false;
-                }
-                if (!item.Length && item.Unit !== 'cái') {
-                    errors.Length = "Vui lòng nhập chiều dài";
-                    isValid = false;
-                }
+        let isValid = true;
+        let errors = [];
 
-                // Validation for Width
-                // Assuming Width is required only if the selected product's unit requires dimensions
-                if (!item.Width && item.Unit !== 'cái') {
-                    errors.Width = "Vui lòng nhập chiều rộng";
-                    isValid = false;
-                }
+        // Perform all validations and construct errors array
+        const newDataSource = dataSource.map(item => {
+            const itemErrors = {};
 
-                // Validation for Height
-                // Assuming Height is not required for all products (adjust logic if this assumption is incorrect)
-                if (!item.Height && item.Unit !== 'cái') { // Replace 'RequiresHeightUnit' with your actual condition
-                    errors.Height = "Vui lòng nhập chiều cao";
-                    isValid = false;
-                }
-
-                // Validation for Quantity
-                if (!item.Quantity || item.Quantity < 1) {
-                    errors.Quantity = "Số lượng phải lớn hơn 0";
-                    isValid = false;
-                }
-
-                return { ...item, error: errors };
-            });
-
-            setDataSource(updatedDataSource);
-
-            if (!isValid) {
-                return; // Stop execution if there's any validation error
+            if (!item.RoomType) {
+                itemErrors.RoomType = "Vui lòng chọn loại phòng";
+                isValid = false;
             }
-            const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
 
             // Check if a product is selected
-            if (item.Product.length > 0 && item.RoomType) {
-                const selectedProduct = item.Product.find(product => product.value === item.RoomType);
-                const productId = selectedProduct ? selectedProduct.value : '';
-
-                return {
-                    customerID: userId,
-                    productID: productId,
-                    estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
-                    quantity: item.Quantity
-                };
-            } else {
-                // Handle case where no product is selected
-                console.error("No product selected for item:", item);
-                return null; // Return null if no product is selected
+            const isProductSelected = item.Product && item.Product.some(product => product.value);
+            if (!isProductSelected) {
+                itemErrors.Product = "Vui lòng chọn sản phẩm";
+                isValid = false;
             }
-        }).filter(Boolean); // Filter out null values
+            if (!item.Length && item.Unit !== 'cái') {
+                itemErrors.Length = "Vui lòng nhập chiều dài";
+                isValid = false;
+            }
+            if (!item.Width && item.Unit !== 'cái') {
+                itemErrors.Width = "Vui lòng nhập chiều rộng";
+                isValid = false;
+            }
+            if (!item.Height && item.Unit !== 'cái') { // Replace 'RequiresHeightUnit' with your actual condition
+                itemErrors.Height = "Vui lòng nhập chiều cao";
+                isValid = false;
+            }
+
+            if (!item.Quantity || item.Quantity < 1) {
+                itemErrors.Quantity = "Số lượng phải lớn hơn 0";
+                isValid = false;
+            }
 
 
-        // Call the addQuotation function and pass the quotationDetails
+            // ... rest of your validation checks
+
+            return { ...item, error: itemErrors };
+        });
+
+        // Update state only once after all validations are done
+        setDataSource(newDataSource);
+
+        // Collect all errors for logging if necessary
+
+
+        // If there are validation errors, stop the function
+        if (!isValid) {
+            console.error("Validation errors:", errors);
+            message.error("Vui lòng kiểm tra lại thông tin.");
+            return; // Exit the function if there's any validation error
+        }
+
+        // Construct quotation details for valid items only
+        const quotationDetails = newDataSource.map(item => {
+            const totalCost = calculateTotalCost(item); // Assume this function is implemented correctly
+            const selectedProduct = item.Product.find(product => product.value === item.RoomType);
+            const productId = selectedProduct ? selectedProduct.value : '';
+
+            return productId ? {
+                customerID: userId,
+                productID: productId,
+                estimateTotalPrice: totalCost,
+                quantity: item.Quantity
+            } : null;
+        }).filter(Boolean); // Remove any null values, which represent invalid items
+
+        // If no valid quotation details are found, show an error and exit
+        if (quotationDetails.length === 0) {
+            message.error("Vui lòng thêm các sản phẩm nội thất!");
+            return;
+        }
+
+        // Call the addQuotation function and pass the valid quotationDetails
         const result = await addQuotation(quotationDetails);
-        if (result=== "Create quotation successfully") {
-            message.success("Thêm đơn báo giá thành công")
+        if (result === "Create quotation successfully") {
+            message.success("Thêm đơn báo giá thành công");
         } else {
             // Show error message
             message.error("Thêm đơn báo giá thất bại");
         }
     };
+
 
     const [count, setCount] = useState(0);
     const navigate = useNavigate();
@@ -199,8 +278,6 @@ const RawMaterialQuotePage = () => {
         // Update the state with the new dataSource
         setDataSource(newData);
     };
-
-
     const handleRoomTypeChange = async (value, key) => {
         try {
             const response = await axios.get(`http://localhost:8080/detail-product/search/findProductByTypeProduct_CategoryProduct_TypeRoom_RoomId?roomId=${value}`, {
@@ -210,17 +287,15 @@ const RawMaterialQuotePage = () => {
                 }
             });
             const products = response.data._embedded.products;
-
             // Fetch unit information for each product asynchronously
-            const productPromises = products.map(async product => {
+            const updatedProducts = await Promise.all(products.map(async product => {
                 const unitResponse = await axios.get(product._links.unit.href, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem("token")}`,
                     }
                 });
-                console.log("ok" + unitResponse)
-
+                // Extract the unit data
                 const unit = unitResponse.data.unitName;
                 return {
                     value: product.productId,
@@ -231,30 +306,38 @@ const RawMaterialQuotePage = () => {
                     unitPrice: product.unitPrice,
                     unit: unit
                 };
-            });
+            }));
 
-            // Wait for all productPromises to resolve
-            const updatedProducts = await Promise.all(productPromises);
-
-            // Update dataSource with products
+            // Update the dataSource with the new products
             const newData = dataSource.map((item) => {
                 if (item.key === key) {
+                    // Check if the currently selected product is in the new list
+                    let existingSelection = item.Product.find(p => updatedProducts.some(up => up.value === p.value));
                     return {
                         ...item,
                         RoomType: value,
-                        Product: updatedProducts,
-                        TotalCost: 0,
+                        Product: updatedProducts, // Set to the updated products
+                        // If there is no existing selection in the new list, reset these fields
+                        Length: existingSelection ? item.Length : '', // Reset if selection not valid
+                        Width: existingSelection ? item.Width : '', // Reset if selection not valid
+                        Height: existingSelection ? item.Height : '', // Reset if selection not valid
+                        Unit: existingSelection ? item.Unit : '', // Reset if selection not valid
+                        UnitPrice: existingSelection ? item.UnitPrice : 0, // Reset if selection not valid
+                        TotalCost: existingSelection ? item.TotalCost : 0, // Reset or recalculate if needed
+                        error: existingSelection ? item.error : {}, // Clear any validation errors if selection not valid
                     };
                 }
                 return item;
             });
 
-            setDataSource(newData);
-            handleSave(newData.find(item => item.key === key));
+            setDataSource(newData); // Update the state with the new dataSource
         } catch (error) {
             console.error('There was a problem fetching products:', error);
         }
     };
+
+
+
 
 
     const handleRawMaterialChange = (value, key) => {
@@ -271,7 +354,8 @@ const RawMaterialQuotePage = () => {
                     Width: selectedProductInfo.width,
                     Height: selectedProductInfo.height,
                     UnitPrice: selectedProductInfo.unitPrice,
-                    productID: value // Assign the selected product's value as productID
+                    productID: value, // Assign the selected product's value as productID
+                    error: {...item.error, Product: undefined}
                 };
             }
             return item;

@@ -6,13 +6,17 @@ import FinishedQuotationCustomer from "./FinishQuotation.jsx";
 import Profile from "./Profile.jsx";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import CancelQuotationCustomer from "./CancelQuotation.jsx";
+import {isToken, isTokenExpired} from "../../utils/JwtService.js";
 
 const MainCustomer = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const sectionRef = useRef(null);
+    const navigation = useNavigate();
+
     useEffect(() => {
+        if (!isToken() || !isTokenExpired(localStorage.getItem('token'))) navigation("/login");
         sectionRef.current.scrollIntoView({behavior: 'smooth'});
     }, []);
     const handleTabClick = (index) => {
