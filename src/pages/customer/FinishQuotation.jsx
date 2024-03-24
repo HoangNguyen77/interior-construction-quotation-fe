@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
-import { Button } from 'antd';
+import {Button, message, Modal} from 'antd';
 import axios from 'axios';
 import { getIdUserByToken } from "../../utils/JwtService";
 import { getValidCurrency } from "../../utils/Validation.js";
 import {Link} from "react-router-dom";
+const { confirm } = Modal;
 
 const Icon = ({ classIcon, color, size }) => {
     const iconSize = {
@@ -25,11 +26,13 @@ const Icon = ({ classIcon, color, size }) => {
 const FinishedQuotationCustomer = () => {
     const [quotationList, setQuotationList] = useState([]);
     const userId = parseInt(getIdUserByToken());
+    const [change, setChange] = useState(false);
 
     const fetchFinishedQuotations = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/quotation-list/search/findListWithStatusIdIs4ByCustomerId?customerId=${userId}`);
             const data = response.data._embedded.quotationLists; // Modify to access the correct data structure
+
             setQuotationList(data);
         } catch (error) {
             console.error('Error fetching finished quotations:', error);
@@ -38,14 +41,41 @@ const FinishedQuotationCustomer = () => {
 
     useEffect(() => {
         fetchFinishedQuotations();
-    }, []);
+    }, [change]);
 
-    // const handleOpenQuote = (listId) => {
-    //     <Link to{`my-quotation/${listId}`}>
-    //
-    //     </Link>
-    // };
+    const deleteQuotationHeader = async (id) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/quotation/cancel-confirm-quotation?quotation-list-id=${id}`);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error deleting quotation header:', error);
+            throw error;
+        }
+    };
 
+
+    const showConfirmDelete = (headerId) => {
+        confirm({
+            title: 'Hủy đơn báo giá này?',
+            okText: 'Xóa',
+            cancelText: 'Thoát', // Đặt văn bản của nút Cancel thành "Thoát"
+            okButtonProps: { className: 'text-red-500 ' }, // Thiết lập màu chữ của nút Delete thành đỏ
+            onOk() {
+                deleteQuotationHeader(headerId)
+                    .then((data) => {
+                        message.success("Đã hủy đơn báo giá");
+                        setChange(!change);
+                    })
+                    .catch((error) => {
+                        console.error('Error deleting quotation header:', error);
+                    });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    };
     return (
         <div>
             <div className='h-auto pl-3'>
@@ -80,6 +110,12 @@ const FinishedQuotationCustomer = () => {
                                 <div className='col-span-2 text-black flex flex-col justify-center'>Đã ký báo giá</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
                                     <div className='flex justify-end gap-2'>
+                                        <Button type="primary"
+                                                style={{borderColor: '#ff0000', color: '#ff0015', fontWeight: 'bold'}}
+                                                onClick={()=>showConfirmDelete(item.listId)}
+                                        >
+                                            Hủy báo giá
+                                        </Button>
                                         <Button type="primary"
                                                 style={{borderColor: '#00BFFF', color: '#00BFFF', fontWeight: 'bold'}}>
                                             <Link to={`my-quotation/${item.listId}`}>Xem báo giá</Link>

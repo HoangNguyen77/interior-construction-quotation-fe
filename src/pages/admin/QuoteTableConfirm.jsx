@@ -252,20 +252,6 @@ const QuoteTableConfirm = ({ selectedQuotationItem, dataSource, setDataSource, t
       render: (estimateTotalPrice) => getValidCurrency(estimateTotalPrice),
       // width: 130,
     },
-    {
-      title: 'Ghi chú',
-      dataIndex: 'note',
-      width: 300,
-      render: (_, record) => (
-          <>
-            <Input
-                value={record.note}
-                onChange={(e) => handleNoteChange(e.target.value, record.detailId)} // Call handleNoteChange on change
-            />
-            {record.errors && record.errors.note && <div style={{ color: 'red' }}>{record.errors.note}</div>}
-          </>
-      ),
-    },
   ];
 
   return (
