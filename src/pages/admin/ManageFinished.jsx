@@ -619,7 +619,7 @@ const ManageFinished = () => {
                     <>
                         <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#348EED]'>ID</div>
+                                <div className='col-span-1 text-[#348EED]'>ID báo giá</div>
                                 <div className='col-span-2 text-[#348EED]'>Tên khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Loại thi công</div>
                                 <div className='col-span-3 text-[#348EED]'>Ngày hoàn thành báo giá</div>

@@ -440,7 +440,7 @@ const ManageBlog = () => {
 
                 <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                     <div className='grid grid-cols-12 py-3 gap-2'>
-                        <div className='col-span-1 text-[#E22E6D]'>ID</div>
+                        <div className='col-span-1 text-[#E22E6D]'>ID bài viết</div>
                         <div className='col-span-2 text-[#E22E6D]'>Hình ảnh</div>
                         <div className='col-span-2 text-[#E22E6D]'>Nhân viên</div>
                         <div className='col-span-2 text-[#E22E6D]'>Tiêu đề</div>

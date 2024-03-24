@@ -554,7 +554,7 @@ const ManageQuotation = () => {
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             {/** iterate from initialArr*/}
                             <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#348EED]'>ID</div>
+                                <div className='col-span-1 text-[#348EED]'>ID khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Họ và tên khách hàng</div>
                                 <div className='col-span-2 text-[#348EED]'>Email</div>
                                 <div className='col-span-1 text-[#348EED]'>Số điện thoại</div>
@@ -606,7 +606,7 @@ const ManageQuotation = () => {
                     <>
                         <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                             <div className='grid grid-cols-10 py-3 gap-2'>
-                                <div className='col-span-1 text-[#60B664]'>ID</div>
+                                <div className='col-span-1 text-[#60B664]'>ID khách hàng</div>
                                 <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
                                 <div className='col-span-2 text-[#60B664]'>Email</div>
                                 <div className='col-span-1 text-[#60B664]'>Số điện thoại</div>

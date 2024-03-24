@@ -90,10 +90,10 @@ const FinishedQuotationCustomer = () => {
 
                     <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                         <div className='grid grid-cols-10 py-3 gap-2'>
-                            <div className='col-span-1 text-[#348EED]'>ID</div>
+                            <div className='col-span-1 text-[#348EED]'>ID Báo Giá</div>
                             <div className='col-span-2 text-[#348EED]'>Ngày Tạo</div>
-                            <div className='col-span-2 text-[#348EED]'>Giá ước tính</div>
-                            <div className='col-span-2 text-[#348EED]'>Giá thực tế</div>
+                            <div className='col-span-2 text-[#348EED]'>Giá Ước Tính</div>
+                            <div className='col-span-2 text-[#348EED]'>Giá Thực Tế</div>
                             <div className='col-span-2 text-[#348EED]'>Trạng Thái</div>
                             <div className='col-span-1 text-[#348EED]'></div>
                         </div>

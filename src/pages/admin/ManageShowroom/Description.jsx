@@ -652,7 +652,7 @@ const Description = () => {
 
                 <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                     <div className='grid grid-cols-12 py-3 gap-2'>
-                        <div className='col-span-1 text-[#348EED]'>ID</div>
+                        <div className='col-span-1 text-[#348EED]'>ID sản phẩm</div>
                         <div className='col-span-2 text-[#348EED]'>Hình ảnh</div>
                         <div className='col-span-2 text-[#348EED]'>Sản phẩm</div>
                         <div className='col-span-2 text-[#348EED]'>Mô tả</div>
