@@ -1,11 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import useScrollToTop from "../../utils/ScrollToTop.jsx";
+import React, {useEffect, useState} from "react";
 import Header from "../../layouts/Header.jsx";
 import Footer from "../../layouts/Footer.jsx";
+import useScrollToTop from "../../utils/ScrollToTop.jsx";
 
-
-function Page403(){
+function Page404() {
     useScrollToTop()
     return (
         <div>
@@ -16,15 +14,14 @@ function Page403(){
                 <div className="container">
                     <div className="row align-items-center justify-content-center">
                         <div className="col-md-12 text-center" data-aos="fade">
-                            <h1 className="mb-2">403</h1>
-                            <h2 className="caption">Cấm truy cập</h2>
+                            <h1 className="mb-2">404</h1>
+                            <h2 className="caption">Không tìm thấy trang</h2>
                         </div>
                     </div>
                 </div>
             </div>
             <Footer/>
         </div>
-    )
-}
-
-export default Page403
+    );
+    }
+    export default Page404;
