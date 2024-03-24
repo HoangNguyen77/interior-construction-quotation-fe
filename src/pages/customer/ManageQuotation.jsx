@@ -470,11 +470,11 @@ const ManageQuotationCustomer = () => {
                             <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                                 {/** iterate from initialArr*/}
                                 <div className='grid grid-cols-10 py-3 gap-2'>
-                                    <div className='col-span-1 text-[#348EED]'>ID</div>
-                                    <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
+                                    <div className='col-span-1 text-[#348EED]'>ID Báo Giá</div>
+                                    <div className='col-span-2 text-[#348EED]'>Họ và Tên</div>
                                     <div className='col-span-2 text-[#348EED]'>Email</div>
-                                    <div className='col-span-2 text-[#348EED]'>Số điện thoại</div>
-                                    <div className='col-span-2 text-[#348EED]'>Ngày báo giá</div>
+                                    <div className='col-span-2 text-[#348EED]'>Số Điện Thoại</div>
+                                    <div className='col-span-2 text-[#348EED]'>Ngày Báo Giá</div>
                                     <div className='col-span-1 text-[#348EED]'></div>
                                 </div>
                                 <div className='overflow-y-auto h-[44vh] pr-3'>
@@ -517,11 +517,11 @@ const ManageQuotationCustomer = () => {
                         <>
                             <div className='w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                                 <div className='grid grid-cols-10 py-3 gap-2'>
-                                    <div className='col-span-1 text-[#60B664]'>ID</div>
-                                    <div className='col-span-2 text-[#60B664]'>Họ và tên</div>
+                                    <div className='col-span-1 text-[#60B664]'>ID Người Dùng</div>
+                                    <div className='col-span-2 text-[#60B664]'>Họ và Tên</div>
                                     <div className='col-span-2 text-[#60B664]'>Email</div>
-                                    <div className='col-span-2 text-[#60B664]'>Số điện thoại</div>
-                                    <div className='col-span-2 text-[#60B664]'>Ngày báo giá</div>
+                                    <div className='col-span-2 text-[#60B664]'>Số Điện Thoại</div>
+                                    <div className='col-span-2 text-[#60B664]'>Ngày Báo Giá</div>
                                     <div className='col-span-1 text-[#60B664]'></div>
                                 </div>
                                 <div className='overflow-y-auto h-[44vh] pr-3'>

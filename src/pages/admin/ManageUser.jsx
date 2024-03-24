@@ -249,15 +249,15 @@ class ManageUser extends Component {
                 </div>
                 <div className='table-all-posts h-auto mt-[50px]'>
                     <div
-                        className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>Người
-                        dùng
+                        className='w-4/5 h-[60px] relative top-7 shadow1 bg-[#348EED] text-center text-[24px] flex flex-col justify-center mx-auto rounded-[10px] text-white'>
+                        NGƯỜI DÙNG
                     </div>
                 </div>
 
                 <div className='table-all-posts h-auto mt-[2px]'>
                     <div className='h-[69vh] w-full bg-white shadow1 pt-[50px] px-[50px] rounded-[10px]'>
                         <div className='grid grid-cols-10 py-3 gap-2'>
-                            <div className='col-span-1 text-[#348EED]'>ID</div>
+                            <div className='col-span-1 text-[#348EED]'>ID người dùng</div>
                             <div className='col-span-1 text-[#348EED]'>Tên người dùng</div>
                             <div className='col-span-2 text-[#348EED]'>Họ và tên</div>
                             <div className='col-span-2 text-[#348EED]'>Email</div>
