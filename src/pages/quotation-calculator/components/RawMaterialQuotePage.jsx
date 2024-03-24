@@ -377,8 +377,6 @@ const RawMaterialQuotePage = () => {
             },
         },
 
-
-
         {
             title: 'Rộng', dataIndex: 'Width', width: '7%',
             render: (__, record) => {
@@ -410,7 +408,7 @@ const RawMaterialQuotePage = () => {
 
                 return (
                     <>
-                        {unit === 'cái' || unit === "md" ? <span>{selectedProductInfo.height}</span> :
+                        {unit === 'cái' || unit === "md" || unit ==="m2"? <span>{selectedProductInfo.height}</span> :
                             <Input
                                 placeholder="1"
                                 type="number"

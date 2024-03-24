@@ -70,10 +70,12 @@ function Header() {
                                                             </React.Fragment>
                                                         ) : (
                                                             <React.Fragment>
-                                                                <Link className="dropdown-item" to="/info">Thông tin của
+                                                                <Link className="dropdown-item" to="/customer-dashboard">Thông tin của
                                                                     bạn</Link>
-                                                                <Link className="dropdown-item"
-                                                                      to="/customer-quotation">Báo giá của bạn</Link>
+                                                                {/*<Link className="dropdown-item" to="/info">Thông tin của*/}
+                                                                {/*    bạn</Link>*/}
+                                                                {/*<Link className="dropdown-item"*/}
+                                                                {/*      to="/customer-quotation">Báo giá của bạn</Link>*/}
                                                                 <div className="dropdown-divider"></div>
                                                             </React.Fragment>
                                                         )
