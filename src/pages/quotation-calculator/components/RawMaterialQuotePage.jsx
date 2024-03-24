@@ -152,6 +152,7 @@ const RawMaterialQuotePage = () => {
 
         // Collect all errors for logging if necessary
 
+
         // If there are validation errors, stop the function
         if (!isValid) {
             console.error("Validation errors:", errors);
