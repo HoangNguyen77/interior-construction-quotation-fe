@@ -215,12 +215,14 @@ export const checkInputDouble = (setErrorInput, input) => {
         return true;
     }
 
-    // Now it's safe to call trim() on input
     if (input.trim() === "") {
         setErrorInput("Thông tin bắt buộc!");
         return true;
-    } else if (isNaN(parseFloat(input))) {
-        setErrorInput("Vui lòng nhập số!");
+    } else if (parseFloat(input) <= 0) {
+        setErrorInput("Vui lòng nhập số lớn hơn 0!");
+        return true;
+    } else if (!/^\d+(\.\d+)?$/.test(input.trim())) {
+        setErrorInput("Vui lòng nhập số hợp lệ!");
         return true;
     } else {
         setErrorInput("");

@@ -8,6 +8,8 @@ import {Link, useParams} from "react-router-dom";
 import {get3RandomBlog, getBlogById} from "../../api/blog/BlogAPI.js";
 import {format} from "date-fns";
 import {getAllBLogImage} from "../../api/blog/BlogImageAPI.js";
+import {parseHTMLString} from "../../component/parseHTMLString.js";
+import MyComponent from "../../component/MyComponent.jsx";
 
 const BlogDetail = () => {
     useScrollToTop();
@@ -20,12 +22,7 @@ const BlogDetail = () => {
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
     const [baoLoi, setBaoLoi] = useState(null);
 
-    const getShortDescription = (description) => {
-        const words = description.split(' ');
-        const shortWords = words.slice(0, 50);
-        const shortDescription = shortWords.join(' ');
-        return shortDescription;
-    };
+
 
     useEffect(() => {
         getBlogById(blogId).then(blog => {
@@ -63,6 +60,15 @@ const BlogDetail = () => {
         return <div><h1>Blog không tồn tại!</h1></div>;
     }
 
+    const getShortDescription = (description, maxLength = 90) => {
+        if (description.length <= maxLength) {
+            return description;
+        } else {
+            // Cắt giảm nội dung nếu độ dài vượt quá maxLength và thêm dấu ba chấm
+            return description.slice(0, maxLength) + '...';
+        }
+    };
+
     const formattedDate = format(new Date(blog.createdDate), 'MMM do, yyyy');
     return(
         <div>
@@ -95,7 +101,12 @@ const BlogDetail = () => {
                                 ))
                             }
                         </Carousel>
-                        <p style={{fontSize: "large", color: "black"}} className="text-justify mt-5">{blog.description}
+                        <p style={{fontSize: "large", color: "black"}} className="text-justify mt-5">
+                            {/*<MyComponent htmlContent={blog.description}/>*/}
+                            {parseHTMLString(blog.description)}
+
+
+
                         </p>
                     </div>
                     <Link to="/blog" className="p-2" style={{fontSize: '50px'}}><span
@@ -128,7 +139,9 @@ const BlogDetail = () => {
                                         <span className="mb-3 d-block post-date">
                         {format(new Date(blog.createdDate), 'MMM do, yyyy')}
                     </span>
-                                        <p style={{color: '#00000080'}}>{getShortDescription(blog.description)}</p>
+                                        <p style={{color: '#00000080'}}>
+                                            <MyComponent htmlContent={getShortDescription(blog.description)}/>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

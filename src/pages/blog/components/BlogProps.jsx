@@ -2,12 +2,15 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {format} from "date-fns";
 import {get1ImageOfABlog} from "../../../api/blog/BlogImageAPI.js";
+import MyComponent from "../../../component/MyComponent.jsx";
 
-const getShortDescription = (description) => {
-    const words = description.split(' ');
-    const shortWords = words.slice(0, 50);
-    const shortDescription = shortWords.join(' ');
-    return shortDescription;
+const getShortDescription = (description, maxLength = 70) => {
+    if (description.length <= maxLength) {
+        return description;
+    } else {
+        // Cắt giảm nội dung nếu độ dài vượt quá maxLength và thêm dấu ba chấm
+        return description.slice(0, maxLength) + '...';
+    }
 };
 const BlogProps = (props) => {
     const blogId = props.blog.blogId;
@@ -66,7 +69,10 @@ const BlogProps = (props) => {
                             <h2 className="heading mb-0"
                                 style={{fontSize: '25px'}}>{getShortDescription(props.blog.title)}</h2>
                             <span className="mb-3 d-block post-date">{formattedDate}</span>
-                            <p style={{color: '#00000080'}}>{getShortDescription(props.blog.description)}...</p>
+                            <p style={{color: '#00000080'}}>
+                            <MyComponent htmlContent={getShortDescription(props.blog.description)}/>
+                                ...
+                            </p>
                         </div>
                     </div>
                 </div>

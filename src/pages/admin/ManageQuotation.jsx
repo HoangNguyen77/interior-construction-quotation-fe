@@ -83,7 +83,7 @@ const ManageQuotation = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/quotation-header`, {
+            const response = await axios.get(`http://localhost:8080/quotation-header?size=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,

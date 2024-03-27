@@ -153,7 +153,7 @@ export async function getBlogWithUsernameById(blogId){
     }
 }
 export async function getAllBlogWithUsername(page) {
-    const url = `http://localhost:8080/blog?sort=blogId,desc&size=4&page=${page}`;
+    const url = `http://localhost:8080/blog?sort=blogId,desc&size=5&page=${page}`;
     try {
         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
         const responseData = response._embedded.blogs;
@@ -185,7 +185,7 @@ export async function getAllBlogWithUsername(page) {
     }
 }
 export async function getAllBlogWithUsernameByTitle(keyword, page) {
-    const url = `http://localhost:8080/blog/search/findByTitleContaining?title=${keyword}&page=${page}&size=4&sort=blogId,desc`;
+    const url = `http://localhost:8080/blog/search/findByTitleContaining?title=${keyword}&page=${page}&size=5&sort=blogId,desc`;
     try {
         const response = await my_request(url); // Assuming my_request is an async function that handles the fetch
         const responseData = response._embedded.blogs;

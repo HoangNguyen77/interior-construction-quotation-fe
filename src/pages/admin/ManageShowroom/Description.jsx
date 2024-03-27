@@ -570,6 +570,9 @@ const Description = () => {
                                     onChange={handleHeightChange}
                                 />
                                 <div style={{color: "red"}}>{errorHeight}</div>
+
+                            </div>
+                            <div className='flex h-[50px] gap-3'>
                                 <input
                                     className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[180px] h-[40px] px-2 text-black'
                                     placeholder='Giá thành...'
@@ -589,6 +592,8 @@ const Description = () => {
                                 </select>
                                 <div style={{color: "red"}}>{errorUnit}</div>
                             </div>
+
+
                             <div
                                 className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
                                 {images.map((base64Image, index) => (

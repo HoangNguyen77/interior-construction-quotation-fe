@@ -105,90 +105,79 @@ const RawMaterialQuotePage = () => {
     //     }
     // };
     const handleAddQuotationDetail = async () => {
-        let isValid = true;
-        let errors = [];
+        const quotationDetails = dataSource.map(item => {
+            let isValid = true;
+            const updatedDataSource = dataSource.map(item => {
+                const errors = {};
+                if (!item.RoomType) {
+                    errors.RoomType = "Vui lòng chọn loại phòng";
+                    isValid = false;
+                }
+                if (item.Product.length === 0) {
+                    errors.Product = "Vui lòng chọn sản phẩm";
+                    isValid = false;
+                }
+                if (!item.Length && item.Unit !== 'cái') {
+                    errors.Length = "Vui lòng nhập chiều dài";
+                    isValid = false;
+                }
 
-        // Perform all validations and construct errors array
-        const newDataSource = dataSource.map(item => {
-            const itemErrors = {};
+                if (!item.Width && item.Unit !== 'cái') {
+                    errors.Width = "Vui lòng nhập chiều rộng";
+                    isValid = false;
+                }
 
-            if (!item.RoomType) {
-                itemErrors.RoomType = "Vui lòng chọn loại phòng";
-                isValid = false;
+                if (!item.Height && item.Unit !== 'cái') {
+                    errors.Height = "Vui lòng nhập chiều cao";
+                    isValid = false;
+                }
+
+                if (!item.Quantity || item.Quantity < 1) {
+                    errors.Quantity = "Số lượng phải lớn hơn 0";
+                    isValid = false;
+                }
+
+                return { ...item, error: errors };
+            });
+
+            setDataSource(updatedDataSource);
+
+            if (!isValid) {
+                message.error("Thêm đơn báo giá thất bại");
+                return; // Stop execution if there's any validation error
             }
+            const totalCost = calculateTotalCost(item); // Calculate the total cost for the current item
 
             // Check if a product is selected
-            const isProductSelected = item.Product && item.Product.some(product => product.value);
-            if (!isProductSelected) {
-                itemErrors.Product = "Vui lòng chọn sản phẩm";
-                isValid = false;
+            if (item.Product.length > 0 && item.RoomType) {
+                const selectedProduct = item.Product.find(product => product.value === item.RoomType);
+                const productId = selectedProduct ? selectedProduct.value : '';
+
+                return {
+                    customerID: userId,
+                    productID: productId,
+                    estimateTotalPrice: totalCost, // Use the calculated total cost as the estimateTotalPrice
+                    quantity: item.Quantity
+                };
+            } else {
+                // Handle case where no product is selected
+                console.error("No product selected for item:", item);
+                return null; // Return null if no product is selected
             }
-            if (!item.Length && item.Unit !== 'cái') {
-                itemErrors.Length = "Vui lòng nhập chiều dài";
-                isValid = false;
-            }
-            if (!item.Width && item.Unit !== 'cái') {
-                itemErrors.Width = "Vui lòng nhập chiều rộng";
-                isValid = false;
-            }
-            if (!item.Height && item.Unit !== 'cái') { // Replace 'RequiresHeightUnit' with your actual condition
-                itemErrors.Height = "Vui lòng nhập chiều cao";
-                isValid = false;
-            }
-
-            if (!item.Quantity || item.Quantity < 1) {
-                itemErrors.Quantity = "Số lượng phải lớn hơn 0";
-                isValid = false;
-            }
+        }).filter(Boolean); // Filter out null values
 
 
-            // ... rest of your validation checks
-
-            return { ...item, error: itemErrors };
-        });
-
-        // Update state only once after all validations are done
-        setDataSource(newDataSource);
-
-        // Collect all errors for logging if necessary
-
-
-        // If there are validation errors, stop the function
-        if (!isValid) {
-            console.error("Validation errors:", errors);
-            message.error("Vui lòng kiểm tra lại thông tin.");
-            return; // Exit the function if there's any validation error
-        }
-
-        // Construct quotation details for valid items only
-        const quotationDetails = newDataSource.map(item => {
-            const totalCost = calculateTotalCost(item); // Assume this function is implemented correctly
-            const selectedProduct = item.Product.find(product => product.value === item.RoomType);
-            const productId = selectedProduct ? selectedProduct.value : '';
-
-            return productId ? {
-                customerID: userId,
-                productID: productId,
-                estimateTotalPrice: totalCost,
-                quantity: item.Quantity
-            } : null;
-        }).filter(Boolean); // Remove any null values, which represent invalid items
-
-        // If no valid quotation details are found, show an error and exit
-        if (quotationDetails.length === 0) {
-            message.error("Vui lòng thêm các sản phẩm nội thất!");
-            return;
-        }
-
-        // Call the addQuotation function and pass the valid quotationDetails
+        // Call the addQuotation function and pass the quotationDetails
         const result = await addQuotation(quotationDetails);
-        if (result === "Create quotation successfully") {
-            message.success("Thêm đơn báo giá thành công");
+        if (result=== "Create quotation successfully") {
+            message.success("Thêm đơn báo giá thành công")
         } else {
             // Show error message
             message.error("Thêm đơn báo giá thất bại");
         }
+        //handleReload();
     };
+
 
 
     const [count, setCount] = useState(0);

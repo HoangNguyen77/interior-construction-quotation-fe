@@ -13,6 +13,11 @@ import Pagination from "../../utils/Pagination.jsx";
 import {getAllBlogWithUsername, getAllBlogWithUsernameByTitle, getBlogById} from "../../api/blog/BlogAPI.js";
 import {format} from "date-fns";
 import {getAllBLogImage, getAllBlogImageData} from "../../api/blog/BlogImageAPI.js";
+import {CKEditor} from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import MyComponent from "../../component/MyComponent.jsx";
+//import CKEditorConfig from "../../utils/CKEditorConfig.js";
 
 const Icon = ({classIcon, color, size}) => {
     const iconSize = {
@@ -35,6 +40,7 @@ const ManageBlog = () => {
     const [images, setImages] = useState([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+
     //blog list
     const [blogList, setBlogList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +71,7 @@ const ManageBlog = () => {
                     console.log(error)
                 }
             )
-        }else {
+        } else {
             getAllBlogWithUsernameByTitle(search, (currentPage - 1)).then(
                 result => {
                     setBlogList(result.blogList);
@@ -78,12 +84,15 @@ const ManageBlog = () => {
             )
         }
     }, [currentPage, isChanged, search]);
-    const getShortDescription = (description) => {
-        const words = description.split(' ');
-        const shortWords = words.slice(0, 5);
-        const shortDescription = shortWords.join(' ');
-        return shortDescription;
+    const getShortDescription = (description, maxLength = 27) => {
+        if (description.length <= maxLength) {
+            return description;
+        } else {
+            // Cắt giảm nội dung nếu độ dài vượt quá maxLength và thêm dấu ba chấm
+            return description.slice(0, maxLength) + '...';
+        }
     };
+
     const formattedDate = (createdDate) => {
         const date = new Date(createdDate);
         const day = String(date.getDate()).padStart(2, '0');
@@ -104,12 +113,26 @@ const ManageBlog = () => {
         setErrorDescription("");
         return checkInput(setErrorDescription, e.target.value);
     }
+
+    const handleDescriptionChangeCKEditor = (event, editor) => {
+        const data = editor.getData(); // Lấy dữ liệu từ editor
+        setDescription(data);
+
+        const hasError = checkInput(setErrorDescription, data);
+        if (hasError) {
+            return;
+        }
+    };
+
+
     const handleModalToggle = () => {
         setIsModalOpen(!isModalOpen);
     };
     const handleModalToggleClose = () => {
         setTitle("");
         setDescription("");
+
+
         setImages([]);
         setUpdate(false);
         setBLogId(0);
@@ -125,6 +148,21 @@ const ManageBlog = () => {
         setSearch(currentSearch);
         setCurrentPage(1); // Cập nhật currentPage về 1 sau khi tìm kiếm
     }
+
+    const CKEditorConfig = {
+        toolbar: [
+            "bold",
+            "italic",
+            "link",
+            "|",
+            "blockQuote",
+            "insertTable",
+            "|",
+            "undo",
+            "redo",
+        ],
+        // ...other configurations
+    };
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             setSearch(event.target.value);
@@ -203,7 +241,7 @@ const ManageBlog = () => {
                         method: 'POST',
                         headers: {
                             'Content-type': 'application/json',
-                            'Authorization':`Bearer ${localStorage.getItem('token')}`
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
                         },
                         body: JSON.stringify({
                             blogId: 0,
@@ -282,11 +320,12 @@ const ManageBlog = () => {
                         setIsDeleting(false);
                     }}>Xóa
                     </div>
-                    <div className="col-2 btn btn-secondary" onClick={()=>{
+                    <div className="col-2 btn btn-secondary" onClick={() => {
                         closeToast();
                         setIsDeleting(false);
                     }
-                    }>Hủy</div>
+                    }>Hủy
+                    </div>
                 </div>
             </div>
         ), {
@@ -317,7 +356,7 @@ const ManageBlog = () => {
             } else {
                 toast.warning("Đã xảy ra lỗi trong quá trình xóa blog!");
             }
-        }catch (error){
+        } catch (error) {
             {
                 toast.error("Đã xảy ra lỗi trong quá trình xóa blog!");
             }
@@ -337,7 +376,8 @@ const ManageBlog = () => {
                         onKeyDown={handleKeyDown}
                     />
                 </div>
-                <div className='absolute bottom-1 left-[365px]' onClick={handleSearch}><Icon classIcon={faSearch} color={"black"}
+                <div className='absolute bottom-1 left-[365px]' onClick={handleSearch}><Icon classIcon={faSearch}
+                                                                                             color={"black"}
                                                                                              size={"24px"}/>
                 </div>
                 <div
@@ -352,6 +392,7 @@ const ManageBlog = () => {
                 </div>
             </div>
 
+
             {isModalOpen && (
                 <div className={`relative w-full mt-10`}>
                     <div className='w-full flex justify-between'>
@@ -361,26 +402,35 @@ const ManageBlog = () => {
                              onClick={handleModalToggleClose}>{`[Đóng]`}</div>
                     </div>
                     <div className='flex mb-3 gap-[10px]'>
+
+
                         <div className='flex flex-col'>
 
                             <input
-                                className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[400px] h-[40px] px-2'
+                                className='bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] w-[900px] h-[40px] px-2'
                                 placeholder='Nhập tiêu đề...'
                                 value={title}
                                 onChange={handleTitleChange}
                             />
+
                             <div style={{color: "red"}}>{errorTitle}</div>
-                            <textarea
-                                className='bg-[#EAEDF2] border-2 mt-[10px] border-[#858585] h-[100px] rounded-[5px] w-[400px] p-2'
-                                placeholder='Nhập nội dung...'
-                                value={description}
-                                onChange={handleDescriptionChange}
-                            />
+
+                            <div style={{maxWidth: '900px', overflowY: 'auto'}}>
+                                <CKEditor
+                                    editor={ClassicEditor}
+                                    config={CKEditorConfig}
+                                    data={description}
+                                    onChange={handleDescriptionChangeCKEditor}
+                                />
+                            </div>
+
+
                             <div style={{color: "red"}}>{errorDescription}</div>
                         </div>
 
+
                         <div
-                            className='h-[150px] w-full bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
+                            className='h-[150px] w-[900px] bg-[#EAEDF2] border-2 border-[#858585] rounded-[5px] p-[10px] flex gap-[10px]'>
                             {images.map((base64Image, index) => (
                                 <div key={index} className='relative'>
                                     <img
@@ -416,6 +466,7 @@ const ManageBlog = () => {
                             <div style={{color: "red"}}>{errorImages}</div>
                         </div>
 
+
                     </div>
 
                     <button className='bg-[#0AFF05] px-3 py-2 rounded-[5px] text-black'
@@ -423,6 +474,7 @@ const ManageBlog = () => {
                     </button>
                 </div>
             )}
+
 
             <div className='table-all-posts h-auto mt-[50px]'>
                 <div
@@ -460,13 +512,16 @@ const ManageBlog = () => {
                                 <div
                                     className='col-span-2 text-black flex flex-col justify-center'>{getShortDescription(blog.title)}...
                                 </div>
-                                <div
-                                    className='col-span-3 text-black flex flex-col justify-center'>{getShortDescription(blog.description)}...
+
+
+                                <div className='col-span-3 text-black flex flex-col justify-center'>
+                                    <MyComponent htmlContent={getShortDescription(blog.description)}/>
                                 </div>
+
                                 <div
                                     className='col-span-1 text-black flex flex-col justify-center'>{formattedDate(blog.createdDate)}</div>
                                 <div className='col-span-1 text-black flex flex-col justify-center'>
-                                    {(!isModalOpen && !isDeleting)  && (
+                                    {(!isModalOpen && !isDeleting) && (
                                         <div className='flex justify-end gap-2'>
                                             <div onClick={() => handleDeleteBlog(blog.blogId)}><Icon
                                                 classIcon={faTrashCan}
